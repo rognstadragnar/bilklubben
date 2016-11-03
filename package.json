@@ -11,7 +11,8 @@
     "webpack": "webpack --watch",
     "gulp": "gulp",
     "scripts": "npm run server & npm run webpack",
-    "start": "npm run server & npm run gulp"
+    "styles": "npm run server & npm run gulp",
+    "start": "babel-node --presets es2015 server/index.js"
   },
   "dependencies": {
     "axios": "^0.15.2",
