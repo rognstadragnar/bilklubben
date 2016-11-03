@@ -2,7 +2,7 @@
   "name": "bilklubben",
   "version": "1.0.0",
   "description": "",
-  "main": "/app/app.js",
+  "main": "server/index.js",
   "author": "",
   "license": "ISC",
   "scripts": {
