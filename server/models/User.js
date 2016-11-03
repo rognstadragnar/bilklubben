@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../models/db';
+//import { sequelize } from './../index.js';
 
 const User = sequelize.define('bk_user', {
     
