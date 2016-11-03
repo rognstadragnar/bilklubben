@@ -1,0 +1,60 @@
+/*
+.price-item
+            span.tittel Gjerrigknarken
+            span.price 249,-
+            span.i-mnd per mnd
+            span.gir 1000 BK-poeng i måned!
+
+*/
+.price-table {
+    width: 100%;
+    padding: 0 10%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    margin: -10px 0
+}
+
+.price-item {
+    display: inline;
+    width: 33.333%;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 10px 0;
+    transition: .5 all ease;
+    span {display: block; text-align: center;}
+    span.tittel {font-size: 1.6rem;}
+    span.price {font-size: 5rem;}
+    span.i-mnd {font-size: 1.2rem;}
+    span.price {font-size: 5rem;}
+    span.points {font-size: 1.5rem;}
+
+
+    &:nth-child(1) {
+        background: rgba(lightblue,.6);
+        &:hover {
+            background: rgba(lightblue, .8);
+            box-shadow: 0px 2px 15px -5px;
+            margin: 5px 0;
+        }
+    }
+    &:nth-child(2) {
+        background: rgba(lightblue,1);
+        z-index: 1;
+        box-shadow: 0px 2px 15px -5px;
+        margin: 5px 0;
+        &:hover {
+            margin: 0;
+        }
+    }
+    &:nth-child(3) {
+        background: rgba(lightblue,.6);
+        &:hover {
+            background: rgba(lightblue, .8);
+            box-shadow: 0px 2px 15px -5px;
+            margin: 5px 0;
+        }
+    }
+}
+
+body {background: #193452; height: 200vh}

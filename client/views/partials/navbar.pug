@@ -1,0 +1,23 @@
+if auth 
+    nav#navigationBar
+        .wrapper
+            .nav-logo
+                img(src='/assets/img/logo.svg')
+            ul.navigation-ul
+                li.navigation-li Lei en bil
+                li.navigation-li Mitt abonnement
+                li.navigation-li Nyheter
+                li.navigation-li#loggUt Logg ut
+                
+else 
+    nav#navigationBar
+        .wrapper
+            .nav-logo
+                img(src='/assets/img/logo.svg')
+            ul.navigation-ul
+                li.navigation-li Lei en bil
+                li.navigation-li Hva er egentlig greia?
+                li.navigation-li Nyheter
+                li.navigation-li#loggInnLink Logg inn
+                li.navigation-li
+                    a(href='/registrer') Bli medlem

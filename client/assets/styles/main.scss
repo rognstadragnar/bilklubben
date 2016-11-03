@@ -1,0 +1,12 @@
+@import './_vendor/simpletypography.scss';
+@import 'https://fonts.googleapis.com/css?family=Oxygen|Raleway:400,600';
+@include setFontFamily("Raleway", 400, 600, "Oxygen", 400);
+
+
+
+@import './_partials/navbar.scss';
+@import './_partials/loggInnForm.scss';
+@import './_partials/hero.scss';
+
+
+@import './_partials/pakker.scss';

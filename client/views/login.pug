@@ -1,0 +1,14 @@
+extends layout/main
+
+
+
+block content
+    form(method='post' action='/login')
+        input(type='text' name='username')
+        input(type='text' name='password')
+        input(type='submit' value='logg inn')
+
+block scripts
+ 
+block variables
+    - var tittel =tittel
