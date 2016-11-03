@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import config from '../../config.json';
+//import config from '../../config.json';
 
 export const sequelize = new Sequelize(
     process.env.DB_DATABASE, 
