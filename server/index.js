@@ -3,17 +3,17 @@ import routes from './routes/routes';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
-import config from '../config.json';
+//import config from '../config.json';
 let app = express();
 
 MySQLStore(session);
 
 const sessionStore = new MySQLStore({
-    host: config.db.host,
-    port: config.db.port,
-    user: config.db.username,
-    password: config.db.password,
-    database: config.db.database,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
     createDatabaseTable: true,
     schema: {
         tableName: 'bk_sessions',
@@ -25,9 +25,11 @@ const sessionStore = new MySQLStore({
     }
 })
 
+
+
 const PORT = process.env.PORT || 3000;
 app.use(session({
-    secret: config.session.secret,
+    secret: process.env.SESSION_SECRET,/*config.session.secret*/
     key: 'myCookie',
     resave: true,
     saveUninitialized: true,
