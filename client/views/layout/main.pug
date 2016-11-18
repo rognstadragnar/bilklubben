@@ -7,10 +7,49 @@ html
         title=tittel
         link(rel='stylesheet' href='/assets/styles/main.css')
         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.5.1/css/pikaday.min.css')
+
+        script(src="https://use.typekit.net/qsq4ljb.js")
+        script.
+            try{Typekit.load({ async: true });}catch(e){}
+            
+        script.
+            var lb = document.getElementById('load-bar');
+            var interval = setInterval(function(){
+                if (document.readyState == 'complete') {
+                    clearInterval(interval);
+                    document.getElementById('load-bar').style.width = '100%';
+                    document.getElementById('load-bar').style.opacity = 0;
+                    document.getElementById('load-bg').style.opacity = 0;
+                    setTimeout(function() {
+                        document.getElementById('load-bar').style.display = 'none';
+                        document.getElementById('load-bg').style.display = 'none';
+                    }, 2500)
+                    
+                }
+            }, 10)
+        style.
+            body {transition: .5s all ease;}
+            #load-bar{
+                width: .1%;
+                height: 3px;
+                position: fixed;
+                top: 50vh;
+                transition: 1s 0s all cubic-bezier(1, 0.29, 1, 0.71), .33s 1s opacity ease;
+                background:#5ca8b6;
+                z-index: 100;
+                opacity: 1;
+            }
+            #load-bg{width: 100%; height: 100%; background: white; z-index: 99; position: fixed; opacity: 1; transition: .33s 1.33s all ease;}
     body
-        include ../partials/navbar
+        #load-bar
+        #load-bg
         .main-content
             include ../partials/header
 
-            block content
+            #actual-content
+                block content
+
+        
+        include ../partials/navbar
+
         block scripts

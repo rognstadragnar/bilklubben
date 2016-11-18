@@ -1,10 +1,7 @@
 //import style from '../styles/main.scss';
 import axios from 'axios';
-
-const lol = () => console.log('sss');
-const loal = () => console.log('sss');
-const laol = () => console.log('sss');
-
+//import simpleScroll from './vendor/simple-scroll';
+import simpleScroll from 'simple-scroll';
 
 const loggInnLink = document.getElementById('loggInnLink');
 const loggInnForm = document.getElementById('loggInnForm');
@@ -37,5 +34,29 @@ window.addEventListener('scroll', () => {
     } else {
         navigationBar.classList.remove('scrolled');
     }
-    console.log(window.scrollY + 'lol')
+})
+
+
+const arrowDown = document.getElementById('arrowdown');
+if (arrowDown) {
+    arrowDown.addEventListener('click', () => {
+        //simpleScroll.setSettings({minSpeed: 0.1})
+        simpleScroll.element('actual-content', 70)
+    });
+}
+
+const mainNavTrigger = document.getElementById('main-nav-trigger');
+if (mainNavTrigger) {
+    mainNavTrigger.addEventListener('click', () => {
+        //simpleScroll.setSettings({minSpeed: 0.1})
+        document.body.classList.add('nav-open');
+        
+    });
+}
+
+
+document.body.addEventListener('click', (e) => {
+    if (document.body.classList.contains('nav-open') && e.target === document.body){
+        document.body.classList.remove('nav-open');
+    }
 })

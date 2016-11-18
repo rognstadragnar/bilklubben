@@ -1,23 +1,39 @@
 if auth 
-    nav#navigationBar
+    nav#navigationBar.nav-bar
         .wrapper
+            #main-nav-trigger.main-nav-trigger
+                span Meny
+                
             .nav-logo
                 img(src='/assets/img/logo.svg')
-            ul.navigation-ul
-                li.navigation-li Lei en bil
-                li.navigation-li Mitt abonnement
-                li.navigation-li Nyheter
-                li.navigation-li#loggUt Logg ut
+            
+            .sec-nav
+                ul.sec-nav-ul 
+                    li.navigation-li#loggUt Logg ut
+    nav.main-nav
+        img(src='/assets/img/logo.svg')
+        ul.main-nav-ul 
+            li.navigation-li Lei en bil
+            li.navigation-li Mitt abonnement
+            li.navigation-li Nyheter
                 
 else 
-    nav#navigationBar
+    nav#navigationBar.nav-bar
         .wrapper
+            #main-nav-trigger.main-nav-trigger
+                span Meny
             .nav-logo
                 img(src='/assets/img/logo.svg')
-            ul.navigation-ul
-                li.navigation-li Lei en bil
-                li.navigation-li Hva er egentlig greia?
-                li.navigation-li Nyheter
-                li.navigation-li#loggInnLink Logg inn
-                li.navigation-li
-                    a(href='/registrer') Bli medlem
+            
+            .sec-nav
+                ul.sec-nav-ul 
+                    li.navigation-li#loggInnLink Logg inn
+                    li.navigation-li
+                        a(href='/registrer') Bli medlem
+                
+    nav.main-nav
+        img(src='/assets/img/logo.svg')
+        ul.main-nav-ul 
+            li.navigation-li Lei en bil
+            li.navigation-li Mitt abonnement
+            li.navigation-li Nyheter

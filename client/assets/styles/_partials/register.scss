@@ -1,0 +1,30 @@
+.register-bg {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('/assets/img/hero1.jpg');
+    background-size: cover;
+    background-position: center top;
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #4CA1AF; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #4CA1AF , #C4E0E5); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #4CA1AF , #C4E0E5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        z-index: 0;
+        opacity: 0.9;
+    }
+    form {
+        z-index: 1;
+        width: 200px;
+    }
+}

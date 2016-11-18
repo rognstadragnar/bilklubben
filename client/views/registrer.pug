@@ -2,11 +2,12 @@ extends layout/registrerLayout
 
 
 block content
-    form(method='post' action='/registrer')
-        input(type='text' name='username' placeholder='usernam')
-        input(type='text' name='password' placeholder='password')
-        input(type='text' name='name' placeholder='name')
-        input(type='submit' value='Registrer deg')
+    .register-bg
+        form(method='post' action='/registrer')
+            input(type='text' name='username' placeholder='usernam')
+            input(type='text' name='password' placeholder='password')
+            input(type='text' name='name' placeholder='name')
+            input(type='submit' value='Registrer deg')
 block scripts
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.5.1/pikaday.min.js')

@@ -1,4 +1,4 @@
-#loggInnForm{
+.logg-inn-container{
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -8,7 +8,7 @@
     opacity: 0;
     visibility: hidden;
     transition: .5s all ease;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +18,7 @@
         width: 200px;
         font-size: 2.5rem;
         //background: red;
-        > input[type='text'] {
+        input[type='text'] {
             width: 100%;
             font-size: 1.5rem;
             margin: 20px 0;

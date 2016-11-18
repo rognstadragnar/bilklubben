@@ -2,7 +2,7 @@
 
 @mixin setFontFamily ($bodyFont, $bodyWeight, $bodyStrongWeight, $headerFont, $headerWeight) {
     body {
-        font-family: $bodyFont;
+        font-family: #{$bodyFont};
         font-weight: $bodyWeight;
         strong {
             font-weight: $bodyStrongWeight;

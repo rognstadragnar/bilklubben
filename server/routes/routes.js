@@ -21,38 +21,54 @@ passport.use(new LocalStrategy(
   }
 ));
 
-router.post('/login', 
-  /*passport.authenticate('local', {
-    successRedirect: '/loginSuccess',
-    failureRedirect: '/loginFailure'
-  })*/(req, res) => {
+router.post('/login', (req, res) => {
     const { username, password } = req.body;
     if (username && password) {
-      req.session.auth = true;
-      req.session.asd = username;
-      res.redirect('/');
+      User.findOne({where: {username: username}})
+        .then((user)=> {
+          if (user) {
+            console.log(req.session, user.dataValues.id)
+
+            if (Bcrypt.compareSync(password, user.dataValues.password)) {
+              const {id, username } = user.dataValues;
+              req.session.user = {id: id, username: username};
+              req.session.auth = true;
+              res.redirect('/');
+            } else {
+              req.session.user = null;
+              req.session.auth = false;
+              res.redirect('/');
+            }
+          } else {
+            req.session.user = null;
+            req.session.auth = false;
+            res.redirect('/');
+          }
+        })
+    
     } else {
+      req.session.user = null;
       req.session.auth = false;
-      res.redirect('/login');
+      res.sendStatus(404);  
+      res.redirect('/');
     }
   }
 );
 router.post('/logout', (req, res) => {
-      req.session.auth = false;
-      req.session.asd = null;
-      res.redirect('/');
-  }
-);
+  req.session.user = null;
+  req.session.auth = false;
+  res.redirect('/');
+});
 
 router.get('/registrer', (req, res, next) => {
-  res.render('registrer', {title: 'Registrer deg | Bilklubben'})
+  res.render('registrer', {title: 'Registrer deg | Bilklubben', auth: req.session.auth, user: req.session.user})
 })
 
 router.post('/registrer', (req, res, next) => {
   const { username, password, name } = req.body;
   //validateRegistration(username, password, name);
-  const hashedPassword = Bcrypt.hashSync(password, salt);
-  console.log(username, password + '===' + hashedPassword, name)
+  //const hashedPassword = Bcrypt.hashSync(password, salt);
+  let hashedPassword = Bcrypt.hashSync(password, salt)
   User.create({username: username, password: hashedPassword, name: name})
     .then(() => {
       req.session.auth = true;
@@ -61,20 +77,16 @@ router.post('/registrer', (req, res, next) => {
     .catch((err) => {
       console.log(err);
     })
-  
 })
 
 router.get('/login', (req, res, next) => {
   res.render('login', {title: 'Logg inn | BILklubben'});
 });
 
-router.get('/innloggin', checkLogin, (req, res) =>  {
-  res.render('index', {name: req.session.asd})
-});
-
 router.get('*', (req, res) =>  {
+  console.log(req.session)
   if (isAuthed(req)) {
-    res.render('index', {auth: req.session.auth})
+    res.render('index', {auth: req.session.auth, user: req.session.user})
   } else {
     res.render('index', {auth: req.session.auth})
   }

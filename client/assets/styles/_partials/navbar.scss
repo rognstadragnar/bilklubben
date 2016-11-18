@@ -6,46 +6,150 @@ body {
     width: 100%;
     margin: 0 auto;
 }
-nav {
+nav.nav-bar {
     position: fixed; 
     width: 100%;
-    top: 30px;
+    max-width: 100%;
+    top: 0;
+    padding-top: 30px;
     z-index: 1;
     transition: .5s all ease,  .2s .2s background cubic-bezier(0.4, 0, 1, 1)
 }
 nav > .wrapper{
-
+    position: relative;
     .nav-logo {
         display: flex;
         align-items: center;
         float: left;
         max-height: 100%;
         height: 100%;
-        width: 200px;
+        width: 100%;
         box-sizing: border-box;
         img {
-            margin: 16px 0;
+            margin: 16px auto;
             height: 38px;
         }
     }
-    ul {
-        float: right;
+    .main-nav-trigger {
+        position: absolute;
+        left: 0;
+        line-height: 70px;
         color: white;
-        line-height: 50px;
-        margin: 0;
-        padding: 0;
-        li {
-            display: inline;
-            margin: 0 5px;
-            &:last-child {
-                margin-right: 0;
-            }
-        }   
+    } 
+    .sec-nav {
+        position: absolute;
+        right: 0; 
+     
+        ul {
+            float: right;
+            color: white;
+            line-height: 70px;
+            margin: 0;
+            padding: 0;
+            transition: .25s all ease-in-out;
+            li {
+                display: inline;
+                margin: 0 5px;
+                &:last-child {
+                    margin-right: 0;
+                }
+                a {
+                    color: white;
+                }
+            } 
+        }
     }
 }
 
 nav.scrolled {
+    padding-top: 0;
+    background: #4a96a3; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(right, #4CA1AF, #4a96a3);
+    background: -o-linear-gradient(right, #4CA1AF, #4a96a3);
+    background: linear-gradient(to left, #4CA1AF, #4a96a3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    box-shadow: 5px 0px 26px -10px;
+}
+
+nav.main-nav {
+    position: fixed;
     top: 0;
-    background:#193452;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    //box-shadow: -10px 0 20px -10px rgba(60, 60, 60, 0.61) inset;
+    background: white;
+    overflow-y: auto;
+    background: #4a96a3; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(right, #4CA1AF, #4a96a3);
+    background: -o-linear-gradient(right, #4CA1AF, #4a96a3);
+    background: linear-gradient(to left, #68c3d2, #66b9c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    transition: .5s all ease,  .2s .2s background cubic-bezier(0.4, 0, 1, 1);
+
+    ul {
+        background: -webkit-linear-gradient(top, #5cb6c5, rgba(255, 255, 255, 0));
+        background: -o-linear-gradient(top, #5cb6c5, rgba(255, 255, 255, 0));
+        background: linear-gradient(to bottom, #5cb6c5, rgba(255, 255, 255, 0));
+        color: white;
+        font-size: 2.25rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        li {
+            line-height: 70px;
+            border-bottom: 1px solid rgb(134, 205, 217);
+            transition: .2s all ease;
+            &:hover {
+                background: rgb(134, 205, 217);
+            }
+            &:last-child {
+                border-bottom: 0px solid rgb(134, 205, 217);
+            }
+        }
+    }
+    img {
+        background: rgba(white, 0.2);
+        display: block;
+        width: 100%;
+        padding: 50px 10%;
+        box-sizing: border-box;
+    }
+}
+
+body {
+    position: absolute;
+    top: 0;left: 0;
+    &:after {
+        content: ''; 
+        position: absolute; 
+        top: 0;
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        background: white; 
+        background: -webkit-linear-gradient(left, #fff, rgba(255, 255, 255, 0.16));
+        background: -o-linear-gradient(left, #fff, rgba(255, 255, 255, 0.16));
+        background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.16));
+        z-index: -1;
+        opacity: 0;
+        transition: .5s all ease;
+    }
+}
+
+body.nav-open {
+    left: 250px;
+    overflow: hidden;
+    max-height: 100vh;
+    > nav.main-nav {
+        left: 0;
+    }
+    > .main-content, .nav-bar {
+        opacity: 0.5; 
+        transition: .5s all ease;
+    }
+    &:after {
+        z-index: 1;
+        opacity: .7;
+    }
 
 }

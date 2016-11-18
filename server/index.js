@@ -1,24 +1,14 @@
 import express from 'express';
 import routes from './routes/routes';
 import bodyParser from 'body-parser';
+//import cookieParser from 'cookie-parser';
+
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
 import Sequelize from 'sequelize';
-//import config from '../config.json';
 let app = express();
-
+//app.use(cookieParser());
 MySQLStore(session);
-
-if (process.env.NODE_ENV !== 'production') {
-    //const config = require('../config.json');
-    /*process.env.DB_HOST = config.DB_HOST;
-    process.env.DB_PORT = config.DB_PORT;
-    process.env.DB_USERNAME = config.DB_USERNAME;
-    process.env.DB_PASSWORD = config.DB_PASSWORD;
-    process.env.DB_DATABASE = config.DB_DATABASE;
-    process.env.SESSION_SECRET = config.SESSION_SECRET;*/
-}
-
 require('dotenv').config();
 
 
@@ -44,10 +34,14 @@ const sessionStore = new MySQLStore({
 const PORT = process.env.PORT || 3000;
 app.use(session({
     secret: process.env.SESSION_SECRET,/*config.session.secret*/
-    key: 'myCookie',
+    key: 'myCookie',    
     resave: true,
     saveUninitialized: true,
-    store: sessionStore
+    store: sessionStore,
+    cookie: {
+        path: '/',
+        maxAge: Date.now() + 10000000
+    }
     })
 );
 
