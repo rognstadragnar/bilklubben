@@ -1,9 +1,11 @@
 import Sequelize from 'sequelize';
-import { sequelize } from '../models/db';
-//import { sequelize } from './../index.js';
 
-const User = sequelize.define('bk_user', {
-    
+const UserModel = {
+    id: { 
+        type: Sequelize.INTEGER, 
+        primaryKey: true, 
+        autoIncrement: true
+    },
     name: {
         type: Sequelize.STRING,
         allowNull: false
@@ -28,6 +30,6 @@ const User = sequelize.define('bk_user', {
             min: 0
         }
     }
-})
-User.sync();
-export default User;
+};
+
+export default UserModel;

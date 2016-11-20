@@ -1,16 +1,11 @@
-//import style from '../styles/main.scss';
 import axios from 'axios';
-//import simpleScroll from './vendor/simple-scroll';
 import simpleScroll from 'simple-scroll';
 
-const loggInnLink = document.getElementById('loggInnLink');
-const loggInnForm = document.getElementById('loggInnForm');
-const loggInnKryssUt = document.getElementById('loggInnKryssUt');
-if (loggInnLink) {
-    loggInnLink.addEventListener('click', () => {
-        loggInnForm.classList.add('showing');
-    });
-}
+import React from 'react';
+import ReactDom from 'react-dom';
+import LoggInnSkjema from './components/LoggInnSkjema.jsx';
+import RegistreringsSkjema from './components/RegistreringsSkjema.jsx';
+
 
 if (loggInnKryssUt) {
     loggInnKryssUt.addEventListener('click', () => {
@@ -60,3 +55,39 @@ document.body.addEventListener('click', (e) => {
         document.body.classList.remove('nav-open');
     }
 })
+
+
+if (document.getElementById('registrer-react')) ReactDom.render(<RegistreringsSkjema />, document.getElementById('registrer-react'))
+
+
+
+const loggInnTrigger = document.getElementById('logg-inn-trigger');
+const loggInnReact = document.getElementById('logg-inn-react');
+const loggInnKryssUt = document.getElementById('loggInnKryssUt');
+if (loggInnTrigger && loggInnReact) {
+    ReactDom.render(<LoggInnSkjema />, document.getElementById('logg-inn-react'))
+    loggInnTrigger.addEventListener('click', (e) => {
+        if (e.target === loggInnTrigger) {
+            loggInnReact.classList.toggle('showing');
+        }
+    });
+    document.getElementById('lukk-logg-inn').addEventListener('click', (e) => {
+        loggInnReact.classList.remove('showing');
+    });
+}
+
+
+const registrerTrigger = document.getElementById('registrer-trigger');
+const registrerReact = document.getElementById('registrer-react');
+const lukkRegistrer = document.getElementById('lukk-registrering');
+if (registrerTrigger && registrerReact) {
+    ReactDom.render(<RegistreringsSkjema />, document.getElementById('registrer-react'))    
+    registrerTrigger.addEventListener('click', (e) => {
+        if (e.target === registrerTrigger) {
+            registrerReact.classList.toggle('showing');
+        }
+    });
+    lukkRegistrer.addEventListener('click', (e) => {
+        registrerReact.classList.remove('showing');
+    });
+}

@@ -20,8 +20,7 @@ module.exports = {
                 include: [
                     path.join(__dirname, 'client'),
                 ],
-                exclude: /node_modules/,
-
+                //exclude: /node_modules/,
                 loader: 'babel-loader'
             }
         ]
@@ -30,6 +29,6 @@ module.exports = {
         //new LiveReloadPlugin(),        
     ],
     resolve: {
-        extensions: [ '', '.js']
+        extensions: [ '', '.js', '.jsx']
     },
 }

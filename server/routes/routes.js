@@ -6,20 +6,7 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import Bcrypt from 'bcrypt';
 import { salt } from '../utils/variables';
-import User from '../models/User';
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-  /*  User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (!user.verifyPassword(password)) { return done(null, false); }
-      return done(null, user);
-    });*/
-      return done(null, {})
-
-  }
-));
+import { User, Car, Order } from '../models';
 
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -33,31 +20,33 @@ router.post('/login', (req, res) => {
               const {id, username } = user.dataValues;
               req.session.user = {id: id, username: username};
               req.session.auth = true;
-              res.redirect('/');
+              res.sendStatus(200);
             } else {
               req.session.user = null;
               req.session.auth = false;
-              res.redirect('/');
+              res.send(401, {error: 'Feil passord.' })
             }
           } else {
             req.session.user = null;
             req.session.auth = false;
-            res.redirect('/');
+            res.send(401, {error: 'Fant ikke bruker.' })
           }
         })
     
     } else {
       req.session.user = null;
       req.session.auth = false;
-      res.sendStatus(404);  
-      res.redirect('/');
+      res.send(401, {error: 'Fyll ut begge felt.' })
+
     }
   }
 );
 router.post('/logout', (req, res) => {
   req.session.user = null;
   req.session.auth = false;
-  res.redirect('/');
+  res.status(200).send({error: 'myerror'});
+  //res.status(500).json({error: 'myerror'});
+  //res.redirect('/');
 });
 
 router.get('/registrer', (req, res, next) => {
@@ -69,6 +58,8 @@ router.post('/registrer', (req, res, next) => {
   //validateRegistration(username, password, name);
   //const hashedPassword = Bcrypt.hashSync(password, salt);
   let hashedPassword = Bcrypt.hashSync(password, salt)
+  Car.create({make: 'Make!', model: "Model!", specs: "Bra bil", price: 100});
+
   User.create({username: username, password: hashedPassword, name: name})
     .then(() => {
       req.session.auth = true;
@@ -84,7 +75,6 @@ router.get('/login', (req, res, next) => {
 });
 
 router.get('*', (req, res) =>  {
-  console.log(req.session)
   if (isAuthed(req)) {
     res.render('index', {auth: req.session.auth, user: req.session.user})
   } else {

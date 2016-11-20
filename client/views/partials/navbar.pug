@@ -26,10 +26,13 @@ else
                 img(src='/assets/img/logo.svg')
             
             .sec-nav
+            
                 ul.sec-nav-ul 
-                    li.navigation-li#loggInnLink Logg inn
-                    li.navigation-li
-                        a(href='/registrer') Bli medlem
+                
+                    li.navigation-li#logg-inn-trigger Logg inn
+                        .logg-inn#logg-inn-react
+
+                    li.navigation-li#registrer-trigger Bli medlem
                 
     nav.main-nav
         img(src='/assets/img/logo.svg')

@@ -4,47 +4,41 @@ extends layout/main
 
 block content
 
-    if !auth
-        .logg-inn-container#loggInnForm
-            span#loggInnKryssUt.kryss-ut
-            form(method='post' action='/login')
-                label(for='username') brukernavn
-                    input(type='text' name='username')
-                label(for='username') brukernavn
-                    input(type='text' name='password')
-                input(type='submit' value='logg inn')
+
     section.hva
         h2 Hva er egentlig greia?    
         p Har du noen gang tenkt at det er sykt stress å leie bil?        
         ul 
             li yolo
     section.priser
-    h2 Priser            
-    .price-table
-        .price-item
-            span.price 249,-
-                span.i-mnd per mnd
-            span.tittel Gjerrigknarken
-            span.points 1000 BK-poeng hver måned!
-            ul
-                li Gode 1
-                li Gode 2
-        .price-item
-            span.price 490,-
-                span.i-mnd per mnd
-            span.tittel Den middelmådige
-            span.points 2500 BK-poeng hver måned!
-            ul
-                li Gode 1
-                li Gode 2
-        .price-item
-            span.price 1499,-
-                span.i-mnd per mnd
-            span.tittel Onkel Skrue
-            span.points 10000 BK-poeng hver måned!
-            ul
-                li Gode 1
-                li Gode 2
+        h2 Priser            
+        .price-table
+            .price-item
+                span.price 249,-
+                    span.i-mnd per mnd
+                span.tittel Gjerrigknarken
+                span.points 1000 BK-poeng hver måned!
+                ul
+                    li Gode 1
+                    li Gode 2
+            .price-item
+                span.price 490,-
+                    span.i-mnd per mnd
+                span.tittel Den middelmådige
+                span.points 2500 BK-poeng hver måned!
+                ul
+                    li Gode 1
+                    li Gode 2
+            .price-item
+                span.price 1499,-
+                    span.i-mnd per mnd
+                span.tittel Onkel Skrue
+                span.points 10000 BK-poeng hver måned!
+                ul
+                    li Gode 1
+                    li Gode 2
+
+    
 
 block scripts
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js')
