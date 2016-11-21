@@ -17,8 +17,11 @@ router.post('/login', (req, res) => {
             console.log(req.session, user.dataValues.id)
 
             if (Bcrypt.compareSync(password, user.dataValues.password)) {
-              const {id, username } = user.dataValues;
-              req.session.user = {id: id, username: username};
+              req.session.bruker = {
+                fulltNavn: user.dataValues.name,
+                brukernavn: user.dataValues.username,
+                points: user.dataValues.points,
+              }
               req.session.auth = true;
               res.sendStatus(200);
             } else {
@@ -45,6 +48,57 @@ router.post('/logout', (req, res) => {
   req.session.user = null;
   req.session.auth = false;
   res.status(200).send({error: 'myerror'});
+  //res.status(500).json({error: 'myerror'});
+  //res.redirect('/');
+});
+
+router.post('/api/isbruker', (req, res) => {
+  console.log('got req', req.body)
+  if (req.body.brukernavn) {
+    User.findOne({where: {username: req.body.brukernavn}})
+    .then((user)=> {
+      if (user) {
+        res.send(500, {error: "Brukernavnet er i bruk"})
+      } else res.send(200)
+    })
+  }
+  //res.status(500).json({error: 'myerror'});
+  //res.redirect('/');
+});
+
+router.post('/api/registrer', (req, res) => {
+  let points;
+  const { brukernavn, passord, fulltNavn, abonnement } = req.body;
+  switch (req.body.abonnement) {
+    case '1': 
+      points = 249;
+      break;
+    case '2':
+      points = 490;
+      break;
+    case '3':
+      points = 1499;
+      break;
+    default:
+      points = 0;
+      break;
+  }
+  console.log('got req', req.body, 'points: ' + points)
+
+  if (brukernavn, passord, fulltNavn) {
+    let hashedPassword = Bcrypt.hashSync(passord, salt)
+    User.create({username: brukernavn, password: hashedPassword, name: fulltNavn, points: points})
+    .then((user)=> {
+        req.session.bruker = {
+          fulltNavn: user.dataValues.name,
+          brukernavn: user.dataValues.username,
+          points: user.dataValues.points,
+        }
+        req.session.auth = true;
+        res.send(200)
+    })
+    .catch((err) => res.send(500, err))
+  }
   //res.status(500).json({error: 'myerror'});
   //res.redirect('/');
 });
@@ -76,6 +130,7 @@ router.get('/login', (req, res, next) => {
 
 router.get('*', (req, res) =>  {
   if (isAuthed(req)) {
+    console.log(req.session)
     res.render('index', {auth: req.session.auth, user: req.session.user})
   } else {
     res.render('index', {auth: req.session.auth})

@@ -34,7 +34,7 @@ export default class LoggInnSkjema extends React.Component {
                 <span id='lukk-logg-inn'>Lukk</span>
                 <form onSubmit={this.handleSubmit}> 
                     <TextFieldGroup icon='../assets/img/icons/person.svg' value={this.state.brukernavn} name='brukernavn' onChange={this.handleChange} placeholder='brukernavn'/>
-                    <TextFieldGroup icon='../assets/img/icons/lock.svg' value={this.state.passord} name='passord' onChange={this.handleChange} placeholder='passord'/>
+                    <TextFieldGroup icon='../assets/img/icons/lock.svg' value={this.state.passord} name='passord' field='password' onChange={this.handleChange} placeholder='passord'/>
                     <input type='submit' value='Logg inn'/>
                 </form>
                 {this.state.error ? <span className='error'>{this.state.error}</span> : ''}

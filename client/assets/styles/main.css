@@ -235,7 +235,7 @@ body.nav-open {
       border-radius: 5px 0 0 5px;
       opacity: 1;
       transition: .2s all ease; }
-    .logg-inn .form-group input[type='text'] {
+    .logg-inn .form-group input[type='text'], .logg-inn .form-group input[type='password'] {
       font-size: 1.5rem;
       background: none;
       border: 1px solid #91c2ca;
@@ -247,10 +247,10 @@ body.nav-open {
       font-weight: 300;
       box-sizing: border-box;
       transition: .2s all ease; }
-      .logg-inn .form-group input[type='text']:focus {
+      .logg-inn .form-group input[type='text']:focus, .logg-inn .form-group input[type='password']:focus {
         border-color: #55a0ae;
         outline: none; }
-        .logg-inn .form-group input[type='text']:focus ~ img {
+        .logg-inn .form-group input[type='text']:focus ~ img, .logg-inn .form-group input[type='password']:focus ~ img {
           background: #55a0ae; }
   .logg-inn input[type='submit'] {
     background: #91c2ca;
@@ -318,8 +318,9 @@ body.nav-open {
 .carousel-parent {
   position: relative;
   overflow-x: hidden;
-  height: 200px;
-  width: 100%; }
+  min-height: 200px;
+  width: 100%;
+  overflow-y: visible; }
   .carousel-parent > .indicators {
     position: absolute;
     bottom: 0;
@@ -340,7 +341,8 @@ body.nav-open {
 .carousel-page {
   position: absolute;
   top: 0;
-  transition: .2s all ease; }
+  transition: .2s all ease;
+  width: 100%; }
 
 .showing1 > .carousel-page:nth-child(1) {
   left: 0; }
@@ -351,6 +353,9 @@ body.nav-open {
 .showing1 > .carousel-page:nth-child(3) {
   left: 200%; }
 
+.showing1 > .carousel-page:nth-child(4) {
+  left: 300%; }
+
 .showing2 > .carousel-page:nth-child(1) {
   left: -100%; }
 
@@ -360,6 +365,9 @@ body.nav-open {
 .showing2 > .carousel-page:nth-child(3) {
   left: 100%; }
 
+.showing2 > .carousel-page:nth-child(4) {
+  left: 200%; }
+
 .showing3 > .carousel-page:nth-child(1) {
   left: -200%; }
 
@@ -368,6 +376,21 @@ body.nav-open {
 
 .showing3 > .carousel-page:nth-child(3) {
   left: 0; }
+
+.showing3 > .carousel-page:nth-child(4) {
+  left: 100%; }
+
+.showing4 > .carousel-page:nth-child(1) {
+  left: -300%; }
+
+.showing4 > .carousel-page:nth-child(2) {
+  left: -200%; }
+
+.showing4 > .carousel-page:nth-child(3) {
+  left: -100%; }
+
+.showing4 > .carousel-page:nth-child(4) {
+  left: 0%; }
 
 .hero-img {
   position: relative;

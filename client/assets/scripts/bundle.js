@@ -23588,6 +23588,7 @@
 	    onFocus: _react2.default.PropTypes.func,
 	    icon: _react2.default.PropTypes.string,
 	    disabled: _react2.default.PropTypes.bool,
+	    checked: _react2.default.PropTypes.bool,
 	    placeholder: _react2.default.PropTypes.string
 
 	};
@@ -23696,7 +23697,7 @@
 	                    'form',
 	                    { onSubmit: this.handleSubmit },
 	                    _react2.default.createElement(_textfieldgroup2.default, { icon: '../assets/img/icons/person.svg', value: this.state.brukernavn, name: 'brukernavn', onChange: this.handleChange, placeholder: 'brukernavn' }),
-	                    _react2.default.createElement(_textfieldgroup2.default, { icon: '../assets/img/icons/lock.svg', value: this.state.passord, name: 'passord', onChange: this.handleChange, placeholder: 'passord' }),
+	                    _react2.default.createElement(_textfieldgroup2.default, { icon: '../assets/img/icons/lock.svg', value: this.state.passord, name: 'passord', field: 'password', onChange: this.handleChange, placeholder: 'passord' }),
 	                    _react2.default.createElement('input', { type: 'submit', value: 'Logg inn' })
 	                ),
 	                this.state.error ? _react2.default.createElement(
@@ -23763,51 +23764,120 @@
 
 	        var _this = _possibleConstructorReturn(this, (RegistreringsSkjema.__proto__ || Object.getPrototypeOf(RegistreringsSkjema)).call(this, props));
 
-	        _this.state = { brukernavn: '', passord: '', error: '', currentPage: 1, totalPages: 3 };
+	        _this.state = {
+	            fulltNavn: '',
+	            brukernavn: '',
+	            passord: '',
+	            abonnement: false,
+	            error: null,
+	            currentPage: 1,
+	            totalPages: 3,
+	            page1isValid: false,
+	            page2isValid: true,
+	            page3isValid: false
+	        };
 	        _this.handleChange = _this.handleChange.bind(_this);
+	        _this.handleRadioChange = _this.handleRadioChange.bind(_this);
 	        _this.handleSubmit = _this.handleSubmit.bind(_this);
-	        _this.goToPage = _this.goToPage.bind(_this);
-
+	        _this.goTo2 = _this.goTo2.bind(_this);
+	        _this.goTo3 = _this.goTo3.bind(_this);
+	        _this.goBack = _this.goBack.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(RegistreringsSkjema, [{
 	        key: 'handleChange',
 	        value: function handleChange(e) {
-	            var _setState;
+	            this.setState(_defineProperty({}, e.target.name, e.target.value));
+	        }
+	    }, {
+	        key: 'handleRadioChange',
+	        value: function handleRadioChange(e) {
+	            var _setState2;
 
-	            var dirty = [e.target.name] + 'Dirty';
-	            var isDirty = '';
-	            e.target.value !== '' ? isDirty = 'dirty' : isDirty = '';
-	            this.setState((_setState = {}, _defineProperty(_setState, e.target.name, e.target.value), _defineProperty(_setState, dirty, isDirty), _setState));
+	            console.log('handled radio change');
+	            this.setState((_setState2 = {}, _defineProperty(_setState2, e.target.name, e.target.value), _defineProperty(_setState2, 'error', null), _setState2));
 	        }
 	    }, {
 	        key: 'handleSubmit',
 	        value: function handleSubmit(e) {
+	            var _this2 = this;
+
 	            e.preventDefault();
-	            /*Axios.post('/login', {
-	                username: this.state.brukernavn, 
-	                password: this.state.passord
-	            })    
-	            .then((res)=> window.location = '/')
-	            .catch((error) => {
-	                 
-	                this.setState({error: error.response.data.error})})*/
+	            var _state = this.state,
+	                passord = _state.passord,
+	                fulltNavn = _state.fulltNavn,
+	                abonnement = _state.abonnement;
+
+	            var brukernavn = this.state.ledigBrukernavn;
+	            console.log(abonnement === false, abonnement == false);
+	            if (this.state.currentPage === 3) {
+	                if (abonnement === false) {
+	                    this.setState({ error: 'Vennligst velg et abonnement.' });
+	                } else if (this.state.error === null) {
+	                    console.log('triggered');
+	                    _axios2.default.post('/api/registrer', {
+	                        brukernavn: brukernavn,
+	                        passord: passord,
+	                        fulltNavn: fulltNavn,
+	                        abonnement: abonnement
+	                    }).then(function (res) {
+	                        _this2.setState({ error: null, currentPage: 4 });
+	                        setTimeout(function () {
+	                            window.location = '/';
+	                        }, 500);
+	                    }).catch(function (error) {
+	                        _this2.setState({ error: error.response.data.error });
+	                    });
+	                }
+	            }
 	        }
 	    }, {
-	        key: 'goToPage',
-	        value: function goToPage(val, event) {
-	            if (val != this.state.currentPage) {
-	                if (val > this.state.totalPages) val = this.state.currentPage;
-	                if (val <= 0) val = 1;
+	        key: 'goTo2',
+	        value: function goTo2(e) {
+	            var _this3 = this;
+
+	            console.log('goTo2');
+	            e.preventDefault();
+	            var _state2 = this.state,
+	                brukernavn = _state2.brukernavn,
+	                passord = _state2.passord,
+	                fulltNavn = _state2.fulltNavn,
+	                ledigBrukernavn = _state2.ledigBrukernavn;
+
+	            if (brukernavn === ledigBrukernavn && fulltNavn && passord) {
+	                this.setState({ error: null, currentPage: 2 });
+	            } else if (brukernavn && passord && fulltNavn) {
+	                _axios2.default.post('/api/isbruker', { brukernavn: brukernavn }).then(function (res) {
+	                    _this3.setState({
+	                        error: null,
+	                        ledigBrukernavn: brukernavn,
+	                        currentPage: 2
+	                    });
+	                }).catch(function (err) {
+	                    _this3.setState({ error: err.response.data.error, ledigBrukernavn: false });
+	                });
+	            } else {
+	                this.setState({ error: 'Fyll ut alle feltene.' });
 	            }
-	            this.setState({ currentPage: val });
+	        }
+	    }, {
+	        key: 'goTo3',
+	        value: function goTo3(e) {
+	            e.preventDefault();
+	            console.log('goto3');
+	            this.setState({ currentPage: 3 });
+	        }
+	    }, {
+	        key: 'goBack',
+	        value: function goBack(e) {
+	            e.preventDefault();
+	            console.log('goback');
+	            if (this.state.currentPage > 1) this.setState({ currentPage: this.state.currentPage - 1 });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
-
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'registrer-parent' },
@@ -23826,7 +23896,10 @@
 	                    { onSubmit: this.handleSubmit },
 	                    _react2.default.createElement(
 	                        _carouselParent2.default,
-	                        { currentPage: this.state.currentPage, totalPages: this.state.totalPages, goToPage: this.goToPage },
+	                        {
+	                            currentPage: this.state.currentPage,
+	                            totalPages: this.state.totalPages
+	                        },
 	                        _react2.default.createElement(
 	                            _carouselPage2.default,
 	                            null,
@@ -23835,13 +23908,12 @@
 	                                null,
 	                                'Kontaktinformasjon'
 	                            ),
-	                            _react2.default.createElement(_textfieldgroup2.default, { value: this.state.brukernavn, name: 'brukernavn', onChange: this.handleChange, labelName: 'brukernavn' }),
-	                            _react2.default.createElement(_textfieldgroup2.default, { value: this.state.passord, name: 'passord', onChange: this.handleChange, labelName: 'passord' }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { value: this.state.fulltNavn, name: 'fulltNavn', onChange: this.handleChange, labelName: 'Fullt navn*' }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { value: this.state.brukernavn, name: 'brukernavn', onChange: this.handleChange, labelName: 'Brukernavn*' }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { value: this.state.passord, field: 'password', name: 'passord', onChange: this.handleChange, labelName: 'Passord*' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: function onClick() {
-	                                        return _this2.goToPage(2);
-	                                    } },
+	                                { type: 'button', onClick: this.goTo2 },
 	                                'Neste'
 	                            )
 	                        ),
@@ -23853,20 +23925,19 @@
 	                                null,
 	                                'Betalingsinformasjon'
 	                            ),
-	                            _react2.default.createElement(_textfieldgroup2.default, { value: 'Mitt kort', name: 'brukernavn', onChange: function onChange() {}, labelName: 'brukernavn', disabled: true }),
-	                            _react2.default.createElement(_textfieldgroup2.default, { value: this.state.passord, name: 'passord', onChange: this.handleChange, labelName: 'passord' }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { value: this.state.fulltNavn, name: 'kortholder', onChange: function onChange() {},
+	                                labelName: 'Navn p\xE5 kortholder', disabled: true }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { value: '1234-5678-9876-5432-1234', name: 'kortnummer', onChange: function onChange() {}, labelName: 'Kortnummer', disabled: true }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { value: '01/17', name: 'utl\xF8psdato', onChange: function onChange() {}, labelName: 'Utl\xF8psdato', disabled: true }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { value: '123', name: 'sikkerhetskode', onChange: function onChange() {}, labelName: 'sikkerhetskode', disabled: true }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: function onClick() {
-	                                        return _this2.goToPage(1);
-	                                    } },
+	                                { type: 'button', onClick: this.goBack },
 	                                'Forrige'
 	                            ),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: function onClick() {
-	                                        return _this2.goToPage(3);
-	                                    } },
+	                                { type: 'button', onClick: this.goTo3 },
 	                                'Neste'
 	                            )
 	                        ),
@@ -23878,14 +23949,23 @@
 	                                null,
 	                                'Velg abonnement'
 	                            ),
-	                            _react2.default.createElement(_textfieldgroup2.default, { value: 'Mitt kort', name: 'brukernavn', onChange: function onChange() {}, labelName: 'brukernavn', disabled: true }),
-	                            _react2.default.createElement(_textfieldgroup2.default, { value: this.state.passord, name: 'passord', onChange: this.handleChange, labelName: 'passord' }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { field: 'radio', value: '1', name: 'abonnement', onChange: this.handleRadioChange, labelName: 'Gjerrigknarken(249,-/mnd)' }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { field: 'radio', value: '2', name: 'abonnement', onChange: this.handleRadioChange, labelName: 'Den middlem\xE5dige(490,-/mnd)' }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { field: 'radio', value: '3', name: 'abonnement', onChange: this.handleRadioChange, labelName: 'Onkelskrue(1499,-/mnd)' }),
+	                            _react2.default.createElement(_textfieldgroup2.default, { field: 'radio', value: '0', name: 'abonnement', onChange: this.handleRadioChange, labelName: 'Det tar vi senere.' }),
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: function onClick() {
-	                                        return _this2.goToPage(2);
-	                                    } },
+	                                { type: 'button', onClick: this.goBack },
 	                                'Forrige'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            _carouselPage2.default,
+	                            null,
+	                            _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                'SKITBRA!'
 	                            )
 	                        )
 	                    ),
@@ -23951,15 +24031,8 @@
 
 	exports.default = function (props) {
 	    var indicators = [];
-
-	    var _loop = function _loop(i) {
-	        indicators.push(_react2.default.createElement('div', { className: i == props.currentPage ? 'dot active' : 'dot', key: Date.now() + i, onClick: function onClick() {
-	                return props.goToPage(i);
-	            } }));
-	    };
-
 	    for (var i = 1; i <= props.totalPages; i++) {
-	        _loop(i);
+	        indicators.push(_react2.default.createElement('div', { className: i == props.currentPage ? 'dot active' : 'dot', key: Date.now() + i }));
 	    }
 
 	    return _react2.default.createElement(

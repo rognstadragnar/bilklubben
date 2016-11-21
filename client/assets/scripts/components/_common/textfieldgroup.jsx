@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TextfieldGroup = ({labelName, labelClass = '', field, name, value, errors, onChange, onBlur, onFocus, icon, disabled,placeholder}) => {
+const TextfieldGroup = ({labelName, labelClass = '', field, name, value, errors, onChange, onBlur, onFocus, icon, disabled, placeholder}) => {
     const hasIcon = icon ? ' hasIcon' : '';
     return (
         <div className={'form-group' + hasIcon + ' '+ labelClass}>
@@ -40,6 +40,7 @@ TextfieldGroup.propTypes = {
     onFocus: React.PropTypes.func,
     icon: React.PropTypes.string,
     disabled: React.PropTypes.bool,
+    checked: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
 
 }

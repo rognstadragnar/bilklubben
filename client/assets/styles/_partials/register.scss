@@ -23,8 +23,9 @@
 .carousel-parent {
     position: relative;
     overflow-x: hidden;
-    height: 200px;
+    min-height: 200px;
     width: 100%;
+    overflow-y: visible;
     > .indicators {
         position: absolute;
         bottom: 0;
@@ -49,6 +50,7 @@
     position: absolute;
     top: 0;
     transition: .2s all ease;
+    width: 100%;
 }
 
 .showing1 {
@@ -61,6 +63,9 @@
     > .carousel-page:nth-child(3) {
         left: 200%;
     }
+    > .carousel-page:nth-child(4) {
+        left: 300%;
+    }
 }
 .showing2 {
     > .carousel-page:nth-child(1) {
@@ -72,6 +77,9 @@
     > .carousel-page:nth-child(3) {
         left: 100%;
     }
+    > .carousel-page:nth-child(4) {
+        left: 200%;
+    }
 }
 .showing3 {
     > .carousel-page:nth-child(1) {
@@ -82,5 +90,22 @@
     }
     > .carousel-page:nth-child(3) {
         left: 0;
+    }
+    > .carousel-page:nth-child(4) {
+        left: 100%;
+    }
+}
+.showing4 {
+    > .carousel-page:nth-child(1) {
+        left: -300%;
+    }
+    > .carousel-page:nth-child(2) {
+        left: -200%;
+    }
+    > .carousel-page:nth-child(3) {
+        left: -100%;
+    }
+    > .carousel-page:nth-child(4) {
+        left: 0%;
     }
 }

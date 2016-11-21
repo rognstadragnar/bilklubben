@@ -7,62 +7,129 @@ import Axios from 'axios';
 export default class RegistreringsSkjema extends React.Component {
     constructor(props){
         super(props);
-        this.state = {brukernavn: '', passord: '', error: '', currentPage: 1, totalPages: 3}
+        this.state = {
+            fulltNavn: '', 
+            brukernavn: '', 
+            passord: '',
+            abonnement: false, 
+            error: null,
+            currentPage: 1, 
+            totalPages: 3,
+            page1isValid: false,
+            page2isValid: true,
+            page3isValid: false
+        }
         this.handleChange = this.handleChange.bind(this);
+        this.handleRadioChange = this.handleRadioChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.goToPage = this.goToPage.bind(this);
-
+        this.goTo2 = this.goTo2.bind(this);
+        this.goTo3 = this.goTo3.bind(this);
+        this.goBack = this.goBack.bind(this);
     }
     handleChange(e){
-        const dirty = [e.target.name] + 'Dirty';
-        let isDirty = '';
-        e.target.value !== '' ? isDirty = 'dirty' : isDirty = '';
-        this.setState({ [e.target.name]: e.target.value, [dirty]: isDirty})
+        this.setState({ [e.target.name]: e.target.value})
+    }
+    handleRadioChange(e){
+        console.log('handled radio change')
+        this.setState({ [e.target.name]: e.target.value, error: null})
     }
     handleSubmit(e){
         e.preventDefault();
-        /*Axios.post('/login', {
-            username: this.state.brukernavn, 
-            password: this.state.passord
-        })    
-        .then((res)=> window.location = '/')
-        .catch((error) => {
-             
-            this.setState({error: error.response.data.error})})*/
-    }
-    goToPage(val, event) {
-        if (val != this.state.currentPage) {
-            if (val > this.state.totalPages) val = this.state.currentPage;
-            if (val <= 0) val = 1;
+        const { passord, fulltNavn, abonnement } = this.state;
+        const brukernavn = this.state.ledigBrukernavn;
+        console.log(abonnement === false, abonnement == false)
+        if (this.state.currentPage === 3) {
+            if (abonnement === false) {
+                this.setState({error: 'Vennligst velg et abonnement.'})
+            } 
+            else if (this.state.error === null) {
+                console.log('triggered')
+                Axios.post('/api/registrer', {
+                    brukernavn: brukernavn, 
+                    passord: passord,
+                    fulltNavn: fulltNavn,
+                    abonnement: abonnement
+                })    
+                .then((res)=> {
+                    this.setState({error: null, currentPage:4});
+                    setTimeout(() => {window.location = '/'}, 500)
+                })
+                .catch((error) => {
+                    this.setState({error: error.response.data.error})})
+            }
         }
-        this.setState({currentPage: val})
+        
     }
+    
+    goTo2(e){
+        console.log('goTo2')
+        e.preventDefault();
+        const { brukernavn, passord, fulltNavn, ledigBrukernavn } = this.state;
+        if (brukernavn === ledigBrukernavn && fulltNavn && passord) {
+            this.setState({error: null, currentPage: 2})
+        } else if (brukernavn && passord && fulltNavn) {
+            Axios.post('/api/isbruker', {brukernavn: brukernavn})
+            .then((res)=> {
+                this.setState({
+                    error: null, 
+                    ledigBrukernavn: brukernavn,
+                    currentPage: 2
+                })
+            })
+            .catch((err) => {
+                this.setState({error: err.response.data.error, ledigBrukernavn: false})
+            })
+        } else {
+            this.setState({error: 'Fyll ut alle feltene.'})
+        }
+    }
+    goTo3(e) {
+        e.preventDefault();
+        console.log('goto3')
+        this.setState({currentPage: 3})
+    }
+    goBack(e) {
+        e.preventDefault();
+        console.log('goback');
+        if (this.state.currentPage > 1) this.setState({currentPage: this.state.currentPage - 1})
+    }
+
     render(){
         return (
             <div className='registrer-parent'>
                 <span id='lukk-registrering'>Lukk</span>
                 <h5>RegistreringsSkjema</h5>
                 <form onSubmit={this.handleSubmit}>
-                   <CarouselParent currentPage={this.state.currentPage} totalPages={this.state.totalPages} goToPage={this.goToPage}>
+                   <CarouselParent 
+                    currentPage={this.state.currentPage} 
+                    totalPages={this.state.totalPages} 
+                    >
                         <CarouselPage>
                             <p>Kontaktinformasjon</p>
-                            <TextFieldGroup value={this.state.brukernavn} name='brukernavn' onChange={this.handleChange} labelName='brukernavn'/>
-                            <TextFieldGroup value={this.state.passord} name='passord' onChange={this.handleChange} labelName='passord'/>
-                            <button onClick={()=> this.goToPage(2)}>Neste</button>
+                            <TextFieldGroup value={this.state.fulltNavn} name='fulltNavn' onChange={this.handleChange} labelName='Fullt navn*'/>
+                            <TextFieldGroup value={this.state.brukernavn} name='brukernavn' onChange={this.handleChange} labelName='Brukernavn*'/>
+                            <TextFieldGroup value={this.state.passord} field='password' name='passord' onChange={this.handleChange} labelName='Passord*'/>
+                            <button type='button' onClick={this.goTo2}>Neste</button>
                         </CarouselPage>
                         <CarouselPage>
                            <p>Betalingsinformasjon</p>
-                            <TextFieldGroup value='Mitt kort' name='brukernavn' onChange={() => {}} labelName='brukernavn' disabled={true}/>
-                            <TextFieldGroup value={this.state.passord} name='passord' onChange={this.handleChange} labelName='passord'/>
-                            <button onClick={()=> this.goToPage(1)}>Forrige</button>
-                            <button onClick={()=> this.goToPage(3)}>Neste</button>
+                           <TextFieldGroup value={this.state.fulltNavn} name='kortholder' onChange={() => {}} 
+                           labelName='Navn på kortholder' disabled={true}/>
+                            <TextFieldGroup value='1234-5678-9876-5432-1234' name='kortnummer' onChange={() => {}} labelName='Kortnummer' disabled={true}/>
+                            <TextFieldGroup value='01/17' name='utløpsdato' onChange={()=> {}} labelName='Utløpsdato' disabled={true}/>
+                            <TextFieldGroup value='123' name='sikkerhetskode' onChange={()=> {}} labelName='sikkerhetskode' disabled={true}/>
+                            <button type='button' onClick={this.goBack}>Forrige</button>
+                            <button type='button' onClick={this.goTo3}>Neste</button>
                         </CarouselPage>
                         <CarouselPage>
-                           <p>Velg abonnement</p>
-                            <TextFieldGroup value='Mitt kort' name='brukernavn' onChange={() => {}} labelName='brukernavn' disabled={true}/>
-                            <TextFieldGroup value={this.state.passord} name='passord' onChange={this.handleChange} labelName='passord'/>
-                            <button onClick={()=> this.goToPage(2)}>Forrige</button>
+                            <p>Velg abonnement</p>
+                            <TextFieldGroup field='radio' value='1' name='abonnement' onChange={this.handleRadioChange} labelName='Gjerrigknarken(249,-/mnd)'/>
+                            <TextFieldGroup field='radio' value='2' name='abonnement' onChange={this.handleRadioChange} labelName='Den middlemådige(490,-/mnd)'/>
+                            <TextFieldGroup field='radio' value='3' name='abonnement' onChange={this.handleRadioChange} labelName='Onkelskrue(1499,-/mnd)'/>
+                            <TextFieldGroup field='radio' value='0' name='abonnement' onChange={this.handleRadioChange} labelName='Det tar vi senere.'/>
+                            <button type='button' onClick={this.goBack}>Forrige</button>
                         </CarouselPage>
+                        <CarouselPage><span>SKITBRA!</span></CarouselPage>
                     </CarouselParent>
                     <input type='submit' value='asd'/>
                 </form>
