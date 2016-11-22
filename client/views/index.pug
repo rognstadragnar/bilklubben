@@ -3,11 +3,12 @@ extends layout/main
 
 
 block content
+    include partials/header
     section.biler
         ul 
-            each car in cars
+            each bil in biler
                 li 
-                    a(href='/bil/' + car.id) Merke: #{car.make} 
+                    a(href='/biler/' + bil.id) Merke: #{bil.make} 
 
     section.hva
         h2 Hva er egentlig greia?    

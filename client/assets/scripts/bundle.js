@@ -88,7 +88,7 @@
 	var loggUt = document.getElementById('loggUt');
 	if (loggUt) {
 	    loggUt.addEventListener('click', function () {
-	        _axios2.default.post('/logout').then(function () {
+	        _axios2.default.post('/api/logout').then(function () {
 	            return window.location = '/';
 	        }).catch(function (err) {
 	            return console.log(err);
@@ -108,15 +108,13 @@
 	var arrowDown = document.getElementById('arrowdown');
 	if (arrowDown) {
 	    arrowDown.addEventListener('click', function () {
-	        //simpleScroll.setSettings({minSpeed: 0.1})
-	        _simpleScroll2.default.element('actual-content', 70);
+	        _simpleScroll2.default.element('actual-content', 70); //må endres
 	    });
 	}
 
 	var mainNavTrigger = document.getElementById('main-nav-trigger');
 	if (mainNavTrigger) {
 	    mainNavTrigger.addEventListener('click', function () {
-	        //simpleScroll.setSettings({minSpeed: 0.1})
 	        document.body.classList.add('nav-open');
 	    });
 	}
@@ -23578,7 +23576,7 @@
 	            var _this2 = this;
 
 	            e.preventDefault();
-	            _axios2.default.post('/login', {
+	            _axios2.default.post('/api/login', {
 	                username: this.state.brukernavn,
 	                password: this.state.passord
 	            }).then(function (res) {
@@ -23808,12 +23806,10 @@
 	                abonnement = _state.abonnement;
 
 	            var brukernavn = this.state.ledigBrukernavn;
-	            console.log(abonnement === false, abonnement == false);
 	            if (this.state.currentPage === 3) {
 	                if (abonnement === false) {
 	                    this.setState({ error: 'Vennligst velg et abonnement.' });
 	                } else if (this.state.error === null) {
-	                    console.log('triggered');
 	                    _axios2.default.post('/api/registrer', {
 	                        brukernavn: brukernavn,
 	                        passord: passord,

@@ -1,14 +1,15 @@
 import express from 'express';
 let router = express.Router();
 import { checkLogin, isAuthed } from '../middleware/authentication';
+import { isAvailable } from '../middleware/availability';
 
-import passport from 'passport';
-import LocalStrategy from 'passport-local';
+import Moment from 'moment';
+require('moment-range');
 import Bcrypt from 'bcrypt';
 import { salt } from '../utils/variables';
 import { User, Car, Order } from '../models';
 
-router.post('/login', (req, res) => {
+router.post('/api/login', (req, res) => {
     const { username, password } = req.body;
     if (username && password) {
       User.findOne({where: {username: username}})
@@ -44,12 +45,10 @@ router.post('/login', (req, res) => {
     }
   }
 );
-router.post('/logout', (req, res) => {
+router.post('/api/logout', (req, res) => {
   req.session.user = null;
   req.session.auth = false;
   res.status(200).send({error: 'myerror'});
-  //res.status(500).json({error: 'myerror'});
-  //res.redirect('/');
 });
 
 router.post('/api/isbruker', (req, res) => {
@@ -61,9 +60,9 @@ router.post('/api/isbruker', (req, res) => {
         res.send(500, {error: "Brukernavnet er i bruk"})
       } else res.send(200)
     })
+  } else {
+    res.status(500).json({error: 'myerror'});
   }
-  //res.status(500).json({error: 'myerror'});
-  //res.redirect('/');
 });
 
 router.post('/api/registrer', (req, res) => {
@@ -83,8 +82,6 @@ router.post('/api/registrer', (req, res) => {
       points = 0;
       break;
   }
-  console.log('got req', req.body, 'points: ' + points)
-
   if (brukernavn, passord, fulltNavn) {
     let hashedPassword = Bcrypt.hashSync(passord, salt)
     User.create({username: brukernavn, password: hashedPassword, name: fulltNavn, points: points})
@@ -98,37 +95,90 @@ router.post('/api/registrer', (req, res) => {
         res.send(200)
     })
     .catch((err) => res.send(500, err))
+  } else {
+    res.status(500).json({error: 'myerror'});
   }
-  //res.status(500).json({error: 'myerror'});
-  //res.redirect('/');
 });
 
-router.get('/registrer', (req, res, next) => {
-  res.render('registrer', {title: 'Registrer deg | Bilklubben', auth: req.session.auth, user: req.session.user})
+router.post('/api/bestill', (req, res, next) => {
+  try {
+    const { c_id, u_id, startDato, sluttDato } = req.body  
+    let userInfo = {}, carInfo = {}, orderInfo = {}, kostnad;
+    const duration = Moment.range(
+      new Moment(startDato).format('YYYY-MM-DD'), 
+      new Moment(sluttDato).format('YYYY-MM-DD')
+    ).diff('days');
+    orderInfo.opptatt = [];
+  if (c_id && u_id && startDato && sluttDato && isAuthed(req) === false) {
+    User.findOne({where: {id: u_id}, attributes: ['id','points']})
+        .then((user)=> { 
+          if (!user) {
+            res.status(404).json({error: 'Fant ikke bruker.'})
+            next();
+          } else {
+            userInfo.id = user.dataValues.id, userInfo.points = user.dataValues.points;
+
+            Car.findOne({where: {id: c_id}, attributes: ['price']})
+            .then(car => {
+              kostnad = car.dataValues.price * duration;
+              console.log('kostnad!!:',kostnad, user.dataValues.points)
+              if (kostnad > user.dataValues.points) {
+                res.status(500).json({error: 'Ikke nok poeng.'})
+                return;
+              } else  {
+                Order.findAll({where: {car_id: c_id}})
+                .then((orders) => {
+                
+                  orders.map(o => {
+                    orderInfo.opptatt.push(
+                      {startDato: o.dataValues.startdate, 
+                      sluttDato: o.dataValues.enddate})
+                 })
+                })
+                .then(()=> {
+                  if (isAvailable(startDato, sluttDato, orderInfo.opptatt) === true) {
+                    Order.create({car_id: c_id, user_id: u_id, startdate: startDato, enddate: sluttDato, cost: kostnad})
+                    .then(() => {
+                      User.update({points: user.dataValues.points - kostnad}, {where: {id: u_id}})
+                    })
+                    .catch((err) => console.log(err))
+                  } else {
+                    res.send(404).json({error: 'E ittj leedig nei shø'})
+                    next();
+                  }
+                })
+                .catch((err) => console.log(err))
+ 
+              
+              }
+          
+        })
+    .then(()=> res.status(200).json({error: 'Funke fjell'}))
+    .catch((err) => {console.log(err)})
+
+          }
+  }) }else {res.sendStatus(403)}
+  } catch(err) {
+    res.sendStatus(200);
+  }
 })
 
-router.post('/registrer', (req, res, next) => {
-  const { username, password, name } = req.body;
-  //validateRegistration(username, password, name);
-  //const hashedPassword = Bcrypt.hashSync(password, salt);
-  let hashedPassword = Bcrypt.hashSync(password, salt)
-  Car.create({make: 'Make!', model: "Model!", specs: "Bra bil", price: 100});
-
-  User.create({username: username, password: hashedPassword, name: name})
-    .then(() => {
-      req.session.auth = true;
-      res.redirect('/');
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+router.get('/biler', (req, res) => {
+  let cars = [];
+  Car.findAll({attributes: ['id', 'make', 'model', 'specs', 'price']})
+  .then(car => {
+    car.map((v) => {cars.push(v.dataValues)})
+  })
+  .then( () => {
+    if (isAuthed(req)) {
+      res.render('biler', {auth: req.session.auth, bruker: req.session.bruker, biler: cars})
+    } else {
+      res.render('biler', {auth: req.session.auth, biler: cars})
+    }
+  })
 })
 
-router.get('/login', (req, res, next) => {
-  res.render('login', {title: 'Logg inn | BILklubben'});
-});
-
-router.get('/bil/:id', (req, res) => {
+router.get('/biler/:id', (req, res) => {
   let theCar;
   Car.findOne({
     where: {
@@ -138,7 +188,7 @@ router.get('/bil/:id', (req, res) => {
     theCar = car.dataValues
   })
   .then(() => {
-    res.render('bil', {auth: req.session.auth, bil: theCar})
+    res.render('bilerSingle', {auth: req.session.auth, bil: theCar})
   })
   .catch(err => res.redirect('/'))
 })
@@ -151,8 +201,7 @@ router.get('/profil', (req, res) => {
   }
 })
 
-
-router.get('*', (req, res) =>  {
+router.get('/', (req, res) =>  {
   let cars = [];
   Car.findAll({attributes: ['id', 'make', 'model', 'specs', 'price']})
   .then(car => {
@@ -160,11 +209,16 @@ router.get('*', (req, res) =>  {
   })
   .then( () => {
     if (isAuthed(req)) {
-      res.render('index', {auth: req.session.auth, bruker: req.session.bruker, cars: cars})
+      res.render('index', {auth: req.session.auth, bruker: req.session.bruker, biler: cars})
     } else {
-      res.render('index', {auth: req.session.auth, cars: cars})
+      res.render('index', {auth: req.session.auth, biler: cars})
     }
   })
+});
+
+
+router.get('*', (req, res) =>  {
+  res.redirect('/')
 });
 
 

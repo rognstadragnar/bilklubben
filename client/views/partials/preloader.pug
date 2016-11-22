@@ -3,9 +3,6 @@ script.
     var w = 0;
     var interval = setInterval(function(){
         w += 3;
-        console.log(w);
-
-
         if (document.readyState == 'complete') {
             clearInterval(interval);
             document.getElementById('load-bar').style.opacity = 0;

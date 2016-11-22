@@ -16,7 +16,7 @@ if (loggInnKryssUt) {
 const loggUt = document.getElementById('loggUt');
 if (loggUt) {
     loggUt.addEventListener('click', () => {
-        axios.post('/logout')
+        axios.post('/api/logout')
         .then(() => window.location = '/')
         .catch((err) => console.log(err));
     });
@@ -35,15 +35,13 @@ window.addEventListener('scroll', () => {
 const arrowDown = document.getElementById('arrowdown');
 if (arrowDown) {
     arrowDown.addEventListener('click', () => {
-        //simpleScroll.setSettings({minSpeed: 0.1})
-        simpleScroll.element('actual-content', 70)
+        simpleScroll.element('actual-content', 70) //må endres
     });
 }
 
 const mainNavTrigger = document.getElementById('main-nav-trigger');
 if (mainNavTrigger) {
     mainNavTrigger.addEventListener('click', () => {
-        //simpleScroll.setSettings({minSpeed: 0.1})
         document.body.classList.add('nav-open');
         
     });

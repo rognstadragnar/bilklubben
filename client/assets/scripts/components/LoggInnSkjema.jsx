@@ -18,7 +18,7 @@ export default class LoggInnSkjema extends React.Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        Axios.post('/login', {
+        Axios.post('/api/login', {
             username: this.state.brukernavn, 
             password: this.state.passord
         })    

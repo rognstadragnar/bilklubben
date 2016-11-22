@@ -36,13 +36,11 @@ export default class RegistreringsSkjema extends React.Component {
         e.preventDefault();
         const { passord, fulltNavn, abonnement } = this.state;
         const brukernavn = this.state.ledigBrukernavn;
-        console.log(abonnement === false, abonnement == false)
         if (this.state.currentPage === 3) {
             if (abonnement === false) {
                 this.setState({error: 'Vennligst velg et abonnement.'})
             } 
             else if (this.state.error === null) {
-                console.log('triggered')
                 Axios.post('/api/registrer', {
                     brukernavn: brukernavn, 
                     passord: passord,

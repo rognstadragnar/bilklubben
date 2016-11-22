@@ -1,0 +1,12 @@
+extends layout/main
+
+block content
+    each bil in biler
+        .bil
+            | Merke: #{bil.make}
+            | Modell: #{bil.model}
+            | Specs: #{bil.specs}
+            a(href='/biler/' + bil.id) Gå til bil
+block scripts
+    script(src='/assets/scripts/bundle.js')
+    
