@@ -100,31 +100,53 @@ router.post('/api/registrer', (req, res) => {
   }
 });
 
+router.post('/api/fyll', (req, res) => {
+  try {
+    const { amount, id } = req.body
+    if (isAuthed(req) === false && amount > 0) {
+      User.findOne({where: {id: /*req.session.bruker.id*/ id}, attributes: ['id', 'points']})
+        .then((user) => {
+          if (user) {
+            const newPoints = Number(user.dataValues.points) + Number(amount);
+            console.log(newPoints)
+            User.update({points: newPoints}, {where: {id: user.dataValues.id}})
+            return res.status(200).json({msg: 'woho'})
+          }
+        })
+    } else {
+      return res.sendStatus(403)
+    }
+  }
+  catch(err) {
+    console.log(err);
+    return res.sendStatus(403)
+  }
+})
+
+
 router.post('/api/bestill', (req, res, next) => {
   try {
     const { c_id, u_id, startDato, sluttDato } = req.body  
     let userInfo = {}, carInfo = {}, orderInfo = {}, kostnad;
     const duration = Moment.range(
       new Moment(startDato).format('YYYY-MM-DD'), 
-      new Moment(sluttDato).format('YYYY-MM-DD')
+      new Moment(sluttDato).add(1, 'days').format('YYYY-MM-DD')
     ).diff('days');
+    console.log(duration + " --- 11111232180923198213908")
     orderInfo.opptatt = [];
   if (c_id && u_id && startDato && sluttDato && isAuthed(req) === false) {
     User.findOne({where: {id: u_id}, attributes: ['id','points']})
         .then((user)=> { 
           if (!user) {
-            res.status(404).json({error: 'Fant ikke bruker.'})
-            next();
+            return res.status(404).json({error: 'Fant ikke bruker.'})
           } else {
             userInfo.id = user.dataValues.id, userInfo.points = user.dataValues.points;
-
             Car.findOne({where: {id: c_id}, attributes: ['price']})
             .then(car => {
               kostnad = car.dataValues.price * duration;
               console.log('kostnad!!:',kostnad, user.dataValues.points)
               if (kostnad > user.dataValues.points) {
-                res.status(500).json({error: 'Ikke nok poeng.'})
-                return;
+                return res.status(500).json({error: 'Ikke nok poeng.'})
               } else  {
                 Order.findAll({where: {car_id: c_id}})
                 .then((orders) => {
@@ -140,11 +162,13 @@ router.post('/api/bestill', (req, res, next) => {
                     Order.create({car_id: c_id, user_id: u_id, startdate: startDato, enddate: sluttDato, cost: kostnad})
                     .then(() => {
                       User.update({points: user.dataValues.points - kostnad}, {where: {id: u_id}})
+                      .then(() => {console.log('gikk da fint herran');return res.sendStatus(200)})
+                      .catch((err) => console.log(err))
+                      
                     })
                     .catch((err) => console.log(err))
                   } else {
-                    res.send(404).json({error: 'E ittj leedig nei shø'})
-                    next();
+                    return res.status(404).json({error: 'E ittj leedig nei shø'})
                   }
                 })
                 .catch((err) => console.log(err))
@@ -153,13 +177,13 @@ router.post('/api/bestill', (req, res, next) => {
               }
           
         })
-    .then(()=> res.status(200).json({error: 'Funke fjell'}))
+    .then(()=> {res.sendStatus(200);})
     .catch((err) => {console.log(err)})
 
           }
-  }) }else {res.sendStatus(403)}
+  }) } else {return res.status(403).json({error: 'shjeit'});}
   } catch(err) {
-    res.sendStatus(200);
+    return res.status(500).json({error: 'err'});
   }
 })
 
@@ -188,9 +212,13 @@ router.get('/biler/:id', (req, res) => {
     theCar = car.dataValues
   })
   .then(() => {
-    res.render('bilerSingle', {auth: req.session.auth, bil: theCar})
+    if (isAuthed(req)) {
+      res.render('bilerSingle', {auth: req.session.auth, bruker: req.session.bruker, bil: theCar})
+    } else {
+      res.render('bilerSingle', {auth: req.session.auth, bil: theCar})
+    }
   })
-  .catch(err => res.redirect('/'))
+  //.catch(err => res.redirect('/'))
 })
 
 router.get('/profil', (req, res) => {
