@@ -30,7 +30,6 @@ export default class RegistreringsSkjema extends React.Component {
         this.setState({ [e.target.name]: e.target.value})
     }
     handleRadioChange(e){
-        console.log('handled radio change')
         this.setState({ [e.target.name]: e.target.value, error: null})
     }
     handleSubmit(e){
@@ -62,7 +61,6 @@ export default class RegistreringsSkjema extends React.Component {
     }
     
     goTo2(e){
-        console.log('goTo2')
         e.preventDefault();
         const { brukernavn, passord, fulltNavn, ledigBrukernavn } = this.state;
         if (brukernavn === ledigBrukernavn && fulltNavn && passord) {
@@ -85,12 +83,10 @@ export default class RegistreringsSkjema extends React.Component {
     }
     goTo3(e) {
         e.preventDefault();
-        console.log('goto3')
         this.setState({currentPage: 3})
     }
     goBack(e) {
         e.preventDefault();
-        console.log('goback');
         if (this.state.currentPage > 1) this.setState({currentPage: this.state.currentPage - 1})
     }
 

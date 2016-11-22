@@ -128,13 +128,43 @@ router.get('/login', (req, res, next) => {
   res.render('login', {title: 'Logg inn | BILklubben'});
 });
 
-router.get('*', (req, res) =>  {
+router.get('/bil/:id', (req, res) => {
+  let theCar;
+  Car.findOne({
+    where: {
+      id: req.params.id}
+    })
+  .then(car => {
+    theCar = car.dataValues
+  })
+  .then(() => {
+    res.render('bil', {auth: req.session.auth, bil: theCar})
+  })
+  .catch(err => res.redirect('/'))
+})
+
+router.get('/profil', (req, res) => {
   if (isAuthed(req)) {
-    console.log(req.session)
-    res.render('index', {auth: req.session.auth, user: req.session.user})
+    res.render('profil', {auth: req.session.auth, bruker: req.session.bruker})
   } else {
-    res.render('index', {auth: req.session.auth})
+    res.redirect('/')
   }
+})
+
+
+router.get('*', (req, res) =>  {
+  let cars = [];
+  Car.findAll({attributes: ['id', 'make', 'model', 'specs', 'price']})
+  .then(car => {
+    car.map((v) => {cars.push(v.dataValues)})
+  })
+  .then( () => {
+    if (isAuthed(req)) {
+      res.render('index', {auth: req.session.auth, bruker: req.session.bruker, cars: cars})
+    } else {
+      res.render('index', {auth: req.session.auth, cars: cars})
+    }
+  })
 });
 
 
