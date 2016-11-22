@@ -111,7 +111,6 @@ router.post('/api/fyll', (req, res) => {
         .then((user) => {
           if (user) {
             const newPoints = Number(user.dataValues.points) + Number(amount);
-            console.log(newPoints)
             User.update({points: newPoints}, {where: {id: user.dataValues.id}})
             return res.status(200).json({msg: 'woho'})
           }
