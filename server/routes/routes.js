@@ -19,9 +19,11 @@ router.post('/api/login', (req, res) => {
 
             if (Bcrypt.compareSync(password, user.dataValues.password)) {
               req.session.bruker = {
+                id: user.dataValues.id,
                 fulltNavn: user.dataValues.name,
                 brukernavn: user.dataValues.username,
                 points: user.dataValues.points,
+                abonnement: user.dataValues.plan,
               }
               req.session.auth = true;
               res.sendStatus(200);
@@ -84,7 +86,7 @@ router.post('/api/registrer', (req, res) => {
   }
   if (brukernavn, passord, fulltNavn) {
     let hashedPassword = Bcrypt.hashSync(passord, salt)
-    User.create({username: brukernavn, password: hashedPassword, name: fulltNavn, points: points})
+    User.create({username: brukernavn, password: hashedPassword, name: fulltNavn, plan: abonnement, points: points})
     .then((user)=> {
         req.session.bruker = {
           fulltNavn: user.dataValues.name,
@@ -102,9 +104,10 @@ router.post('/api/registrer', (req, res) => {
 
 router.post('/api/fyll', (req, res) => {
   try {
-    const { amount, id } = req.body
-    if (isAuthed(req) === false && amount > 0) {
-      User.findOne({where: {id: /*req.session.bruker.id*/ id}, attributes: ['id', 'points']})
+    const { amount } = req.body
+    if (isAuthed(req) === true && amount > 0) {
+      console.log('yeas')
+      User.findOne({where: {id: req.session.bruker.id}, attributes: ['id', 'points']})
         .then((user) => {
           if (user) {
             const newPoints = Number(user.dataValues.points) + Number(amount);
@@ -120,6 +123,69 @@ router.post('/api/fyll', (req, res) => {
   catch(err) {
     console.log(err);
     return res.sendStatus(403)
+  }
+})
+
+router.post('/api/endre', (req, res) => {
+  try {
+    if (req.body.passord, req.body.nyttPassord && isAuthed(req)) {
+      const { epost, fulltNavn, passord, nyttPassord, abonnement } = req.body
+      User.findOne({where: {id: req.session.bruker.id}})
+        .then((user)=> {
+          if (user) {
+            if (Bcrypt.compareSync(user.dataValues.passord, passord)) {
+              const hashedPassord = Bcrypt.hashSync(nyttPassord, salt)
+              User.update(
+                {password: hashedPassord, name: fulltNavn, email: epost, plan: abonnement}, 
+                {where: {id: req.session.bruker.id}})
+                .then(() => res.sendStatus(200))
+                .catch((err) => res.status(403).json({error: 'Det skjedde en feil.'}))
+            } else {
+              res.status(403).json({error: 'Feil passord'})
+            }
+          } else {
+
+          }
+        })
+    } else if (isAuthed(req)) {
+      const { epost, fulltNavn, abonnement } = req.body
+        console.log(req.session)
+        User.findOne({where: {id: req.session.bruker.id}})
+        .then((user) => {
+          if (user) {
+            let newPoints, planPoints
+            switch (abonnement) {
+              case '1': 
+                planPoints = 249;
+                break;
+              case '2': 
+                planPoints = 490;
+                break;
+              case '3':
+                planPoints = 1499
+                break;
+              default:
+                planPoints = 0;
+                break;
+            }
+            if (user.dataValues.plan !== abonnement) {
+              newPoints = Number(user.dataValues.points) + planPoints
+            } else {
+              newPoints = user.dataValues.points
+            }
+              
+            console.log(abonnement, req.session.bruker.abonnement, planPoints, newPoints)
+            User.update({name: fulltNavn, email: epost, plan: abonnement, points: newPoints}, {where: {id: req.session.bruker.id}})
+              .then(() => {res.status(200)})
+              .catch((err)=> {console.log(err); res.sendStatus(500)})
+          }
+          
+        })
+        
+    }
+  } catch(err) {
+    console.log(err)
+    res.sendStatus(500)
   }
 })
 
@@ -219,6 +285,14 @@ router.get('/biler/:id', (req, res) => {
     }
   })
   //.catch(err => res.redirect('/'))
+})
+
+router.get('/api/getBruker', (req, res) => {
+  if (isAuthed(req)) {
+    res.status(200).json({bruker: req.session.bruker})
+  } else {
+    res.sendStatus(403)
+  }
 })
 
 router.get('/profil', (req, res) => {

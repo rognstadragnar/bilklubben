@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import LoggInnSkjema from './components/LoggInnSkjema.jsx';
 import RegistreringsSkjema from './components/RegistreringsSkjema.jsx';
+import Profilskjema from './components/ProfilSkjema.jsx';
 
 
 if (loggInnKryssUt) {
@@ -88,4 +89,11 @@ if (registrerTrigger && registrerReact) {
     lukkRegistrer.addEventListener('click', (e) => {
         registrerReact.classList.remove('showing');
     });
+}
+
+
+const profilReact = document.getElementById('profil-react');
+if (profilReact) {
+    ReactDom.render(<Profilskjema />, profilReact);    
+
 }

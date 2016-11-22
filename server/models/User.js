@@ -23,6 +23,14 @@ const UserModel = {
         type: Sequelize.STRING,
         allowNull: false
     },
+    plan: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        validate: {
+            min: 0
+        }
+    },
     points: {
         type: Sequelize.INTEGER,
         allowNull: false,

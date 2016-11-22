@@ -29,6 +29,6 @@ Car.hasOne(Order, {foreignKey: 'car_id'});
 //User.hasMany(Order, {foreignKey: 'o_id'});
 export { User, Car, Order };
 
-User.sync();
-Car.sync();
-Order.sync();
+User.sync().catch(err => console.log(err));
+Car.sync().catch(err => console.log(err));
+Order.sync().catch(err => console.log(err));
