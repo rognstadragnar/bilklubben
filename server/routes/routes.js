@@ -92,6 +92,7 @@ router.post('/api/registrer', (req, res) => {
           fulltNavn: user.dataValues.name,
           brukernavn: user.dataValues.username,
           points: user.dataValues.points,
+          abonnement: req.body.abonnement
         }
         req.session.auth = true;
         res.send(200)
@@ -112,7 +113,11 @@ router.post('/api/fyll', (req, res) => {
           if (user) {
             const newPoints = Number(user.dataValues.points) + Number(amount);
             User.update({points: newPoints}, {where: {id: user.dataValues.id}})
-            return res.status(200).json({msg: 'woho'})
+            .then(()=> {
+              req.session.bruker.points = newPoints;
+              return res.status(200).json({newPoints: newPoints})
+            })
+            .catch((err) => {return res.sendStatus(500)})
           }
         })
     } else {
@@ -175,7 +180,20 @@ router.post('/api/endre', (req, res) => {
               
             console.log(abonnement, req.session.bruker.abonnement, planPoints, newPoints)
             User.update({name: fulltNavn, email: epost, plan: abonnement, points: newPoints}, {where: {id: req.session.bruker.id}})
-              .then(() => {res.status(200)})
+              .then(() => {
+                req.session.bruker.points = newPoints;
+                req.session.bruker.email = epost;
+                req.session.bruker.fulltNavn = fulltNavn;
+                req.session.bruker.abonnement = abonnement;
+                res.status(200).json({
+                  brukerInfo: {
+                    points: newPoints,
+                    email: epost,
+                    fulltNavn: fulltNavn,
+                    abonnement: abonnement
+                  }
+                })
+              })
               .catch((err)=> {console.log(err); res.sendStatus(500)})
           }
           
@@ -283,7 +301,7 @@ router.get('/biler/:id', (req, res) => {
       res.render('bilerSingle', {auth: req.session.auth, bil: theCar})
     }
   })
-  //.catch(err => res.redirect('/'))
+  .catch(err => res.redirect('/biler'))
 })
 
 router.get('/api/getBruker', (req, res) => {
@@ -292,6 +310,28 @@ router.get('/api/getBruker', (req, res) => {
   } else {
     res.sendStatus(403)
   }
+})
+
+router.get('/api/getOrdre', (req, res) => {
+  let ordre = [];
+  let biler = []
+  Order.findAll({
+    where: {user_id: 1},
+    include: [{
+        model: Car, attributes: ['make', 'model']
+    }]
+  })
+  .then(res => res.map(o => {
+    ordre.push({
+      bilMerke: o.dataValues.bk_car.make,
+      bilModell: o.dataValues.bk_car.model,
+      startDato: o.dataValues.startdate,
+      sluttDato: o.dataValues.enddate,
+      kostnad: o.dataValues.cost
+    });
+  }))
+  .then(() => {console.log(ordre)})
+  .catch(err => console.log('err', err))
 })
 
 router.get('/profil', (req, res) => {

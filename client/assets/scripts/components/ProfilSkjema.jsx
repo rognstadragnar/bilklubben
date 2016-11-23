@@ -22,27 +22,48 @@ export default class ProfilSkjema extends React.Component {
         this.handlePointSubmit = this.handlePointSubmit.bind(this);
     }
     componentDidMount(){
+        let abonnementText;
         Axios.get('/api/getBruker')
-            .then((res) => this.setState({
-                brukernavn: res.data.bruker.brukernavn,
-                fulltNavn: res.data.bruker.fulltNavn,
-                epost: res.data.bruker.epost ? res.data.bruker.epost : '',
-                points: res.data.bruker.points,
-                abonnement: res.data.bruker.abonnement
-            }))
+            .then((res) => {
+                switch(Number(res.data.bruker.abonnement)) {
+                    case 1:
+                        abonnementText = 'Gjerrigknarken';
+                        break;
+                    case 2:
+                        abonnementText = 'Den middlemådige';
+                        break;
+                    case 3: 
+                        abonnementText = 'Onkel Skrue';
+                        break;
+                    default: 
+                        abonnementText = 'Du har ikke abonnement.'
+                }; return res})
+            .then((res) => {
+                this.setState({
+                    brukernavn: res.data.bruker.brukernavn,
+                    fulltNavn: res.data.bruker.fulltNavn,
+                    epost: res.data.bruker.email ? res.data.bruker.email : '',
+                    points: res.data.bruker.points,
+                    abonnement: res.data.bruker.abonnement,
+                    abonnementText: abonnementText
+                })
+                return res
+            })
+            .then((res ) => console.log(res))
             .catch(err => console.log(err))
     }
     handleChange(e){
         this.setState({ [e.target.name]: e.target.value})
     }
     handleSubmit(e){
+        console.log(window.location.href)
         e.preventDefault();
         Axios.post('/api/endre', {
             fulltNavn: this.state.nyttNavn !== '' ? this.state.nyttNavn : this.state.fulltNavn, 
             epost: this.state.nyEpost !== '' ? this.state.nyEpost : this.state.epost,
             abonnement: this.state.abonnement
         })
-        .then((res) => console.log(res))
+        .then((res) => {window.location = window.location.href;})
         .catch(err => console.log(err))
     }
     handlePointSubmit(e){
@@ -51,7 +72,7 @@ export default class ProfilSkjema extends React.Component {
             Axios.post('/api/fyll', {
             amount: Number(this.state.nyePoeng)
         })
-        .then((res) => {console.log(res); this.setState({errors: null})})
+        .then((res) => { this.setState({errors: null, points: res.data.newPoints, nyePoeng: ''})})
         .catch(err => console.log(err))
         } else {
             this.setState({errors: "wow"})
@@ -88,10 +109,10 @@ export default class ProfilSkjema extends React.Component {
                         placeholder='Nytt passord' 
                         onChange={this.handleChange}
                     />
-                    <p>{this.state.abonnement}</p>
+                    <p>Du har abonnement: {this.state.abonnementText}</p>
                     <TextFieldGroup field='radio' value='1' name='abonnement' onChange={this.handleChange} labelName='Gjerrigknarken(249,-/mnd)'/>
                     <TextFieldGroup field='radio' value='2' name='abonnement' onChange={this.handleChange} labelName='Den middlemådige(490,-/mnd)'/>
-                    <TextFieldGroup field='radio' value='3' name='abonnement' onChange={this.handleChange} labelName='Onkelskrue(1499,-/mnd)'/>
+                    <TextFieldGroup field='radio' value='3' name='abonnement' onChange={this.handleChange} labelName='Onkel Skrue(1499,-/mnd)'/>
                     <TextFieldGroup field='radio' value='0' name='abonnement' onChange={this.handleChange} labelName='Det tar vi senere.'/>
                             
                     <input type='submit' value='alslda' />

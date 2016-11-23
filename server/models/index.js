@@ -25,8 +25,8 @@ const Order = sequelize.define('bk_order', orderModel)
 
 User.hasOne(Order, {foreignKey: 'user_id'});
 Car.hasOne(Order, {foreignKey: 'car_id'});
-//Order.hasMany(Car, {foreignKey: 'o_id'});
-//User.hasMany(Order, {foreignKey: 'o_id'});
+Order.belongsTo(Car);
+Order.belongsTo(User);
 export { User, Car, Order };
 
 User.sync().catch(err => console.log(err));
