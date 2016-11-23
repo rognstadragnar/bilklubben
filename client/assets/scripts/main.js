@@ -6,6 +6,7 @@ import ReactDom from 'react-dom';
 import LoggInnSkjema from './components/LoggInnSkjema.jsx';
 import RegistreringsSkjema from './components/RegistreringsSkjema.jsx';
 import Profilskjema from './components/ProfilSkjema.jsx';
+import MineOrdre from './components/MineOrdre/MineOrdre.jsx';
 
 
 if (loggInnKryssUt) {
@@ -95,5 +96,8 @@ if (registrerTrigger && registrerReact) {
 const profilReact = document.getElementById('profil-react');
 if (profilReact) {
     ReactDom.render(<Profilskjema />, profilReact);    
-
+}
+const mineOrdrer = document.getElementById('mine-ordre-react');
+if (mineOrdrer) {
+    ReactDom.render(<MineOrdre />, mineOrdrer);    
 }

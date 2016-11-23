@@ -313,6 +313,7 @@ router.get('/api/getBruker', (req, res) => {
 })
 
 router.get('/api/getOrdre', (req, res) => {
+  console.log('// got reqqq')
   let ordre = [];
   let biler = []
   Order.findAll({
@@ -323,14 +324,16 @@ router.get('/api/getOrdre', (req, res) => {
   })
   .then(res => res.map(o => {
     ordre.push({
+      id: o.dataValues.id,
       bilMerke: o.dataValues.bk_car.make,
       bilModell: o.dataValues.bk_car.model,
       startDato: o.dataValues.startdate,
       sluttDato: o.dataValues.enddate,
+      ordreDato: o.dataValues.createdAt,
       kostnad: o.dataValues.cost
     });
   }))
-  .then(() => {console.log(ordre)})
+  .then(() => {res.status(200).json({ordre: ordre});console.log(ordre)})
   .catch(err => console.log('err', err))
 })
 

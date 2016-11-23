@@ -1,21 +1,36 @@
 import React from 'react';
 import Axios from 'axios';
+import Moment from 'moment';
+
+import EnOrdre from './EnOrdre.jsx';
 
 export default class MineOrdre extends React.Component {
     constructor(){
         super()
+        this.state = {
+            ordre: []
+        }
         this.handleStatusClick = this.handleStatusClick.bind(this)
         this.handleCloseStatusClick = this.handleCloseStatusClick.bind(this)
     }
-    ComponentDidMount(){
-        Axios.get('/api/ordrer')
-        .then(()=> {
+    componentDidMount() {
+        console.log('hi')
+        Axios.get('/api/getOrdre')
+        .then((res)=> {
             this.setState({
-                ordrer: res.data.ordrer
+                ordre: res.data.ordre
             })
         })
+        .then(() => console.log(this.state))
     }
     handleStatusClick(val){
+        this.setState({
+            showStatusRapport: true,
+            showStatusRapportId: val
+        })
+    }
+    handleStatusClose(val){
+        console.log(val)
         this.setState({
             showStatusRapport: true,
             showStatusRapportId: val
@@ -26,19 +41,22 @@ export default class MineOrdre extends React.Component {
     }
     render(){
         const ordreToShow = this.state.ordre.map((o) => {
-            <EnOrdre  
+            
+            return <EnOrdre 
                 key={o.id}
                 handleStatusClick={this.handleStatusClick}
-                id={o.id}
-                bilNavn={o.bilNavn} 
-                startDato={o.startDato} 
-                sluttDato={o.sluttDato} 
+                bilId={o.id}
+                bilNavn= {o.bilMerke + '-' + o.bilModell} 
+                startDato={new Moment(o.startDato).format('DD/MM/YYYY')} 
+                sluttDato={new Moment(o.sluttDato).format('DD/MM/YYYY')} 
+                ordreDato={new Moment(o.ordreDato).format('DD/MM/YYYY')}
                 kostndad={o.kostnad} 
             />
         })
-        const showStatusRapport = this.showStatusRapport ? <StatusRapport handleClick={this.handleCloseStatusClick} id={showStatusRapportId}/> : ''
+        //const showStatusRapport = this.showStatusRapport ? <StatusRapport handleClick={this.handleCloseStatusClick} id={showStatusRapportId}/> : ''
         return (
-            <div>{ordreToSHow}
+            <div>{ordreToShow}
+            {this.state.showStatusRapport ? this.state.showStatusRapportId : 'lol'}
             </div>  
         )
     }

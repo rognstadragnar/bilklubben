@@ -5,12 +5,7 @@ export default class OrdreInfo extends Component {
         super()
     }
     ComponentDidMount(){
-        /*Axios.get('/api/getOrdreInfo')
-        .then((res) => {
-            this.setState({
-                order: res.data.orderInfo 
-            })
-        })*/
+        
     }
     render() {
         return (

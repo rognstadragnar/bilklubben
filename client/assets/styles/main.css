@@ -88,6 +88,9 @@ nav > .wrapper {
     height: 100%;
     width: 100%;
     box-sizing: border-box; }
+    nav > .wrapper .nav-logo a {
+      margin: 0 auto;
+      height: 70px; }
     nav > .wrapper .nav-logo img {
       margin: 16px auto;
       height: 38px; }
