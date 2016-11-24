@@ -61,6 +61,8 @@ export default class ProfilSkjema extends React.Component {
         Axios.post('/api/endre', {
             fulltNavn: this.state.nyttNavn !== '' ? this.state.nyttNavn : this.state.fulltNavn, 
             epost: this.state.nyEpost !== '' ? this.state.nyEpost : this.state.epost,
+            passord: this.state.currentPassord !== '' ? this.state.currentPassord : null,
+            nyttPassord: this.state.nyttPassord !== '' ? this.state.nyttPassord : null,
             abonnement: this.state.abonnement
         })
         .then((res) => {window.location = window.location.href;})
@@ -98,14 +100,16 @@ export default class ProfilSkjema extends React.Component {
                     />
 
                     <TextFieldGroup 
-                        name='passord' 
+                        name='currentPassord' 
                         value={this.state.currentPassord} 
+                        field='password'
                         placeholder='nåværende passord' 
                         onChange={this.handleChange}
                     />
                     <TextFieldGroup 
                         name='nyttPassord' 
                         value={this.state.nyttPassord} 
+                        field='password'
                         placeholder='Nytt passord' 
                         onChange={this.handleChange}
                     />

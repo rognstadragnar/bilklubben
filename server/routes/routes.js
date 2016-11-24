@@ -133,11 +133,14 @@ router.post('/api/fyll', (req, res) => {
 router.post('/api/endre', (req, res) => {
   try {
     if (req.body.passord, req.body.nyttPassord && isAuthed(req)) {
+      console.log('11111both b here', req.body)
       const { epost, fulltNavn, passord, nyttPassord, abonnement } = req.body
       User.findOne({where: {id: req.session.bruker.id}})
         .then((user)=> {
           if (user) {
-            if (Bcrypt.compareSync(user.dataValues.passord, passord)) {
+            if (Bcrypt.compareSync(passord, user.dataValues.password)) {
+              console.log(user.dataValues.password, passord)
+
               const hashedPassord = Bcrypt.hashSync(nyttPassord, salt)
               User.update(
                 {password: hashedPassord, name: fulltNavn, email: epost, plan: abonnement}, 
@@ -152,6 +155,8 @@ router.post('/api/endre', (req, res) => {
           }
         })
     } else if (isAuthed(req)) {
+            console.log('111111both b not here', req.body)
+
       const { epost, fulltNavn, abonnement } = req.body
         console.log(req.session)
         User.findOne({where: {id: req.session.bruker.id}})
@@ -317,7 +322,7 @@ router.get('/api/getOrdre', (req, res) => {
   let ordre = [];
   let biler = []
   Order.findAll({
-    where: {user_id: 1},
+    where: {user_id: req.session.bruker.id},
     include: [{
         model: Car, attributes: ['make', 'model']
     }]
@@ -336,6 +341,15 @@ router.get('/api/getOrdre', (req, res) => {
   .then(() => {res.status(200).json({ordre: ordre});console.log(ordre)})
   .catch(err => console.log('err', err))
 })
+
+router.get('/bestilling', (req, res) => {
+  if (isAuthed(req)) {
+    res.render('bestilling', {auth: req.session.auth, bruker: req.session.bruker})
+  } else {
+    res.redirect('/')
+  }
+})
+
 
 router.get('/profil', (req, res) => {
   if (isAuthed(req)) {

@@ -7,6 +7,7 @@ import LoggInnSkjema from './components/LoggInnSkjema.jsx';
 import RegistreringsSkjema from './components/RegistreringsSkjema.jsx';
 import Profilskjema from './components/ProfilSkjema.jsx';
 import MineOrdre from './components/MineOrdre/MineOrdre.jsx';
+import BestillingsShortcut from './components/Bestilling/BestillingsShortcut.jsx';
 
 
 if (loggInnKryssUt) {
@@ -100,4 +101,10 @@ if (profilReact) {
 const mineOrdrer = document.getElementById('mine-ordre-react');
 if (mineOrdrer) {
     ReactDom.render(<MineOrdre />, mineOrdrer);    
+}
+
+
+const BestillingsShortcutReact = document.getElementById('bestillings-shortcut-react');
+if (BestillingsShortcutReact) {
+    ReactDom.render(<BestillingsShortcut />, BestillingsShortcutReact);    
 }
