@@ -275,6 +275,17 @@ router.post('/api/bestill', (req, res, next) => {
   }
 })
 
+router.get('/api/getbiler', (req, res) => {
+  let cars = [];
+  Car.findAll()
+  .then(car => {
+    console.log(car, 'lol')
+    car.map((v) => {cars.push(v.dataValues)})
+  })
+  .then(() => res.status(200).json({biler: cars}))
+  .catch(err => res.statis(404).json({error: 'fant ikke biler'}))
+})
+
 router.get('/biler', (req, res) => {
   let cars = [];
   Car.findAll({attributes: ['id', 'make', 'model', 'specs', 'price']})
