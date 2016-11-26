@@ -41679,6 +41679,7 @@
 	        _this.state = {
 	            startMoment: null,
 	            sluttMoment: null,
+	            maxDato: (0, _moment2.default)('2999/12/12'),
 	            velgBil: true
 	        };
 	        _this.handleToggleBilDato = _this.handleToggleBilDato.bind(_this);
@@ -41692,10 +41693,25 @@
 	    _createClass(Bestilling, [{
 	        key: 'handleStartChange',
 	        value: function handleStartChange(val) {
-	            if (this.state.velgBil) {
+	            if ((0, _moment2.default)(val).isBefore(this.state.sluttDato.add(1, 'days'))) {
 	                this.setState({
-	                    startDato: val
+	                    sluttDato: (0, _moment2.default)(val).add(1, 'days')
 	                });
+	            }
+	            if (this.state.velgBil || this.state.valgtBil) {
+	                this.setState({
+	                    startDato: val,
+	                    maxDate: (0, _moment2.default)("10/10/2999")
+	                });
+	                var dateArr = this.state.updateOpptatteDatoer.sort(function (a, b) {
+	                    if (a > b) return 1;else if (a > b) return -1;else return false;
+	                });
+	                for (var i = 0; i < dateArr.length; i++) {
+	                    if (dateArr[i].isSame(startDate) || dateArr[i].isAfter(startDate)) {
+	                        this.setState({ maxdate: dateArr[i] });
+	                        return;
+	                    }
+	                }
 	            } else {
 	                this.updateOpptatteBiler();
 	                this.setState({
@@ -41703,14 +41719,15 @@
 	                });
 	            }
 
-	            if ((0, _moment2.default)(val).isValid()) {
-	                console.log('chis');
-	            }
-	            var newDate = new _moment2.default(val).add(0, 'days').toDate();
-	            var newDisabled = this.state.disabledDays;
-	            newDisabled.push(new _moment2.default(newDate));
-	            this.setState({ startDate: newDate, disabledDays: newDisabled });
-	            console.log(newDisabled, this.state);
+	            /*
+	                 if (Moment(val).isValid()) {
+	                    console.log('chis')
+	                }
+	                const newDate = new Moment(val).add(0, 'days').toDate();
+	                let newDisabled = this.state.disabledDays;
+	                newDisabled.push(new Moment(newDate))
+	                this.setState({startDate: newDate, disabledDays: newDisabled})
+	                console.log(newDisabled, this.state)*/
 	        }
 	    }, {
 	        key: 'handleSluttChange',
@@ -41787,12 +41804,18 @@
 	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            this.setState({
-	                sessStartDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsStartDato')),
-	                sessSluttDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsSluttDato')),
-	                sessBil: Number(window.sessionStorage.getItem('bestillingsBil'))
-	            });
-	            console.log(window.sessionStorage.getItem('bestllingsBil'));
+	            if (window.sessionStorage.getItem('bestillingsStartDato') && window.sessionStorage.getItem('bestillingsSluttDato')) {
+	                this.setState({
+	                    startDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsStartDato')) || (0, _moment2.default)(),
+	                    sluttDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsSluttDato')) || (0, _moment2.default)().add(1, days)
+	                });
+	            } else if (window.sessionStorage.getItem('bestillingsBil')) {
+	                this.setState({
+	                    startDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsStartDato')) || (0, _moment2.default)(),
+	                    sluttDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsSluttDato')) || (0, _moment2.default)().add(1, days)
+	                });
+	            }
+	            _moment2.default.locale('nb');
 	        }
 	    }, {
 	        key: 'render',
@@ -41802,9 +41825,10 @@
 	                { style: { margin: '250px 20px' } },
 	                _react2.default.createElement(_SokeFelt2.default, {
 	                    toggleBil: this.handleToggleBilDato,
-	                    startDato: this.state.startDato,
-	                    sluttDato: this.state.sluttDato,
+	                    startDato: (0, _moment2.default)(this.state.startDato),
+	                    sluttDato: (0, _moment2.default)(this.state.sluttDato),
 	                    sluttDatoMin: this.state.sluttDatoMin,
+	                    maxDato: this.state.maxDato,
 	                    handleStartChange: this.state.handleStartChange,
 	                    handleSluttChange: this.state.handleSluttChange
 	                })
@@ -41858,7 +41882,6 @@
 	        var _this = _possibleConstructorReturn(this, (BestillingsShortcut.__proto__ || Object.getPrototypeOf(BestillingsShortcut)).call(this));
 
 	        _this.disableDayFn = _this.disableDayFn.bind(_this);
-	        _this.findMaxSluttDato = _this.findMaxSluttDato.bind(_this);
 	        return _this;
 	    }
 
@@ -41873,24 +41896,8 @@
 	            }
 	        }
 	    }, {
-	        key: 'findMaxSluttDato',
-	        value: function findMaxSluttDato() {
-	            var dateArr = this.props.opptatteDatoer.sort(function (a, b) {
-	                if (a > b) return 1;else if (a > b) return -1;else return false;
-	            });
-
-	            for (var i = 0; i < dateArr.length; i++) {
-	                if (dateArr[i].isSame(startDate) || dateArr[i].isAfter(startDate)) {
-	                    return dateArr[i];
-	                }
-	            }
-	            return null;
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
-
 	            var i18n = {
 	                previousMonth: 'Forrige måned',
 	                nextMonth: 'Next måned',
@@ -41903,9 +41910,9 @@
 	                null,
 	                _react2.default.createElement(_reactPikadayComponent2.default, {
 	                    placeholder: 'Velg startdato',
-	                    format: 'DD/MM/YYYY',
+	                    format: 'LL',
 	                    minDate: this.props.startDato ? this.props.startDato.toDate() : new Date(null),
-	                    value: this.props.startDato ? this.props.startDato.toDate() : new Date(null),
+	                    value: this.props.startDato.toDate(),
 	                    onChange: this.props.handleStartChange,
 	                    disableDayFn: this.disableDayFn,
 	                    i18n: i18n,
@@ -41913,12 +41920,10 @@
 	                }),
 	                _react2.default.createElement(_reactPikadayComponent2.default, {
 	                    placeholder: 'Velg sluttdato',
-	                    format: 'YYYY/MM/DD',
-	                    minDate: this.props.startDato ? this.props.startDato.add(1, 'days').toDate() : new Date(null),
-	                    maxDate: function maxDate() {
-	                        return _this2.findMaxSluttDato();
-	                    },
-	                    value: this.props.sluttDato ? this.props.sluttDato.toDate() : new Date(null),
+	                    format: 'LL',
+	                    minDate: this.props.startDato.toDate() ? this.props.startDato.add(1, 'days').toDate() : new Date(null),
+	                    maxDate: this.props.maxDato ? this.props.maxDato.toDate() : new Date(),
+	                    value: this.props.sluttDato.toDate(),
 	                    onChange: this.props.handleSluttChange,
 	                    i18n: i18n,
 	                    disableDayFn: this.disableDayFn,

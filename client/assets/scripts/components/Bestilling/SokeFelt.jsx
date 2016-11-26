@@ -8,7 +8,6 @@ export default class BestillingsShortcut extends React.Component {
     constructor(){
         super()
         this.disableDayFn = this.disableDayFn.bind(this)
-        this.findMaxSluttDato = this.findMaxSluttDato.bind(this)
     }
 
     disableDayFn(day) {
@@ -19,20 +18,7 @@ export default class BestillingsShortcut extends React.Component {
             }
         }
     }
-    findMaxSluttDato(){
-        const dateArr = this.props.opptatteDatoer.sort((a, b) => {
-            if (a > b) return 1
-            else if (a > b) return -1
-            else return false
-        })
-
-        for (let i = 0; i < dateArr.length; i++) {
-            if (dateArr[i].isSame(startDate) || dateArr[i].isAfter(startDate)) {
-                return dateArr[i];
-            }   
-        }
-        return null;
-    }
+    
     render() {
         const i18n =  {
             previousMonth : 'Forrige måned',
@@ -45,9 +31,9 @@ export default class BestillingsShortcut extends React.Component {
             <div>
             <DatePicker 
                 placeholder="Velg startdato"
-                format="DD/MM/YYYY"
+                format="LL"
                 minDate={this.props.startDato ? this.props.startDato.toDate() : new Date(null)}
-                value={this.props.startDato ? this.props.startDato.toDate() : new Date(null)}
+                value={this.props.startDato.toDate()}
                 onChange={this.props.handleStartChange}
                 disableDayFn={this.disableDayFn}
                 i18n={i18n}
@@ -55,10 +41,10 @@ export default class BestillingsShortcut extends React.Component {
             />
             <DatePicker 
                 placeholder="Velg sluttdato"
-                format="YYYY/MM/DD"
-                minDate={this.props.startDato ? this.props.startDato.add(1, 'days').toDate() : new Date(null)}
-                maxDate={() => this.findMaxSluttDato()}
-                value={this.props.sluttDato ? this.props.sluttDato.toDate() : new Date(null)}
+                format="LL"
+                minDate={this.props.startDato.toDate() ? this.props.startDato.add(1, 'days').toDate() : new Date(null)}
+                maxDate={this.props.maxDato ? this.props.maxDato.toDate() : new Date()}
+                value={this.props.sluttDato.toDate()}
                 onChange={this.props.handleSluttChange}
                 i18n={i18n}
                 disableDayFn={this.disableDayFn}

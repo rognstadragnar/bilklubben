@@ -12,6 +12,7 @@ export default class Bestilling extends React.Component {
         this.state = {
             startMoment: null,
             sluttMoment: null,
+            maxDato: Moment('2999/12/12'),
             velgBil: true
         }
         this.handleToggleBilDato = this.handleToggleBilDato.bind(this)
@@ -22,10 +23,27 @@ export default class Bestilling extends React.Component {
     }
 
     handleStartChange(val){
-        if (this.state.velgBil) {
+        if (Moment(val).isBefore(this.state.sluttDato.add(1, 'days'))) {
             this.setState({
-                startDato: val
+                sluttDato: Moment(val).add(1, 'days')
             })
+        }
+        if (this.state.velgBil || this.state.valgtBil) {
+            this.setState({
+                startDato: val,
+                maxDate: Moment("10/10/2999")
+            })
+            const dateArr = this.state.updateOpptatteDatoer.sort((a, b) => {
+                if (a > b) return 1
+                else if (a > b) return -1
+                else return false
+            })
+            for (let i = 0; i < dateArr.length; i++) {
+                if (dateArr[i].isSame(startDate) || dateArr[i].isAfter(startDate)) {
+                    this.setState({maxdate: dateArr[i]})
+                    return
+                }   
+            }
         } else {
             this.updateOpptatteBiler()
             this.setState({
@@ -33,6 +51,7 @@ export default class Bestilling extends React.Component {
             })
         }
 
+    /*
 
         if (Moment(val).isValid()) {
             console.log('chis')
@@ -41,7 +60,7 @@ export default class Bestilling extends React.Component {
         let newDisabled = this.state.disabledDays;
         newDisabled.push(new Moment(newDate))
         this.setState({startDate: newDate, disabledDays: newDisabled})
-        console.log(newDisabled, this.state)
+        console.log(newDisabled, this.state)*/
     }
     handleSluttChange(val){
         if (this.state.velgBil) {
@@ -112,21 +131,29 @@ export default class Bestilling extends React.Component {
 
 
     componentWillMount(){
-        this.setState({
-            sessStartDato: Moment(window.sessionStorage.getItem('bestillingsStartDato')),
-            sessSluttDato: Moment(window.sessionStorage.getItem('bestillingsSluttDato')),
-            sessBil: Number(window.sessionStorage.getItem('bestillingsBil'))
-        })
-        console.log(window.sessionStorage.getItem('bestllingsBil'))
+        if (window.sessionStorage.getItem('bestillingsStartDato') && 
+            window.sessionStorage.getItem('bestillingsSluttDato')) {
+            this.setState({
+                startDato: Moment(window.sessionStorage.getItem('bestillingsStartDato')) || Moment(),
+                sluttDato: Moment(window.sessionStorage.getItem('bestillingsSluttDato')) || Moment().add(1, days),
+            })
+        } else if (window.sessionStorage.getItem('bestillingsBil')) { 
+            this.setState({
+                startDato: Moment(window.sessionStorage.getItem('bestillingsStartDato')) || Moment(),
+                sluttDato: Moment(window.sessionStorage.getItem('bestillingsSluttDato')) || Moment().add(1, days),
+            })
+        } 
+        Moment.locale('nb')
     }
     render() {
         return (
             <div style={{margin: '250px 20px'}}>
                 <SokeFelt 
                     toggleBil={this.handleToggleBilDato} 
-                    startDato={this.state.startDato} 
-                    sluttDato={this.state.sluttDato}
+                    startDato={Moment(this.state.startDato)} 
+                    sluttDato={Moment(this.state.sluttDato)}
                     sluttDatoMin={this.state.sluttDatoMin}
+                    maxDato={this.state.maxDato}
                     handleStartChange={this.state.handleStartChange}
                     handleSluttChange={this.state.handleSluttChange}
                 />
