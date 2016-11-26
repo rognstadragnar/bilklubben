@@ -150,9 +150,10 @@ export default class Bestilling extends React.Component {
         if (window.sessionStorage.getItem('bestillingsStartDato') && 
             window.sessionStorage.getItem('bestillingsSluttDato')) {
             this.setState({
-                startDato: Moment(window.sessionStorage.getItem('bestillingsStartDato')) || Moment(),
-                sluttDato: Moment(window.sessionStorage.getItem('bestillingsSluttDato')) || Moment().add(1, days),
+                startDato: Moment(window.sessionStorage.getItem('bestillingsStartDato')),
+                sluttDato: Moment(window.sessionStorage.getItem('bestillingsSluttDato')),
             })
+            setTimeout(() => this.updateOpptatteBiler(), 500)
         } else if (window.sessionStorage.getItem('bestillingsBil')) { 
             const bilen = Number(window.sessionStorage.getItem('bestillingsBil'))
             let carArr = []

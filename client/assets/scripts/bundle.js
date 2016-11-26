@@ -41731,9 +41731,12 @@
 	            });
 	            if (window.sessionStorage.getItem('bestillingsStartDato') && window.sessionStorage.getItem('bestillingsSluttDato')) {
 	                this.setState({
-	                    startDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsStartDato')) || (0, _moment2.default)(),
-	                    sluttDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsSluttDato')) || (0, _moment2.default)().add(1, days)
+	                    startDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsStartDato')),
+	                    sluttDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsSluttDato'))
 	                });
+	                setTimeout(function () {
+	                    return _this4.updateOpptatteBiler();
+	                }, 500);
 	            } else if (window.sessionStorage.getItem('bestillingsBil')) {
 	                var bilen = Number(window.sessionStorage.getItem('bestillingsBil'));
 	                var carArr = [];
