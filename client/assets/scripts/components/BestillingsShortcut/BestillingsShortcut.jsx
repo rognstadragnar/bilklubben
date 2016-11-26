@@ -10,8 +10,8 @@ export default class BestillingsShortcut extends React.Component {
     constructor(){
         super()
         this.state = {
-            startDato: false, 
-            sluttDato: false, 
+            startDato: '', 
+            sluttDato: '', 
             startDatoClass: '', 
             sluttDatoClass: '', 
             biler: []

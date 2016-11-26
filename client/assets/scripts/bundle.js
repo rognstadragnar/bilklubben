@@ -41412,8 +41412,8 @@
 	        var _this = _possibleConstructorReturn(this, (BestillingsShortcut.__proto__ || Object.getPrototypeOf(BestillingsShortcut)).call(this));
 
 	        _this.state = {
-	            startDato: false,
-	            sluttDato: false,
+	            startDato: '',
+	            sluttDato: '',
 	            startDatoClass: '',
 	            sluttDatoClass: '',
 	            biler: []
@@ -41668,6 +41668,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	_moment2.default.locale('nb');
+
 	var Bestilling = function (_React$Component) {
 	    _inherits(Bestilling, _React$Component);
 
@@ -41677,9 +41679,10 @@
 	        var _this = _possibleConstructorReturn(this, (Bestilling.__proto__ || Object.getPrototypeOf(Bestilling)).call(this));
 
 	        _this.state = {
-	            startMoment: null,
-	            sluttMoment: null,
-	            maxDato: (0, _moment2.default)('2999/12/12'),
+	            startDato: (0, _moment2.default)(),
+	            sluttDato: (0, _moment2.default)().add(1, 'days'),
+	            maxDato: (0, _moment2.default)('12/12/2999'),
+	            opptatteDatoer: [(0, _moment2.default)('2016/11/11'), (0, _moment2.default)('2016/11/17')],
 	            velgBil: true
 	        };
 	        _this.handleToggleBilDato = _this.handleToggleBilDato.bind(_this);
@@ -41693,53 +41696,48 @@
 	    _createClass(Bestilling, [{
 	        key: 'handleStartChange',
 	        value: function handleStartChange(val) {
-	            if ((0, _moment2.default)(val).isBefore(this.state.sluttDato.add(1, 'days'))) {
+	            this.setState({ maxDato: (0, _moment2.default)('12/12/2999') });
+
+	            if ((0, _moment2.default)(val).isBefore((0, _moment2.default)(this.state.sluttDato).add(1, 'days'))) {
+	                console.log('it is');
 	                this.setState({
 	                    sluttDato: (0, _moment2.default)(val).add(1, 'days')
 	                });
 	            }
 	            if (this.state.velgBil || this.state.valgtBil) {
 	                this.setState({
-	                    startDato: val,
-	                    maxDate: (0, _moment2.default)("10/10/2999")
+	                    startDato: (0, _moment2.default)(val)
 	                });
-	                var dateArr = this.state.updateOpptatteDatoer.sort(function (a, b) {
-	                    if (a > b) return 1;else if (a > b) return -1;else return false;
+
+	                var dateArr = this.state.opptatteDatoer.sort(function (a, b) {
+	                    if (a > b) return 1;else if (a > b) return -1;else return 0;
 	                });
 	                for (var i = 0; i < dateArr.length; i++) {
-	                    if (dateArr[i].isSame(startDate) || dateArr[i].isAfter(startDate)) {
-	                        this.setState({ maxdate: dateArr[i] });
-	                        return;
+	                    console.log(dateArr[i].isSame((0, _moment2.default)(val)), dateArr[i].isAfter((0, _moment2.default)(val)));
+
+	                    if (dateArr[i].isAfter(this.state.startDato)) {
+	                        this.setState({ maxDato: dateArr[i] });
+	                        return true;
 	                    }
 	                }
 	            } else {
 	                this.updateOpptatteBiler();
 	                this.setState({
-	                    startDato: val
+	                    startDato: (0, _moment2.default)(val)
 	                });
 	            }
-
-	            /*
-	                 if (Moment(val).isValid()) {
-	                    console.log('chis')
-	                }
-	                const newDate = new Moment(val).add(0, 'days').toDate();
-	                let newDisabled = this.state.disabledDays;
-	                newDisabled.push(new Moment(newDate))
-	                this.setState({startDate: newDate, disabledDays: newDisabled})
-	                console.log(newDisabled, this.state)*/
 	        }
 	    }, {
 	        key: 'handleSluttChange',
 	        value: function handleSluttChange(val) {
 	            if (this.state.velgBil) {
 	                this.setState({
-	                    sluttDato: val
+	                    sluttDato: (0, _moment2.default)(val)
 	                });
 	            } else {
 	                this.updateOpptatteBiler();
 	                this.setState({
-	                    sluttDato: val
+	                    sluttDato: (0, _moment2.default)(val)
 	                });
 	            }
 	            /*
@@ -41811,11 +41809,10 @@
 	                });
 	            } else if (window.sessionStorage.getItem('bestillingsBil')) {
 	                this.setState({
-	                    startDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsStartDato')) || (0, _moment2.default)(),
-	                    sluttDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsSluttDato')) || (0, _moment2.default)().add(1, days)
+	                    startDato: (0, _moment2.default)(),
+	                    sluttDato: (0, _moment2.default)().add(1, 'days')
 	                });
 	            }
-	            _moment2.default.locale('nb');
 	        }
 	    }, {
 	        key: 'render',
@@ -41825,12 +41822,13 @@
 	                { style: { margin: '250px 20px' } },
 	                _react2.default.createElement(_SokeFelt2.default, {
 	                    toggleBil: this.handleToggleBilDato,
-	                    startDato: (0, _moment2.default)(this.state.startDato),
-	                    sluttDato: (0, _moment2.default)(this.state.sluttDato),
+	                    startDato: this.state.startDato,
+	                    sluttDato: this.state.sluttDato,
 	                    sluttDatoMin: this.state.sluttDatoMin,
+	                    opptatteDatoer: this.state.opptatteDatoer,
 	                    maxDato: this.state.maxDato,
-	                    handleStartChange: this.state.handleStartChange,
-	                    handleSluttChange: this.state.handleSluttChange
+	                    handleStartChange: this.handleStartChange,
+	                    handleSluttChange: this.handleSluttChange
 	                })
 	            );
 	        }
@@ -41857,9 +41855,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactPikadayComponent = __webpack_require__(327);
+	var _pikaday = __webpack_require__(328);
 
-	var _reactPikadayComponent2 = _interopRequireDefault(_reactPikadayComponent);
+	var _pikaday2 = _interopRequireDefault(_pikaday);
 
 	var _moment = __webpack_require__(212);
 
@@ -41872,6 +41870,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var startPicker = void 0,
+	    sluttPicker = void 0;
 
 	var BestillingsShortcut = function (_React$Component) {
 	    _inherits(BestillingsShortcut, _React$Component);
@@ -41896,8 +41897,10 @@
 	            }
 	        }
 	    }, {
-	        key: 'render',
-	        value: function render() {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
 	            var i18n = {
 	                previousMonth: 'Forrige måned',
 	                nextMonth: 'Next måned',
@@ -41905,31 +41908,65 @@
 	                weekdays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
 	                weekdaysShort: ['Søn', 'Man', 'Tirs', 'Ons', 'Tho', 'Fre', 'Lør']
 	            };
+
+	            startPicker = new _pikaday2.default({
+	                placeholder: "Velg startdato",
+	                format: "LL",
+	                minDate: this.props.startDato ? this.props.startDato.toDate() : new Date(null),
+	                value: this.props.startDato.toDate(),
+
+	                defaultDate: this.props.startDato.toDate(),
+	                setDefaultDate: true,
+	                onSelect: function onSelect(v) {
+	                    _this2.props.handleStartChange(v);
+	                },
+	                disableDayFn: this.disableDayFn,
+	                i18n: i18n,
+	                firstDay: 1,
+
+	                field: this.refs.startPickerDiv
+
+	            });
+
+	            sluttPicker = new _pikaday2.default({
+	                placeholder: "Velg sluttdato",
+	                format: "LL",
+	                minDate: this.props.startDato.toDate() ? this.props.startDato.add(1, 'days').toDate() : new Date(null),
+	                maxDate: this.props.maxDato.toDate() ? this.props.maxDato.toDate() : new Date('12/12/2999'),
+	                //defaultDate: this.props.sluttDato.toDate(),
+	                onSelect: function onSelect(v) {
+	                    _this2.props.handleSluttChange(v);
+	                },
+	                onOpen: function onOpen(v) {
+	                    sluttPicker.setMinDate(_this2.props.startDato.toDate());sluttPicker.setMaxDate(_this2.props.maxDato.toDate());
+	                },
+	                //setDefaultDate: true,
+	                i18n: i18n,
+	                disableDayFn: this.disableDayFn,
+	                firstDay: 1,
+	                field: this.refs.sluttPickerDiv
+
+	            });
+	            console.log(this.props.startDato);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_reactPikadayComponent2.default, {
-	                    placeholder: 'Velg startdato',
-	                    format: 'LL',
-	                    minDate: this.props.startDato ? this.props.startDato.toDate() : new Date(null),
-	                    value: this.props.startDato.toDate(),
-	                    onChange: this.props.handleStartChange,
-	                    disableDayFn: this.disableDayFn,
-	                    i18n: i18n,
-	                    firstDay: 1
-	                }),
-	                _react2.default.createElement(_reactPikadayComponent2.default, {
-	                    placeholder: 'Velg sluttdato',
-	                    format: 'LL',
-	                    minDate: this.props.startDato.toDate() ? this.props.startDato.add(1, 'days').toDate() : new Date(null),
-	                    maxDate: this.props.maxDato ? this.props.maxDato.toDate() : new Date(),
-	                    value: this.props.sluttDato.toDate(),
-	                    onChange: this.props.handleSluttChange,
-	                    i18n: i18n,
-	                    disableDayFn: this.disableDayFn,
-	                    firstDay: 1
-
-	                }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { height: '50px', width: '150px', background: 'red' }, ref: 'startPickerDiv' },
+	                    this.props.startDato ? this.props.startDato.format('LL') : ''
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { height: '50px', width: '150px', background: 'yellow' }, ref: 'sluttPickerDiv' },
+	                    this.props.sluttDato ? this.props.sluttDato.format('LL') : '',
+	                    ' '
+	                ),
 	                _react2.default.createElement(
 	                    'button',
 	                    null,

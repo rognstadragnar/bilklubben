@@ -6,13 +6,17 @@ import Axios from 'axios';
 import BilVisning from './BilVisning.jsx';
 import SokeFelt from './SokeFelt.jsx';
 
+
+        Moment.locale('nb')
+
 export default class Bestilling extends React.Component {
     constructor(){
         super()
         this.state = {
-            startMoment: null,
-            sluttMoment: null,
-            maxDato: Moment('2999/12/12'),
+            startDato: Moment(),
+            sluttDato: Moment().add(1, 'days'),
+            maxDato: Moment('12/12/2999'),
+            opptatteDatoer: [Moment('2016/11/11'), Moment('2016/11/17')],
             velgBil: true
         }
         this.handleToggleBilDato = this.handleToggleBilDato.bind(this)
@@ -23,54 +27,50 @@ export default class Bestilling extends React.Component {
     }
 
     handleStartChange(val){
-        if (Moment(val).isBefore(this.state.sluttDato.add(1, 'days'))) {
+        this.setState({maxDato: Moment('12/12/2999')})
+
+        if (Moment(val).isBefore(Moment(this.state.sluttDato).add(1, 'days'))) {
+            console.log('it is')
             this.setState({
                 sluttDato: Moment(val).add(1, 'days')
             })
         }
         if (this.state.velgBil || this.state.valgtBil) {
             this.setState({
-                startDato: val,
-                maxDate: Moment("10/10/2999")
+                startDato: Moment(val),
+                //maxDato: Moment("10/10/2999")
             })
-            const dateArr = this.state.updateOpptatteDatoer.sort((a, b) => {
+
+            const dateArr = this.state.opptatteDatoer.sort((a, b) => {
                 if (a > b) return 1
                 else if (a > b) return -1
-                else return false
+                else return 0
             })
             for (let i = 0; i < dateArr.length; i++) {
-                if (dateArr[i].isSame(startDate) || dateArr[i].isAfter(startDate)) {
-                    this.setState({maxdate: dateArr[i]})
-                    return
+                console.log(dateArr[i].isSame(Moment(val)), dateArr[i].isAfter(Moment(val)))
+
+                if (dateArr[i].isAfter(this.state.startDato)) {
+                    this.setState({maxDato: dateArr[i]})
+                    return true
                 }   
             }
         } else {
             this.updateOpptatteBiler()
             this.setState({
-                startDato: val
+                startDato: Moment(val)
             })
         }
 
-    /*
-
-        if (Moment(val).isValid()) {
-            console.log('chis')
-        }
-        const newDate = new Moment(val).add(0, 'days').toDate();
-        let newDisabled = this.state.disabledDays;
-        newDisabled.push(new Moment(newDate))
-        this.setState({startDate: newDate, disabledDays: newDisabled})
-        console.log(newDisabled, this.state)*/
     }
     handleSluttChange(val){
         if (this.state.velgBil) {
             this.setState({
-                sluttDato: val
+                sluttDato: Moment(val)
             })
         } else {
             this.updateOpptatteBiler()
             this.setState({
-                sluttDato: val
+                sluttDato: Moment(val)
             })
         }
         /*
@@ -139,23 +139,23 @@ export default class Bestilling extends React.Component {
             })
         } else if (window.sessionStorage.getItem('bestillingsBil')) { 
             this.setState({
-                startDato: Moment(window.sessionStorage.getItem('bestillingsStartDato')) || Moment(),
-                sluttDato: Moment(window.sessionStorage.getItem('bestillingsSluttDato')) || Moment().add(1, days),
+                startDato: Moment(),
+                sluttDato: Moment().add(1, 'days'),
             })
         } 
-        Moment.locale('nb')
     }
     render() {
         return (
             <div style={{margin: '250px 20px'}}>
                 <SokeFelt 
                     toggleBil={this.handleToggleBilDato} 
-                    startDato={Moment(this.state.startDato)} 
-                    sluttDato={Moment(this.state.sluttDato)}
+                    startDato={this.state.startDato} 
+                    sluttDato={this.state.sluttDato}
                     sluttDatoMin={this.state.sluttDatoMin}
+                    opptatteDatoer={this.state.opptatteDatoer}
                     maxDato={this.state.maxDato}
-                    handleStartChange={this.state.handleStartChange}
-                    handleSluttChange={this.state.handleSluttChange}
+                    handleStartChange={this.handleStartChange}
+                    handleSluttChange={this.handleSluttChange}
                 />
                 {/*<BilVisning biler={[{id: 1},{id: 2},{id: 3}]}/>
                 <BilInfo />
