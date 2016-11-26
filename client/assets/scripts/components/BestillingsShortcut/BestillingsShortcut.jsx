@@ -70,6 +70,7 @@ export default class BestillingsShortcut extends React.Component {
         new Pikaday({
             field: this.refs.start,
             format: 'MM/DD/YYYY',
+            minDate: Moment().toDate(),
             onSelect: this.onChangeStart,
             onOpen: () => this.setState({startDatoClass: 'active'}),
             onClose: () => this.setState({startDatoClass: ''}),
@@ -80,6 +81,7 @@ export default class BestillingsShortcut extends React.Component {
         lol = new Pikaday({
             field: this.refs.slutt,
             format: 'MM/DD/YYYY',
+            minDate: Moment().add(1, 'day').toDate(),
             onSelect: this.onChangeSlutt,
             onOpen: () => this.setState({sluttDatoClass: 'active'}),
             onClose: () => this.setState({sluttDatoClass: ''}),

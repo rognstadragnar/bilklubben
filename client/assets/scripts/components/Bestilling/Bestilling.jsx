@@ -1,6 +1,7 @@
 import React from 'react';
 import DatePicker from 'react-pikaday-component';
 import Moment from 'moment';
+require('moment-range');
 import Axios from 'axios';
 
 import BilVisning from './BilVisning.jsx';
@@ -13,13 +14,15 @@ export default class Bestilling extends React.Component {
     constructor(){
         super()
         this.state = {
-            startDato: Moment(),
-            sluttDato: Moment().add(1, 'days'),
+            //startDato: Moment(),
+            //sluttDato: Moment().add(1, 'days'),
             maxDato: Moment('12/12/2999'),
-            opptatteDatoer: [Moment('2016/11/11'), Moment('2016/11/17')],
-            velgBil: true
+            opptatteDatoer: [],
+            opptatteBiler: [],
+            velgBil: false
         }
         this.handleToggleBilDato = this.handleToggleBilDato.bind(this)
+        this.handleBilValg = this.handleBilValg.bind(this)
         this.handleStartChange = this.handleStartChange.bind(this)
         this.handleSluttChange = this.handleSluttChange.bind(this)
         this.updateOpptatteBiler = this.updateOpptatteBiler.bind(this)
@@ -27,20 +30,22 @@ export default class Bestilling extends React.Component {
     }
 
     handleStartChange(val){
-        this.setState({maxDato: Moment('12/12/2999')})
-
-        if (Moment(val).isBefore(Moment(this.state.sluttDato).add(1, 'days'))) {
+        this.setState({
+            maxDato: Moment('12/12/2999'),
+            startDato: Moment(val),
+        })
+        
+        if (this.state.sluttDato && !Moment(val).isBefore(this.state.sluttDato)) {
             console.log('it is')
             this.setState({
                 sluttDato: Moment(val).add(1, 'days')
             })
         }
-        if (this.state.velgBil || this.state.valgtBil) {
-            this.setState({
-                startDato: Moment(val),
-                //maxDato: Moment("10/10/2999")
-            })
+        if (!this.state.velgBil) {
+            this.updateOpptatteBiler()
+        }
 
+        if (this.state.velgBil && this.state.valgtBil) {
             const dateArr = this.state.opptatteDatoer.sort((a, b) => {
                 if (a > b) return 1
                 else if (a > b) return -1
@@ -54,83 +59,94 @@ export default class Bestilling extends React.Component {
                     return true
                 }   
             }
-        } else {
-            this.updateOpptatteBiler()
-            this.setState({
-                startDato: Moment(val)
-            })
         }
 
     }
     handleSluttChange(val){
+        console.log(this.state.startDato)
+        console.log('HANDLED SLUTT CHANGE')
         if (this.state.velgBil) {
             this.setState({
                 sluttDato: Moment(val)
             })
         } else {
-            this.updateOpptatteBiler()
             this.setState({
+                startDato: Moment(this.state.startDato),
                 sluttDato: Moment(val)
             })
+            this.updateOpptatteBiler()
         }
-        /*
-        if (Moment(val).isValid()) {
-            console.log('chis')
-        }
-        const newDate = new Moment(val).add(0, 'days').toDate();
-
-        //Axios.get
-
-        let newDisabled = this.state.disabledDays;
-        newDisabled.push(new Moment(newDate))
-        this.setState({dateStart: newDate, disabledDays: newDisabled})
-        console.log(newDisabled, this.state)*/
     }
+
     handleToggleBilDato(){
-        this.setState({
-            velgBil: this.state.velgBil ? false : true,
-            biler: this.resetBiler(),
-            startDato: null,
-            sluttDato: null
-        })
+        if (this.state.velgBil) {
+            this.resetBiler()
+
+            this.setState({
+                velgBil: false,
+                startDato: Moment(),
+                sluttDato: Moment().add(1, 'days'),
+                opptatteDatoer: []
+
+            })
+        } else {
+            this.resetBiler()
+            this.setState({
+                velgBil: true,
+                startDato: null,
+                sluttDato: null,
+                opptatteDatoer: []
+            })
+        }
     }
+
     handleBilValg(val){
+        console.log('hop', val === this.state.valgtBil)
         if (this.state.velgBil) {
             this.updateOpptatteDatoer(val)
             this.setState({
-                valgtBil: val
+                valgtBil: this.state.valgtBil === val ? null : val,
             })
         } else {
             this.setState({
-                valgtBil: val
+                valgtBil: this.state.valgtBil === val ? null : val
             })
         }
+    }
+
+    resetBiler(){
+        this.setState({
+            valgtBil: null,
+            opptatteBiler: []
+        })
     }
 
 
     updateOpptatteDatoer(val){
-        Axios.get('/api/finnOpptatteDatoer', {bilId: val})
-        .then(res => {
-            this.setState({
-                opptatteDatoer: res.data.opptatteDatoer,
-                opptatteBiler: null
-            })
-        })
+        console.log('UPDATE OPPTATTE DATOER')
+        Axios.post('/api/finnOpptatteDatoer', {bilId: val})
+        .then(res => {console.log(res.data);this.setState(
+            {opptatteDatoer: res.data.opptatteDatoer.map(
+                d => Moment.range(d.start, d.slutt)
+            )}
+        )})
     }
+
     updateOpptatteBiler(){
-        Axios.get('/api/finnOpptatteBiler', {startDato: this.state.StartDato, sluttDato: this.state.sluttDato})
-        .then(res => {
-            this.setState({
-                opptatteBiler: res.data.opptatteBiler,
-                opptatteDatoer: null
-            })
+        Axios.post('/api/finnOpptatteBiler', {
+            startDato: this.state.startDato ?  this.state.startDato : null, 
+            sluttDato: this.state.sluttDato ? this.state.sluttDato : null
         })
+        .then(res => this.setState({opptatteBiler: res.data.opptatteBiler})) //should retrun res.data.opptattebiler
+
     }
 
 
 
 
-    componentWillMount(){
+    componentDidMount(){
+        Axios.get('/api/getBiler')
+        .then(res => this.setState({biler: res.data.biler}))
         if (window.sessionStorage.getItem('bestillingsStartDato') && 
             window.sessionStorage.getItem('bestillingsSluttDato')) {
             this.setState({
@@ -138,9 +154,13 @@ export default class Bestilling extends React.Component {
                 sluttDato: Moment(window.sessionStorage.getItem('bestillingsSluttDato')) || Moment().add(1, days),
             })
         } else if (window.sessionStorage.getItem('bestillingsBil')) { 
+            const bilen = Number(window.sessionStorage.getItem('bestillingsBil'))
+            let carArr = []
+            carArr.push(bilen)
+            this.updateOpptatteDatoer(carArr)
             this.setState({
-                startDato: Moment(),
-                sluttDato: Moment().add(1, 'days'),
+                velgBil: true,
+                valgtBil: Number(window.sessionStorage.getItem('bestillingsBil'))
             })
         } 
     }
@@ -157,8 +177,9 @@ export default class Bestilling extends React.Component {
                     handleStartChange={this.handleStartChange}
                     handleSluttChange={this.handleSluttChange}
                 />
-                {/*<BilVisning biler={[{id: 1},{id: 2},{id: 3}]}/>
-                <BilInfo />
+                <button onClick={this.handleToggleBilDato}>{this.state.velgBil ? 'Velg basert på dato' : 'Velg basert på bil'}</button>
+                <BilVisning handleBilValg={this.handleBilValg} valgtBil={this.state.valgtBil} opptatteBiler={this.state.opptatteBiler} biler={this.state.biler}/>
+                {/*<BilInfo />
                 <BekreftBestilling />*/}
             </div>
         )

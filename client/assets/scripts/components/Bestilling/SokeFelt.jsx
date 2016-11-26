@@ -1,6 +1,7 @@
 import React from 'react';
 import Pikaday from 'pikaday';
 import Moment from 'moment';
+require('moment-range');
 
 
 let startPicker, sluttPicker
@@ -13,9 +14,7 @@ export default class BestillingsShortcut extends React.Component {
     disableDayFn(day) {
         if (!this.props.opptatteDatoer) return false
         for (let i = 0; i < this.props.opptatteDatoer.length; i++) {
-            if (Moment(day).diff(this.props.opptatteDatoer[i], 'days') === 0) {
-                return true
-            }
+            if (Moment(day).within(this.props.opptatteDatoer[i])) return true
         }
     }
 
@@ -32,10 +31,8 @@ export default class BestillingsShortcut extends React.Component {
         startPicker = new Pikaday({
             placeholder: "Velg startdato",
             format: "LL",
-            minDate: this.props.startDato ? this.props.startDato.toDate() : new Date(null),
-            value: this.props.startDato.toDate(),
-
-            defaultDate: this.props.startDato.toDate(),
+            minDate: Moment().toDate(),
+            defaultDate: this.props.startDato ? this.props.startDato.toDate() : null,
             setDefaultDate: true,
             onSelect: (v) => {this.props.handleStartChange(v);},
             disableDayFn: this.disableDayFn,
@@ -49,27 +46,31 @@ export default class BestillingsShortcut extends React.Component {
         sluttPicker = new Pikaday({
             placeholder: "Velg sluttdato",
             format: "LL",
-            minDate: this.props.startDato.toDate() ? this.props.startDato.add(1, 'days').toDate() : new Date(null),
+            minDate: this.props.startDato ? Moment(this.props.startDato).add(1, 'days').toDate() : Moment().add(1, 'days').toDate(),
             maxDate: this.props.maxDato.toDate() ? this.props.maxDato.toDate() : new Date('12/12/2999'),
-            //defaultDate: this.props.sluttDato.toDate(),
-            onSelect: (v) => {this.props.handleSluttChange(v)},
-            onOpen: (v) => {sluttPicker.setMinDate(this.props.startDato.toDate());  sluttPicker.setMaxDate(this.props.maxDato.toDate()); },
-            //setDefaultDate: true,
+            defaultDate: this.props.sluttDato ? this.props.sluttDato.toDate() : null,
+            setDefaultDate: true,
+            onSelect: (v) => {this.props.handleSluttChange(v); console.log(this.props.startDato)},
+            onOpen: (v) => {this.props.startDato ? 
+                sluttPicker.setMinDate(Moment(this.props.startDato).add(1, 'days').toDate()) : 
+                sluttPicker.setMinDate(Moment().add(1, 'days').toDate());  
+                sluttPicker.setMaxDate(this.props.maxDato.toDate()); },
             i18n: i18n,
             disableDayFn: this.disableDayFn,
             firstDay: 1,
             field: this.refs.sluttPickerDiv,
 
         })
-        console.log(this.props.startDato)
+        sluttPicker.setDate(null)
+
     }
     
     render() {
         
         return (
             <div>
-                <div style={{height: '50px', width: '150px', background: 'red'}}ref='startPickerDiv'>{this.props.startDato ? this.props.startDato.format('LL') : ''}</div>
-                <div style={{height: '50px', width: '150px', background: 'yellow'}}ref='sluttPickerDiv'>{this.props.sluttDato ? this.props.sluttDato.format('LL') : ''} </div>
+                <div style={{height: '50px', width: '150px', background: 'red'}}ref='startPickerDiv'>{this.props.startDato ? this.props.startDato.format('LL') : 'Velg startdato'}</div>
+                <div style={{height: '50px', width: '150px', background: 'yellow'}}ref='sluttPickerDiv'>{this.props.sluttDato ? this.props.sluttDato.format('LL') : 'Velg sluttdato'} </div>
                 <button>Søk</button>
         </div>
         )

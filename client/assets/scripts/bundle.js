@@ -85,11 +85,11 @@
 
 	var _MineOrdre2 = _interopRequireDefault(_MineOrdre);
 
-	var _BestillingsShortcut = __webpack_require__(331);
+	var _BestillingsShortcut = __webpack_require__(326);
 
 	var _BestillingsShortcut2 = _interopRequireDefault(_BestillingsShortcut);
 
-	var _Bestilling = __webpack_require__(333);
+	var _Bestilling = __webpack_require__(330);
 
 	var _Bestilling2 = _interopRequireDefault(_Bestilling);
 
@@ -5308,30 +5308,38 @@
 	// Set.prototype.keys
 	Set.prototype != null && typeof Set.prototype.keys === 'function' && isNative(Set.prototype.keys);
 
+	var setItem;
+	var getItem;
+	var removeItem;
+	var getItemIDs;
+	var addRoot;
+	var removeRoot;
+	var getRootIDs;
+
 	if (canUseCollections) {
 	  var itemMap = new Map();
 	  var rootIDSet = new Set();
 
-	  var setItem = function (id, item) {
+	  setItem = function (id, item) {
 	    itemMap.set(id, item);
 	  };
-	  var getItem = function (id) {
+	  getItem = function (id) {
 	    return itemMap.get(id);
 	  };
-	  var removeItem = function (id) {
+	  removeItem = function (id) {
 	    itemMap['delete'](id);
 	  };
-	  var getItemIDs = function () {
+	  getItemIDs = function () {
 	    return Array.from(itemMap.keys());
 	  };
 
-	  var addRoot = function (id) {
+	  addRoot = function (id) {
 	    rootIDSet.add(id);
 	  };
-	  var removeRoot = function (id) {
+	  removeRoot = function (id) {
 	    rootIDSet['delete'](id);
 	  };
-	  var getRootIDs = function () {
+	  getRootIDs = function () {
 	    return Array.from(rootIDSet.keys());
 	  };
 	} else {
@@ -5347,31 +5355,31 @@
 	    return parseInt(key.substr(1), 10);
 	  };
 
-	  var setItem = function (id, item) {
+	  setItem = function (id, item) {
 	    var key = getKeyFromID(id);
 	    itemByKey[key] = item;
 	  };
-	  var getItem = function (id) {
+	  getItem = function (id) {
 	    var key = getKeyFromID(id);
 	    return itemByKey[key];
 	  };
-	  var removeItem = function (id) {
+	  removeItem = function (id) {
 	    var key = getKeyFromID(id);
 	    delete itemByKey[key];
 	  };
-	  var getItemIDs = function () {
+	  getItemIDs = function () {
 	    return Object.keys(itemByKey).map(getIDFromKey);
 	  };
 
-	  var addRoot = function (id) {
+	  addRoot = function (id) {
 	    var key = getKeyFromID(id);
 	    rootByKey[key] = true;
 	  };
-	  var removeRoot = function (id) {
+	  removeRoot = function (id) {
 	    var key = getKeyFromID(id);
 	    delete rootByKey[key];
 	  };
-	  var getRootIDs = function () {
+	  getRootIDs = function () {
 	    return Object.keys(rootByKey).map(getIDFromKey);
 	  };
 	}
@@ -6152,7 +6160,7 @@
 
 	'use strict';
 
-	module.exports = '15.4.0';
+	module.exports = '15.4.1';
 
 /***/ },
 /* 58 */
@@ -39848,7 +39856,213 @@
 
 
 /***/ },
-/* 326 */,
+/* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(29);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactPikadayComponent = __webpack_require__(327);
+
+	var _reactPikadayComponent2 = _interopRequireDefault(_reactPikadayComponent);
+
+	var _pikaday = __webpack_require__(328);
+
+	var _pikaday2 = _interopRequireDefault(_pikaday);
+
+	var _moment = __webpack_require__(212);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _axios = __webpack_require__(2);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _BilListe = __webpack_require__(329);
+
+	var _BilListe2 = _interopRequireDefault(_BilListe);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var lol = void 0;
+
+	var BestillingsShortcut = function (_React$Component) {
+	    _inherits(BestillingsShortcut, _React$Component);
+
+	    function BestillingsShortcut() {
+	        _classCallCheck(this, BestillingsShortcut);
+
+	        var _this = _possibleConstructorReturn(this, (BestillingsShortcut.__proto__ || Object.getPrototypeOf(BestillingsShortcut)).call(this));
+
+	        _this.state = {
+	            startDato: '',
+	            sluttDato: '',
+	            startDatoClass: '',
+	            sluttDatoClass: '',
+	            biler: []
+	        };
+	        _this.onChangeStart = _this.onChangeStart.bind(_this);
+	        _this.onChangeSlutt = _this.onChangeSlutt.bind(_this);
+	        _this.handleShowCar = _this.handleShowCar.bind(_this);
+	        _this.handleSelect = _this.handleSelect.bind(_this);
+	        _this.handleConfirmBil = _this.handleConfirmBil.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(BestillingsShortcut, [{
+	        key: 'onChangeStart',
+	        value: function onChangeStart(val) {
+	            this.setState({ startDato: (0, _moment2.default)(val) });
+	            lol.setMinDate((0, _moment2.default)(val).add(1, 'days').toDate());
+	        }
+	    }, {
+	        key: 'onChangeSlutt',
+	        value: function onChangeSlutt(val) {
+	            this.setState({ sluttDato: (0, _moment2.default)(val) });
+
+	            if (this.state.startDato.isValid() && this.state.sluttDato.isValid() && this.state.sluttDato.diff(this.state.startDato, 'days') > 0) {
+	                window.sessionStorage.setItem('bestillingsStartDato', this.state.startDato);
+	                window.sessionStorage.setItem('bestillingsSluttDato', this.state.sluttDato);
+	                window.location = '/bestilling';
+	            }
+	        }
+	    }, {
+	        key: 'handleShowCar',
+	        value: function handleShowCar() {
+	            var _this2 = this;
+
+	            _axios2.default.get('/api/getbiler').then(function (res) {
+	                return _this2.setState({ biler: res.data.biler });
+	            }).then(console.log(this.state.biler));
+	        }
+	    }, {
+	        key: 'handleSelect',
+	        value: function handleSelect(val) {
+	            this.setState({ selected: val });
+	            console.log(val, 'triggered');
+	        }
+	    }, {
+	        key: 'handleConfirmBil',
+	        value: function handleConfirmBil() {
+	            console.log('triggered11');
+
+	            if (this.state.selected) {
+	                console.log('triggered');
+	                window.sessionStorage.setItem('bestillingsBil', this.state.selected);
+	                window.location = '/bestilling';
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this3 = this;
+
+	            window.sessionStorage.removeItem('bestillingsStartDato');
+	            window.sessionStorage.removeItem('bestillingsSluttDato');
+	            window.sessionStorage.removeItem('bestillingsBilId');
+
+	            var i18n = {
+	                previousMonth: 'Forrige måned',
+	                nextMonth: 'Next måned',
+	                months: ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'],
+	                weekdays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
+	                weekdaysShort: ['Søn', 'Man', 'Tirs', 'Ons', 'Tho', 'Fre', 'Lør'] };
+
+	            new _pikaday2.default({
+	                field: this.refs.start,
+	                format: 'MM/DD/YYYY',
+	                minDate: (0, _moment2.default)().toDate(),
+	                onSelect: this.onChangeStart,
+	                onOpen: function onOpen() {
+	                    return _this3.setState({ startDatoClass: 'active' });
+	                },
+	                onClose: function onClose() {
+	                    return _this3.setState({ startDatoClass: '' });
+	                },
+	                i18n: i18n,
+	                firstDay: 1
+
+	            });
+	            lol = new _pikaday2.default({
+	                field: this.refs.slutt,
+	                format: 'MM/DD/YYYY',
+	                minDate: (0, _moment2.default)().add(1, 'day').toDate(),
+	                onSelect: this.onChangeSlutt,
+	                onOpen: function onOpen() {
+	                    return _this3.setState({ sluttDatoClass: 'active' });
+	                },
+	                onClose: function onClose() {
+	                    return _this3.setState({ sluttDatoClass: '' });
+	                },
+	                i18n: i18n,
+	                firstDay: 1
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    '\xC5 leie en bil hos Bilklubben er enkelt, slik det skal v\xE6re. La oss starte med velge '
+	                ),
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: this.state.startDatoClass + (this.state.startDato ? ' dirty' : ''), ref: 'start' },
+	                    'startdato ',
+	                    this.state.startDato ? this.state.startDato.format('DD/MM/YY') : '_______'
+	                ),
+	                _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    ' og '
+	                ),
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: this.state.sluttDatoClass + (this.state.sluttDato ? ' dirty' : ''), ref: 'slutt' },
+	                    'sluttdato ',
+	                    this.state.sluttDato ? this.state.sluttDato.format('DD/MM/YY') : '_______'
+	                ),
+	                _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    ', eller '
+	                ),
+	                _react2.default.createElement(
+	                    'span',
+	                    { onClick: this.handleShowCar },
+	                    'velge bil.'
+	                ),
+	                _react2.default.createElement(_BilListe2.default, { confirm: this.handleConfirmBil, selected: this.state.selected, select: this.handleSelect, shouldShow: this.state.bilListe, biler: this.state.biler })
+	            );
+	        }
+	    }]);
+
+	    return BestillingsShortcut;
+	}(_react2.default.Component);
+
+	exports.default = BestillingsShortcut;
+
+/***/ },
 /* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -41262,316 +41476,6 @@
 	    value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(29);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var EnBil = function (_React$Component) {
-	    _inherits(EnBil, _React$Component);
-
-	    function EnBil() {
-	        _classCallCheck(this, EnBil);
-
-	        return _possibleConstructorReturn(this, (EnBil.__proto__ || Object.getPrototypeOf(EnBil)).apply(this, arguments));
-	    }
-
-	    _createClass(EnBil, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: this.props.disabled ? 'disabled' : this.props.valgt ? 'valgt' : '' },
-	                _react2.default.createElement('img', { src: '/assets/img/biler/' + this.props.bilId + '/liten.jpg' })
-	            );
-	        }
-	    }]);
-
-	    return EnBil;
-	}(_react2.default.Component);
-
-	exports.default = EnBil;
-
-/***/ },
-/* 330 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(29);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _EnBil = __webpack_require__(329);
-
-	var _EnBil2 = _interopRequireDefault(_EnBil);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var BilVisning = function (_React$Component) {
-	    _inherits(BilVisning, _React$Component);
-
-	    function BilVisning() {
-	        _classCallCheck(this, BilVisning);
-
-	        return _possibleConstructorReturn(this, (BilVisning.__proto__ || Object.getPrototypeOf(BilVisning)).apply(this, arguments));
-	    }
-
-	    _createClass(BilVisning, [{
-	        key: 'render',
-	        value: function render() {
-	            var biler = this.props.biler.map(function (b) {
-	                return _react2.default.createElement(_EnBil2.default, { id: b.id });
-	            });
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                biler
-	            );
-	        }
-	    }]);
-
-	    return BilVisning;
-	}(_react2.default.Component);
-
-	exports.default = BilVisning;
-
-/***/ },
-/* 331 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(29);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactPikadayComponent = __webpack_require__(327);
-
-	var _reactPikadayComponent2 = _interopRequireDefault(_reactPikadayComponent);
-
-	var _pikaday = __webpack_require__(328);
-
-	var _pikaday2 = _interopRequireDefault(_pikaday);
-
-	var _moment = __webpack_require__(212);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _axios = __webpack_require__(2);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _BilListe = __webpack_require__(332);
-
-	var _BilListe2 = _interopRequireDefault(_BilListe);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var lol = void 0;
-
-	var BestillingsShortcut = function (_React$Component) {
-	    _inherits(BestillingsShortcut, _React$Component);
-
-	    function BestillingsShortcut() {
-	        _classCallCheck(this, BestillingsShortcut);
-
-	        var _this = _possibleConstructorReturn(this, (BestillingsShortcut.__proto__ || Object.getPrototypeOf(BestillingsShortcut)).call(this));
-
-	        _this.state = {
-	            startDato: '',
-	            sluttDato: '',
-	            startDatoClass: '',
-	            sluttDatoClass: '',
-	            biler: []
-	        };
-	        _this.onChangeStart = _this.onChangeStart.bind(_this);
-	        _this.onChangeSlutt = _this.onChangeSlutt.bind(_this);
-	        _this.handleShowCar = _this.handleShowCar.bind(_this);
-	        _this.handleSelect = _this.handleSelect.bind(_this);
-	        _this.handleConfirmBil = _this.handleConfirmBil.bind(_this);
-	        return _this;
-	    }
-
-	    _createClass(BestillingsShortcut, [{
-	        key: 'onChangeStart',
-	        value: function onChangeStart(val) {
-	            this.setState({ startDato: (0, _moment2.default)(val) });
-	            lol.setMinDate((0, _moment2.default)(val).add(1, 'days').toDate());
-	        }
-	    }, {
-	        key: 'onChangeSlutt',
-	        value: function onChangeSlutt(val) {
-	            this.setState({ sluttDato: (0, _moment2.default)(val) });
-
-	            if (this.state.startDato.isValid() && this.state.sluttDato.isValid() && this.state.sluttDato.diff(this.state.startDato, 'days') > 0) {
-	                window.sessionStorage.setItem('bestillingsStartDato', this.state.startDato);
-	                window.sessionStorage.setItem('bestillingsSluttDato', this.state.sluttDato);
-	                window.location = '/bestilling';
-	            }
-	        }
-	    }, {
-	        key: 'handleShowCar',
-	        value: function handleShowCar() {
-	            var _this2 = this;
-
-	            _axios2.default.get('/api/getbiler').then(function (res) {
-	                return _this2.setState({ biler: res.data.biler });
-	            }).then(console.log(this.state.biler));
-	        }
-	    }, {
-	        key: 'handleSelect',
-	        value: function handleSelect(val) {
-	            this.setState({ selected: val });
-	            console.log(val, 'triggered');
-	        }
-	    }, {
-	        key: 'handleConfirmBil',
-	        value: function handleConfirmBil() {
-	            console.log('triggered11');
-
-	            if (this.state.selected) {
-	                console.log('triggered');
-	                window.sessionStorage.setItem('bestillingsBil', this.state.selected);
-	                window.location = '/bestilling';
-	            }
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
-
-	            window.sessionStorage.removeItem('bestillingsStartDato');
-	            window.sessionStorage.removeItem('bestillingsSluttDato');
-	            window.sessionStorage.removeItem('bestillingsBilId');
-
-	            var i18n = {
-	                previousMonth: 'Forrige måned',
-	                nextMonth: 'Next måned',
-	                months: ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'],
-	                weekdays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
-	                weekdaysShort: ['Søn', 'Man', 'Tirs', 'Ons', 'Tho', 'Fre', 'Lør'] };
-
-	            new _pikaday2.default({
-	                field: this.refs.start,
-	                format: 'MM/DD/YYYY',
-	                onSelect: this.onChangeStart,
-	                onOpen: function onOpen() {
-	                    return _this3.setState({ startDatoClass: 'active' });
-	                },
-	                onClose: function onClose() {
-	                    return _this3.setState({ startDatoClass: '' });
-	                },
-	                i18n: i18n,
-	                firstDay: 1
-
-	            });
-	            lol = new _pikaday2.default({
-	                field: this.refs.slutt,
-	                format: 'MM/DD/YYYY',
-	                onSelect: this.onChangeSlutt,
-	                onOpen: function onOpen() {
-	                    return _this3.setState({ sluttDatoClass: 'active' });
-	                },
-	                onClose: function onClose() {
-	                    return _this3.setState({ sluttDatoClass: '' });
-	                },
-	                i18n: i18n,
-	                firstDay: 1
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    '\xC5 leie en bil hos Bilklubben er enkelt, slik det skal v\xE6re. La oss starte med velge '
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    { className: this.state.startDatoClass + (this.state.startDato ? ' dirty' : ''), ref: 'start' },
-	                    'startdato ',
-	                    this.state.startDato ? this.state.startDato.format('DD/MM/YY') : '_______'
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    ' og '
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    { className: this.state.sluttDatoClass + (this.state.sluttDato ? ' dirty' : ''), ref: 'slutt' },
-	                    'sluttdato ',
-	                    this.state.sluttDato ? this.state.sluttDato.format('DD/MM/YY') : '_______'
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    ', eller '
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    { onClick: this.handleShowCar },
-	                    'velge bil.'
-	                ),
-	                _react2.default.createElement(_BilListe2.default, { confirm: this.handleConfirmBil, selected: this.state.selected, select: this.handleSelect, shouldShow: this.state.bilListe, biler: this.state.biler })
-	            );
-	        }
-	    }]);
-
-	    return BestillingsShortcut;
-	}(_react2.default.Component);
-
-	exports.default = BestillingsShortcut;
-
-/***/ },
-/* 332 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
 	var _react = __webpack_require__(29);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -41625,7 +41529,7 @@
 	exports.default = bilListe;
 
 /***/ },
-/* 333 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41652,11 +41556,11 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _BilVisning = __webpack_require__(330);
+	var _BilVisning = __webpack_require__(331);
 
 	var _BilVisning2 = _interopRequireDefault(_BilVisning);
 
-	var _SokeFelt = __webpack_require__(334);
+	var _SokeFelt = __webpack_require__(333);
 
 	var _SokeFelt2 = _interopRequireDefault(_SokeFelt);
 
@@ -41667,6 +41571,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	__webpack_require__(325);
+
 
 	_moment2.default.locale('nb');
 
@@ -41679,13 +41586,15 @@
 	        var _this = _possibleConstructorReturn(this, (Bestilling.__proto__ || Object.getPrototypeOf(Bestilling)).call(this));
 
 	        _this.state = {
-	            startDato: (0, _moment2.default)(),
-	            sluttDato: (0, _moment2.default)().add(1, 'days'),
+	            //startDato: Moment(),
+	            //sluttDato: Moment().add(1, 'days'),
 	            maxDato: (0, _moment2.default)('12/12/2999'),
-	            opptatteDatoer: [(0, _moment2.default)('2016/11/11'), (0, _moment2.default)('2016/11/17')],
-	            velgBil: true
+	            opptatteDatoer: [],
+	            opptatteBiler: [],
+	            velgBil: false
 	        };
 	        _this.handleToggleBilDato = _this.handleToggleBilDato.bind(_this);
+	        _this.handleBilValg = _this.handleBilValg.bind(_this);
 	        _this.handleStartChange = _this.handleStartChange.bind(_this);
 	        _this.handleSluttChange = _this.handleSluttChange.bind(_this);
 	        _this.updateOpptatteBiler = _this.updateOpptatteBiler.bind(_this);
@@ -41696,19 +41605,22 @@
 	    _createClass(Bestilling, [{
 	        key: 'handleStartChange',
 	        value: function handleStartChange(val) {
-	            this.setState({ maxDato: (0, _moment2.default)('12/12/2999') });
+	            this.setState({
+	                maxDato: (0, _moment2.default)('12/12/2999'),
+	                startDato: (0, _moment2.default)(val)
+	            });
 
-	            if ((0, _moment2.default)(val).isBefore((0, _moment2.default)(this.state.sluttDato).add(1, 'days'))) {
+	            if (this.state.sluttDato && !(0, _moment2.default)(val).isBefore(this.state.sluttDato)) {
 	                console.log('it is');
 	                this.setState({
 	                    sluttDato: (0, _moment2.default)(val).add(1, 'days')
 	                });
 	            }
-	            if (this.state.velgBil || this.state.valgtBil) {
-	                this.setState({
-	                    startDato: (0, _moment2.default)(val)
-	                });
+	            if (!this.state.velgBil) {
+	                this.updateOpptatteBiler();
+	            }
 
+	            if (this.state.velgBil && this.state.valgtBil) {
 	                var dateArr = this.state.opptatteDatoer.sort(function (a, b) {
 	                    if (a > b) return 1;else if (a > b) return -1;else return 0;
 	                });
@@ -41720,71 +41632,81 @@
 	                        return true;
 	                    }
 	                }
-	            } else {
-	                this.updateOpptatteBiler();
-	                this.setState({
-	                    startDato: (0, _moment2.default)(val)
-	                });
 	            }
 	        }
 	    }, {
 	        key: 'handleSluttChange',
 	        value: function handleSluttChange(val) {
+	            console.log(this.state.startDato);
+	            console.log('HANDLED SLUTT CHANGE');
 	            if (this.state.velgBil) {
 	                this.setState({
 	                    sluttDato: (0, _moment2.default)(val)
 	                });
 	            } else {
-	                this.updateOpptatteBiler();
 	                this.setState({
+	                    startDato: (0, _moment2.default)(this.state.startDato),
 	                    sluttDato: (0, _moment2.default)(val)
 	                });
+	                this.updateOpptatteBiler();
 	            }
-	            /*
-	            if (Moment(val).isValid()) {
-	                console.log('chis')
-	            }
-	            const newDate = new Moment(val).add(0, 'days').toDate();
-	             //Axios.get
-	             let newDisabled = this.state.disabledDays;
-	            newDisabled.push(new Moment(newDate))
-	            this.setState({dateStart: newDate, disabledDays: newDisabled})
-	            console.log(newDisabled, this.state)*/
 	        }
 	    }, {
 	        key: 'handleToggleBilDato',
 	        value: function handleToggleBilDato() {
-	            this.setState({
-	                velgBil: this.state.velgBil ? false : true,
-	                biler: this.resetBiler(),
-	                startDato: null,
-	                sluttDato: null
-	            });
+	            if (this.state.velgBil) {
+	                this.resetBiler();
+
+	                this.setState({
+	                    velgBil: false,
+	                    startDato: (0, _moment2.default)(),
+	                    sluttDato: (0, _moment2.default)().add(1, 'days'),
+	                    opptatteDatoer: []
+
+	                });
+	            } else {
+	                this.resetBiler();
+	                this.setState({
+	                    velgBil: true,
+	                    startDato: null,
+	                    sluttDato: null,
+	                    opptatteDatoer: []
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'handleBilValg',
 	        value: function handleBilValg(val) {
+	            console.log('hop', val === this.state.valgtBil);
 	            if (this.state.velgBil) {
 	                this.updateOpptatteDatoer(val);
 	                this.setState({
-	                    valgtBil: val
+	                    valgtBil: this.state.valgtBil === val ? null : val
 	                });
 	            } else {
 	                this.setState({
-	                    valgtBil: val
+	                    valgtBil: this.state.valgtBil === val ? null : val
 	                });
 	            }
+	        }
+	    }, {
+	        key: 'resetBiler',
+	        value: function resetBiler() {
+	            this.setState({
+	                valgtBil: null,
+	                opptatteBiler: []
+	            });
 	        }
 	    }, {
 	        key: 'updateOpptatteDatoer',
 	        value: function updateOpptatteDatoer(val) {
 	            var _this2 = this;
 
-	            _axios2.default.get('/api/finnOpptatteDatoer', { bilId: val }).then(function (res) {
-	                _this2.setState({
-	                    opptatteDatoer: res.data.opptatteDatoer,
-	                    opptatteBiler: null
-	                });
+	            console.log('UPDATE OPPTATTE DATOER');
+	            _axios2.default.post('/api/finnOpptatteDatoer', { bilId: val }).then(function (res) {
+	                console.log(res.data);_this2.setState({ opptatteDatoer: res.data.opptatteDatoer.map(function (d) {
+	                        return _moment2.default.range(d.start, d.slutt);
+	                    }) });
 	            });
 	        }
 	    }, {
@@ -41792,25 +41714,34 @@
 	        value: function updateOpptatteBiler() {
 	            var _this3 = this;
 
-	            _axios2.default.get('/api/finnOpptatteBiler', { startDato: this.state.StartDato, sluttDato: this.state.sluttDato }).then(function (res) {
-	                _this3.setState({
-	                    opptatteBiler: res.data.opptatteBiler,
-	                    opptatteDatoer: null
-	                });
-	            });
+	            _axios2.default.post('/api/finnOpptatteBiler', {
+	                startDato: this.state.startDato ? this.state.startDato : null,
+	                sluttDato: this.state.sluttDato ? this.state.sluttDato : null
+	            }).then(function (res) {
+	                return _this3.setState({ opptatteBiler: res.data.opptatteBiler });
+	            }); //should retrun res.data.opptattebiler
 	        }
 	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this4 = this;
+
+	            _axios2.default.get('/api/getBiler').then(function (res) {
+	                return _this4.setState({ biler: res.data.biler });
+	            });
 	            if (window.sessionStorage.getItem('bestillingsStartDato') && window.sessionStorage.getItem('bestillingsSluttDato')) {
 	                this.setState({
 	                    startDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsStartDato')) || (0, _moment2.default)(),
 	                    sluttDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsSluttDato')) || (0, _moment2.default)().add(1, days)
 	                });
 	            } else if (window.sessionStorage.getItem('bestillingsBil')) {
+	                var bilen = Number(window.sessionStorage.getItem('bestillingsBil'));
+	                var carArr = [];
+	                carArr.push(bilen);
+	                this.updateOpptatteDatoer(carArr);
 	                this.setState({
-	                    startDato: (0, _moment2.default)(),
-	                    sluttDato: (0, _moment2.default)().add(1, 'days')
+	                    velgBil: true,
+	                    valgtBil: Number(window.sessionStorage.getItem('bestillingsBil'))
 	                });
 	            }
 	        }
@@ -41829,7 +41760,13 @@
 	                    maxDato: this.state.maxDato,
 	                    handleStartChange: this.handleStartChange,
 	                    handleSluttChange: this.handleSluttChange
-	                })
+	                }),
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.handleToggleBilDato },
+	                    this.state.velgBil ? 'Velg basert på dato' : 'Velg basert på bil'
+	                ),
+	                _react2.default.createElement(_BilVisning2.default, { handleBilValg: this.handleBilValg, valgtBil: this.state.valgtBil, opptatteBiler: this.state.opptatteBiler, biler: this.state.biler })
 	            );
 	        }
 	    }]);
@@ -41840,7 +41777,134 @@
 	exports.default = Bestilling;
 
 /***/ },
-/* 334 */
+/* 331 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(29);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _EnBil = __webpack_require__(332);
+
+	var _EnBil2 = _interopRequireDefault(_EnBil);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BilVisning = function (_React$Component) {
+	    _inherits(BilVisning, _React$Component);
+
+	    function BilVisning() {
+	        _classCallCheck(this, BilVisning);
+
+	        return _possibleConstructorReturn(this, (BilVisning.__proto__ || Object.getPrototypeOf(BilVisning)).call(this));
+	    }
+
+	    _createClass(BilVisning, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            console.log(this.props.opptatteBiler);
+	            var biler = this.props.biler ? this.props.biler.map(function (b) {
+	                if (_this2.props.opptatteBiler && _this2.props.opptatteBiler.length) {
+	                    return _this2.props.opptatteBiler.indexOf(b.id) < 0 ? _react2.default.createElement(_EnBil2.default, { isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id + new Date(), bil: b }) : _react2.default.createElement(_EnBil2.default, { isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: true, handleClick: _this2.props.handleBilValg, key: b.id + new Date(), bil: b });
+	                } else {
+	                    return _react2.default.createElement(_EnBil2.default, { isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id + new Date(), bil: b });
+	                }
+	            }) : null;
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                biler,
+	                _react2.default.createElement(
+	                    'button',
+	                    null,
+	                    'a'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return BilVisning;
+	}(_react2.default.Component);
+
+	exports.default = BilVisning;
+
+/***/ },
+/* 332 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(29);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EnBil = function (_React$Component) {
+	    _inherits(EnBil, _React$Component);
+
+	    function EnBil() {
+	        _classCallCheck(this, EnBil);
+
+	        return _possibleConstructorReturn(this, (EnBil.__proto__ || Object.getPrototypeOf(EnBil)).apply(this, arguments));
+	    }
+
+	    _createClass(EnBil, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var classes = this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : '';
+	            return _react2.default.createElement(
+	                'div',
+	                { onClick: function onClick() {
+	                        return _this2.props.handleClick(_this2.props.bil.id);
+	                    }, className: this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : '' },
+	                _react2.default.createElement('img', { src: '/assets/img/biler/' + this.props.bil.id + '/' + this.props.bil.imgsm }),
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    this.props.bil.year + ' ' + this.props.bil.make + ' - ' + this.props.bil.model
+	                )
+	            );
+	        }
+	    }]);
+
+	    return EnBil;
+	}(_react2.default.Component);
+
+	exports.default = EnBil;
+
+/***/ },
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41871,6 +41935,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	__webpack_require__(325);
+
 	var startPicker = void 0,
 	    sluttPicker = void 0;
 
@@ -41891,9 +41957,7 @@
 	        value: function disableDayFn(day) {
 	            if (!this.props.opptatteDatoer) return false;
 	            for (var i = 0; i < this.props.opptatteDatoer.length; i++) {
-	                if ((0, _moment2.default)(day).diff(this.props.opptatteDatoer[i], 'days') === 0) {
-	                    return true;
-	                }
+	                if ((0, _moment2.default)(day).within(this.props.opptatteDatoer[i])) return true;
 	            }
 	        }
 	    }, {
@@ -41912,10 +41976,8 @@
 	            startPicker = new _pikaday2.default({
 	                placeholder: "Velg startdato",
 	                format: "LL",
-	                minDate: this.props.startDato ? this.props.startDato.toDate() : new Date(null),
-	                value: this.props.startDato.toDate(),
-
-	                defaultDate: this.props.startDato.toDate(),
+	                minDate: (0, _moment2.default)().toDate(),
+	                defaultDate: this.props.startDato ? this.props.startDato.toDate() : null,
 	                setDefaultDate: true,
 	                onSelect: function onSelect(v) {
 	                    _this2.props.handleStartChange(v);
@@ -41931,23 +41993,24 @@
 	            sluttPicker = new _pikaday2.default({
 	                placeholder: "Velg sluttdato",
 	                format: "LL",
-	                minDate: this.props.startDato.toDate() ? this.props.startDato.add(1, 'days').toDate() : new Date(null),
+	                minDate: this.props.startDato ? (0, _moment2.default)(this.props.startDato).add(1, 'days').toDate() : (0, _moment2.default)().add(1, 'days').toDate(),
 	                maxDate: this.props.maxDato.toDate() ? this.props.maxDato.toDate() : new Date('12/12/2999'),
-	                //defaultDate: this.props.sluttDato.toDate(),
+	                defaultDate: this.props.sluttDato ? this.props.sluttDato.toDate() : null,
+	                setDefaultDate: true,
 	                onSelect: function onSelect(v) {
-	                    _this2.props.handleSluttChange(v);
+	                    _this2.props.handleSluttChange(v);console.log(_this2.props.startDato);
 	                },
 	                onOpen: function onOpen(v) {
-	                    sluttPicker.setMinDate(_this2.props.startDato.toDate());sluttPicker.setMaxDate(_this2.props.maxDato.toDate());
+	                    _this2.props.startDato ? sluttPicker.setMinDate((0, _moment2.default)(_this2.props.startDato).add(1, 'days').toDate()) : sluttPicker.setMinDate((0, _moment2.default)().add(1, 'days').toDate());
+	                    sluttPicker.setMaxDate(_this2.props.maxDato.toDate());
 	                },
-	                //setDefaultDate: true,
 	                i18n: i18n,
 	                disableDayFn: this.disableDayFn,
 	                firstDay: 1,
 	                field: this.refs.sluttPickerDiv
 
 	            });
-	            console.log(this.props.startDato);
+	            sluttPicker.setDate(null);
 	        }
 	    }, {
 	        key: 'render',
@@ -41959,12 +42022,12 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { style: { height: '50px', width: '150px', background: 'red' }, ref: 'startPickerDiv' },
-	                    this.props.startDato ? this.props.startDato.format('LL') : ''
+	                    this.props.startDato ? this.props.startDato.format('LL') : 'Velg startdato'
 	                ),
 	                _react2.default.createElement(
 	                    'div',
 	                    { style: { height: '50px', width: '150px', background: 'yellow' }, ref: 'sluttPickerDiv' },
-	                    this.props.sluttDato ? this.props.sluttDato.format('LL') : '',
+	                    this.props.sluttDato ? this.props.sluttDato.format('LL') : 'Velg sluttdato',
 	                    ' '
 	                ),
 	                _react2.default.createElement(

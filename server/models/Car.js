@@ -14,9 +14,63 @@ const Car = {
         type: Sequelize.STRING,
         allowNull: false
     },
-    specs: {
+    year: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 2016,
+    },
+    category: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+    },
+    color: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+    km: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 10000,
+    },
+    motor: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: '1,8l TDI',
+    },
+    bhp: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 110,
+    },
+    seats: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 5,
+    },
+    status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'Utmerket',
+    },
+    poslat: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: '58.969976',
+    },
+    poslng: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: '5.733107',
+    },
+    imglg: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'largeimg.jpg',
+    },
+    imgsm: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'smallimg.jpg',
     },
     price: {
         type: Sequelize.INTEGER,

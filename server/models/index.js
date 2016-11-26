@@ -30,5 +30,14 @@ Order.belongsTo(User);
 export { User, Car, Order };
 
 User.sync().catch(err => console.log(err));
-Car.sync().catch(err => console.log(err));
+Car.sync()
+    /*.then(() => Car.create({
+        make: 'Skoda',
+        model: 'Octavia',
+        year: 2015,
+        category: 'Sedan',
+        color: 'Sort',
+        price: 20
+    }))*/
+    .catch(err => console.log(err));
 Order.sync().catch(err => console.log(err));

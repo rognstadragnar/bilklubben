@@ -220,7 +220,6 @@ router.post('/api/bestill', (req, res, next) => {
       new Moment(startDato).format('YYYY-MM-DD'), 
       new Moment(sluttDato).add(1, 'days').format('YYYY-MM-DD')
     ).diff('days');
-    console.log(duration + " --- 11111232180923198213908")
     orderInfo.opptatt = [];
   if (c_id && u_id && startDato && sluttDato && isAuthed(req) === false) {
     User.findOne({where: {id: u_id}, attributes: ['id','points']})
@@ -260,8 +259,6 @@ router.post('/api/bestill', (req, res, next) => {
                   }
                 })
                 .catch((err) => console.log(err))
- 
-              
               }
           
         })
@@ -279,16 +276,79 @@ router.get('/api/getbiler', (req, res) => {
   let cars = [];
   Car.findAll()
   .then(car => {
-    console.log(car, 'lol')
     car.map((v) => {cars.push(v.dataValues)})
   })
   .then(() => res.status(200).json({biler: cars}))
   .catch(err => res.statis(404).json({error: 'fant ikke biler'}))
 })
 
+router.post('/api/finnOpptatteBiler', (req, res) => {
+  
+  try {
+      const stD = req.body.startDato ? Moment(req.body.startDato) : Moment(),
+        slD = Moment(req.body.sluttDato) ? Moment(req.body.sluttDato) : req.body.startDato ? 
+        Moment(req.body.startDato).add(1, 'days') : Moment().add(1, 'days')
+      let opptatteBiler = []
+      console.log('!!!!' + stD, '---' + slD)
+      Order.findAll({
+        where: {
+          
+          //startdate: {$and: [{$gte: slD.subtract(1, 'days').toDate()}, {$lte: stD.toDate()}]}
+            
+            /*
+          $or: [
+            {startdate: 
+              {$gte: slD.subtract(1, 'days').toDate()}
+            }, 
+            {enddate: 
+              {$lte: stD.add(1, 'days').toDate()}
+          }]*/
+          $or: [
+            {$and: [
+              {startdate: {$lte: stD.subtract(1, 'days').toDate()}}, 
+              {enddate: {$gte: slD.add(1, 'days').toDate()}}
+            ]},
+            {$and: [
+              {startdate: {$gte: stD.subtract(1, 'days').toDate()}},
+              {startdate: {$lte: slD.add(1,'days').toDate()}}
+            ]},
+            {$and: [
+              {enddate: {$gte: stD.subtract(1, 'days').toDate()}},
+              {enddate: {$lte: slD.add(1,'days').toDate()}}
+            ]}
+          ]
+        }
+      })
+      .then(orders => orders.map(o => {console.log(o.dataValues);opptatteBiler.push(o.dataValues.bkCarId)}))
+      .then(() => res.status(200).json({opptatteBiler: opptatteBiler.filter(
+        (elem, index, self) => index == self.indexOf(elem)
+      )})
+)
+
+
+  } 
+  catch(err) {
+    console.log(err)
+  }
+})
+
+
+router.post('/api/finnOpptatteDatoer', (req, res) => {
+  try {
+    const bilId = req.body.bilId
+    let datoer = [];
+    Order.findAll({where: {bkCarId: bilId}})
+    .then(orders => orders.map(o => datoer.push({start: Moment(o.dataValues.startdate), slutt: Moment(o.dataValues.enddate)})))
+    .then(() => res.status(200).json({opptatteDatoer: datoer}))
+  } 
+  catch(err) {
+    console.log(err)
+  }
+})
+
 router.get('/biler', (req, res) => {
   let cars = [];
-  Car.findAll({attributes: ['id', 'make', 'model', 'specs', 'price']})
+  Car.findAll()
   .then(car => {
     car.map((v) => {cars.push(v.dataValues)})
   })
@@ -329,7 +389,6 @@ router.get('/api/getBruker', (req, res) => {
 })
 
 router.get('/api/getOrdre', (req, res) => {
-  console.log('// got reqqq')
   let ordre = [];
   let biler = []
   Order.findAll({
@@ -372,7 +431,7 @@ router.get('/profil', (req, res) => {
 
 router.get('/', (req, res) =>  {
   let cars = [];
-  Car.findAll({attributes: ['id', 'make', 'model', 'specs', 'price']})
+  Car.findAll()
   .then(car => {
     car.map((v) => {cars.push(v.dataValues)})
   })
