@@ -7,6 +7,7 @@ import Axios from 'axios';
 import BilVisning from './BilVisning.jsx';
 import BilInfo from './BilInfo.jsx';
 import SokeFelt from './SokeFelt.jsx';
+import BekreftBestilling from './BekreftBestilling.jsx';
 
 
         Moment.locale('nb')
@@ -20,10 +21,13 @@ export default class Bestilling extends React.Component {
             maxDato: Moment('12/12/2999'),
             opptatteDatoer: [],
             opptatteBiler: [],
-            velgBil: false
+            velgBil: false,
+            visInfo: false
         }
         this.handleToggleBilDato = this.handleToggleBilDato.bind(this)
         this.handleBilValg = this.handleBilValg.bind(this)
+        this.handleVisInfo = this.handleVisInfo.bind(this)
+        this.handleBestill = this.handleBestill.bind(this)
         this.handleStartChange = this.handleStartChange.bind(this)
         this.handleSluttChange = this.handleSluttChange.bind(this)
         this.updateOpptatteBiler = this.updateOpptatteBiler.bind(this)
@@ -123,6 +127,11 @@ export default class Bestilling extends React.Component {
             opptatteBiler: []
         })
     }
+    handleVisInfo(val){
+        this.setState({
+            visInfo: val
+        })
+    }
 
 
     updateOpptatteDatoer(val){
@@ -144,11 +153,17 @@ export default class Bestilling extends React.Component {
 
     }
 
+    handleBestill(){
+        console.log('yeeho')
+        if (Moment(this.state.startDato).isValid() && Moment(this.state.sluttDato).isValid && this.state.valgtBil) {
+            Axios.post('/api/bestill', {startDato: this.state.startDato, sluttDato: this.state.sluttDato, bil: this.state.valgtBil})
+            .then(() => window.location = '/profil')
+            .catch(err => console.log(err))
+        }
+    }
 
 
-
-    componentDidMount(){
-        console.log('apparently mounting')
+    componentWillMount(){
         Axios.get('/api/getBiler')
         .then(res => this.setState({biler: res.data.biler}))
         if (window.sessionStorage.getItem('bestillingsStartDato') && 
@@ -167,25 +182,47 @@ export default class Bestilling extends React.Component {
                 velgBil: true,
                 valgtBil: Number(window.sessionStorage.getItem('bestillingsBil'))
             })
-        } 
+        } else {
+            this.setState({
+                startDato: Moment(),
+                sluttDato: Moment().add(1, 'days')
+            })
+        }
+    }
+    componentDidMount(){
+        if (window.sessionStorage.getItem('bestillingsStartDato')) window.sessionStorage.removeItem('bestillingsStartDato')
+        if (window.sessionStorage.getItem('bestillingsSluttDato')) window.sessionStorage.removeItem('bestillingsSluttDato')
+        if (window.sessionStorage.getItem('bestillingsBil')) window.sessionStorage.removeItem('bestillingsBil')
     }
     render() {
         return (
-            <div style={{margin: '250px 20px'}}>
-                <SokeFelt 
-                    toggleBil={this.handleToggleBilDato} 
-                    startDato={this.state.startDato} 
-                    sluttDato={this.state.sluttDato}
-                    sluttDatoMin={this.state.sluttDatoMin}
-                    opptatteDatoer={this.state.opptatteDatoer}
-                    maxDato={this.state.maxDato}
-                    handleStartChange={this.handleStartChange}
-                    handleSluttChange={this.handleSluttChange}
-                />
-                <button onClick={this.handleToggleBilDato}>{this.state.velgBil ? 'Velg basert på dato' : 'Velg basert på bil'}</button>
-                <BilVisning handleBilValg={this.handleBilValg} valgtBil={this.state.valgtBil} opptatteBiler={this.state.opptatteBiler} biler={this.state.biler}/>
-                {this.state.valgtBil ? <BilInfo showing={true} bil={this.state.biler.filter(cv => cv.id == this.state.valgtBil)[0]}/> : ''}
-                {/*<BekreftBestilling />*/}
+            <div className='bestilling-content'>
+                <div className='sidebar'>
+                    <SokeFelt 
+                        toggleBil={this.handleToggleBilDato} 
+                        startDato={this.state.startDato} 
+                        sluttDato={this.state.sluttDato}
+                        sluttDatoMin={this.state.sluttDatoMin}
+                        opptatteDatoer={this.state.opptatteDatoer}
+                        maxDato={this.state.maxDato}
+                        handleStartChange={this.handleStartChange}
+                        handleSluttChange={this.handleSluttChange}
+                        handleToggle={this.handleToggleBilDato} 
+                        toggleHva={this.state.velgBil ? 'Velg basert på dato' : 'Velg basert på bil'} 
+                    />
+                    {<BekreftBestilling 
+                        showing={this.state.valgtBil && Moment(this.state.startDato).isValid() && Moment(this.state.sluttDato).isValid() ? true : false} 
+                        bil={this.state.valgtBil && this.state.biler ? this.state.biler.filter(cv => cv.id === this.state.valgtBil)[0] : null}
+                        lengde={Moment(this.state.startDato).isValid() && Moment(this.state.sluttDato).isValid ? Moment.range(Moment(this.state.startDato), Moment(this.state.sluttDato)).diff('days') : null}
+                        startDato={this.state.startDato ? this.state.startDato.format('Do MMM') : null}
+                        sluttDato={this.state.sluttDato ? this.state.sluttDato.format('Do MMM') : null}
+                        handleBestill={this.handleBestill}
+                    />}
+                </div>
+                <div className='main'>
+                <BilVisning handleVisInfo={this.handleVisInfo} handleBilValg={this.handleBilValg} valgtBil={this.state.valgtBil} opptatteBiler={this.state.opptatteBiler} biler={this.state.biler}/>
+                {this.state.visInfo ? <BilInfo showing={true} handleLukk={this.handleVisInfo} bil={this.state.biler.filter(cv => cv.id == this.state.visInfo)[0]}/> : ''}
+                </div>
             </div>
         )
     }

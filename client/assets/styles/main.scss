@@ -20,13 +20,16 @@ $accent: #3d94d0;
 @import './_partials/greia.scss';
 @import './_partials/abonnement.scss';
 @import './_partials/varebiler.scss';
+@import './_partials/footer.scss';
 
+@import './_partials/bestilling.scss';
 
 
 body {
     background: white;
     overflow-x: hidden;
     max-width: 100vw;
+    width: 100vw;
 }
 
 @import "../../../node_modules/simple-flexgrid/dist/simple-flexgrid.scss";

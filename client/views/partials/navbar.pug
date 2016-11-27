@@ -13,11 +13,15 @@ if auth
                     li.navigation-li Du er logget inn som #{bruker.fulltNavn}
                     li.navigation-i#loggUt Logg ut
     nav.main-nav
-        img(src='/assets/img/logo.svg')
+        a(href='/') 
+            img(src='/assets/img/logo.svg')
         ul.main-nav-ul 
-            li.navigation-li Lei en bil
-            li.navigation-li Mitt abonnement
-            li.navigation-li Nyheter
+            li.navigation-li 
+                a(href='/bestilling') Lei en bil
+            li.navigation-li 
+                a(href='/profil') Min side
+            li.navigation-li 
+                a(href='/nyheter') Nyheter
                 
 else 
     nav#navigationBar.nav-bar
@@ -38,8 +42,7 @@ else
                     li.navigation-li#registrer-trigger Bli medlem
                 
     nav.main-nav
-        img(src='/assets/img/logo.svg')
+        a(href='/') 
+            img(src='/assets/img/logo.svg')
         ul.main-nav-ul 
-            li.navigation-li Lei en bil
-            li.navigation-li Mitt abonnement
             li.navigation-li Nyheter

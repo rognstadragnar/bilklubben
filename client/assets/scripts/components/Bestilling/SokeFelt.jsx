@@ -68,10 +68,10 @@ export default class BestillingsShortcut extends React.Component {
     render() {
         
         return (
-            <div>
-                <div style={{height: '50px', width: '150px', background: 'red'}}ref='startPickerDiv'>{this.props.startDato ? this.props.startDato.format('LL') : 'Velg startdato'}</div>
-                <div style={{height: '50px', width: '150px', background: 'yellow'}}ref='sluttPickerDiv'>{this.props.sluttDato ? this.props.sluttDato.format('LL') : 'Velg sluttdato'} </div>
-                <button>Søk</button>
+            <div className='sok-content'>
+                <div className={'sokefelt startfelt' + (this.props.startDato ? '' : ' grayed')} ref='startPickerDiv'>{this.props.startDato ? this.props.startDato.format('LL') : 'Velg startdato'}</div>
+                <div className={'sokefelt sluttfelt' + (this.props.sluttDato ? '' : ' grayed')} ref='sluttPickerDiv'>{this.props.sluttDato ? this.props.sluttDato.format('LL') : 'Velg sluttdato'} </div>
+                <span onClick={this.props.handleToggle}>{this.props.toggleHva}</span>
         </div>
         )
     }

@@ -26,14 +26,17 @@ if (loggUt) {
     });
 }
 
-const navigationBar = document.getElementById('navigationBar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 100 && navigationBar) {
-        navigationBar.classList.add('scrolled');
-    } else {
-        navigationBar.classList.remove('scrolled');
-    }
-})
+const navigationBarScroll = document.getElementById('navigationBar-scroll');
+if (navigationBarScroll) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100 && navigationBarScroll) {
+            navigationBarScroll.classList.add('scrolled');
+        } else {
+            navigationBarScroll.classList.remove('scrolled');
+        }
+    })
+}
+
 
 
 const arrowDown = document.getElementById('arrowdown');

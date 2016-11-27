@@ -119,11 +119,14 @@ block content
                 span.forsikring 
                     i *BK-forsikring er bare tull. Vi dekker ingen verdens ting.
         section.biler-section
-            h2 Våre fantastiske biler
             .content
                 each bil in biler
                     .bil
                         .img-container(style='background-image: url(/assets/img/biler/' + bil.id + '/' + bil.imgsm + ')')
+                a(href='/biler/').overlay
+                    h2 Våre fantastiske biler
+                    span Les mer
+
 
 
 block scripts

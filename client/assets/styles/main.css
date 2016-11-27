@@ -178,7 +178,7 @@ body {
   left: 0; }
   body:after {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -201,6 +201,7 @@ body.nav-open {
     opacity: 0.5;
     transition: .5s all ease; }
   body.nav-open:after {
+    left: 250px;
     z-index: 1;
     opacity: .7; }
 
@@ -791,15 +792,15 @@ section.top-biler > .top-bil {
     font-size: 8rem;
     color: #3d94d0; }
   .abonnement-section > .content {
-    width: -webkit-calc(50% - 16px * 0.5);
-    width: calc(50% - 16px * 0.5);
-    max-width: -webkit-calc(50% - 16px * 0.5);
-    max-width: calc(50% - 16px * 0.5);
+    width: -webkit-calc(41.66667% - 16px * 0.58333);
+    width: calc(41.66667% - 16px * 0.58333);
+    max-width: -webkit-calc(41.66667% - 16px * 0.58333);
+    max-width: calc(41.66667% - 16px * 0.58333);
     margin-bottom: 16px;
     box-sizing: border-box;
     display: block;
-    margin-left: -webkit-calc(25% - 16px * 0.75);
-    margin-left: calc(25% - 16px * 0.75); }
+    margin-left: -webkit-calc(29.16667% - 16px * 0.70833);
+    margin-left: calc(29.16667% - 16px * 0.70833); }
     .abonnement-section > .content .abonnement {
       padding: 20px; }
       .abonnement-section > .content .abonnement h3 {
@@ -816,7 +817,75 @@ section.top-biler > .top-bil {
       display: block;
       text-align: center; }
 
-section.biler-section .content {
+section.biler-section {
+  margin: 20px 0 50px; }
+  section.biler-section .content {
+    position: relative;
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: visible;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 90%;
+    margin: 0 auto; }
+  section.biler-section .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(61, 148, 208, 0.83);
+    transition: .2s all ease; }
+    section.biler-section .overlay span {
+      color: white;
+      display: block; }
+    section.biler-section .overlay:hover {
+      background: rgba(61, 148, 208, 0.53); }
+      section.biler-section .overlay:hover span {
+        border-bottom: 1px solid; }
+  section.biler-section h2 {
+    width: -webkit-calc(100%);
+    width: calc(100%);
+    max-width: -webkit-calc(100%);
+    max-width: calc(100%);
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    font-family: 'reklame-script';
+    font-size: 8rem;
+    color: white; }
+  section.biler-section .bil {
+    position: relative;
+    width: -webkit-calc(20% - 0px * 0.8);
+    width: calc(20% - 0px * 0.8);
+    max-width: -webkit-calc(20% - 0px * 0.8);
+    max-width: calc(20% - 0px * 0.8);
+    margin-bottom: 0px;
+    box-sizing: border-box;
+    display: block; }
+    section.biler-section .bil .img-container {
+      background-position: center center;
+      background-size: cover;
+      height: 10vw;
+      width: 100%; }
+
+footer {
   overflow-wrap: break-word;
   overflow-x: hidden;
   overflow-y: visible;
@@ -834,26 +903,159 @@ section.biler-section .content {
   justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 140px; }
+  max-width: 90%;
+  margin: 0 auto; }
 
-section.biler-section .bil {
-  width: -webkit-calc(20% - 0px * 0.8);
-  width: calc(20% - 0px * 0.8);
-  max-width: -webkit-calc(20% - 0px * 0.8);
-  max-width: calc(20% - 0px * 0.8);
-  margin-bottom: 0px;
-  box-sizing: border-box;
-  display: block; }
-  section.biler-section .bil .img-container {
-    background-position: center center;
-    background-size: cover;
-    height: 200px;
-    width: 100%; }
+.bestilling-content {
+  /*max-width: 90%;*/
+  width: 100%;
+  position: relative;
+  padding-top: 70px;
+  margin: 0 auto;
+  min-height: 100vh; }
+  .bestilling-content .sidebar {
+    position: fixed;
+    left: 0;
+    height: 100%;
+    box-sizing: border-box;
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    background: #3d94d0; }
+    .bestilling-content .sidebar .sok-content {
+      position: relative;
+      top: 0;
+      height: auto;
+      width: 100%; }
+    .bestilling-content .sidebar .sokefelt {
+      background: white;
+      border: 2px solid #3d94d0;
+      padding: 3px;
+      font-size: 1.7rem;
+      margin: 10px 0;
+      text-align: center;
+      font-weight: 500;
+      color: #3d94d0; }
+      .bestilling-content .sidebar .sokefelt.grayed {
+        font-style: italic;
+        color: rgba(61, 148, 208, 0.8); }
+    .bestilling-content .sidebar button {
+      background: #3d94d0;
+      border: 2px solid #3d94d0; }
+    .bestilling-content .sidebar .bekreft-bestilling {
+      position: relative;
+      top: 0; }
+  .bestilling-content .main {
+    padding-left: 200px;
+    box-sizing: border-box; }
+  .bestilling-content .bil-visning {
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: visible;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 50px; }
+    .bestilling-content .bil-visning .en-bil {
+      position: relative;
+      width: -webkit-calc(33.33333% - 16px * 0.66667);
+      width: calc(33.33333% - 16px * 0.66667);
+      max-width: -webkit-calc(33.33333% - 16px * 0.66667);
+      max-width: calc(33.33333% - 16px * 0.66667);
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      display: block;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-self: center;
+      box-sizing: border-box;
+      border: 2px solid transparent;
+      height: 250px; }
+      .bestilling-content .bil-visning .en-bil .en-bil-img {
+        height: 100%;
+        width: 100%;
+        background-position: center center;
+        background-size: cover; }
+      .bestilling-content .bil-visning .en-bil .en-bil-desc {
+        position: absolute;
+        padding: 5px 0;
+        background: gray; }
+      .bestilling-content .bil-visning .en-bil .en-bil-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: .2s all ease-in-out; }
+        .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-velg, .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-info {
+          position: relative;
+          height: 50px;
+          width: 50px;
+          margin: 0 20px;
+          background-position: center center;
+          background-size: contain;
+          z-index: 1;
+          background: rgba(85, 95, 111, 0.81);
+          transform: translateY(50px);
+          transition: 0.2s all ease-in-out, 0.2s transform cubic-bezier(0.37, 1.67, 1, 1); }
+          .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-velg:before, .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-info:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 6px;
+            box-sizing: border-box;
+            z-index: -1;
+            background-origin: content-box;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain; }
+        .bestilling-content .bil-visning .en-bil .en-bil-overlay > .en-bil-velg:before {
+          background-image: url("/assets/img/icons/cart.svg"); }
+        .bestilling-content .bil-visning .en-bil .en-bil-overlay > .en-bil-info:before {
+          background-image: url("/assets/img/icons/info.svg"); }
+      .bestilling-content .bil-visning .en-bil:hover {
+        cursor: pointer; }
+        .bestilling-content .bil-visning .en-bil:hover .en-bil-overlay {
+          opacity: 1; }
+        .bestilling-content .bil-visning .en-bil:hover .en-bil-velg, .bestilling-content .bil-visning .en-bil:hover .en-bil-info {
+          transform: translateY(0px); }
+        .bestilling-content .bil-visning .en-bil:hover .en-bil-velg:hover {
+          background: #51ab52; }
+        .bestilling-content .bil-visning .en-bil:hover .en-bil-info:hover {
+          background: #8a9fbf; }
+      .bestilling-content .bil-visning .en-bil.valgt {
+        border-color: #51ab52; }
+      .bestilling-content .bil-visning .en-bil.disabled {
+        opacity: 0.2; }
 
 body {
   background: white;
   overflow-x: hidden;
-  max-width: 100vw; }
+  max-width: 100vw;
+  width: 100vw; }
 
 /* SIMPLE FLEXGRID */
 .row {

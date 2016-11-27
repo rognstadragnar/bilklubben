@@ -9,8 +9,8 @@
         color: #3d94d0;
     }
     > .content {
-        @include col(6);
-        @include push(3, 12);
+        @include col(5, 12);
+        @include push(7, 24);
         .abonnement{
             h3 {
                 color: #3d94d0;

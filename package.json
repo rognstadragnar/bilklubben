@@ -37,6 +37,7 @@
     "express-session": "^1.14.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "foundation-sites": "^6.2.4",
+    "google-map-react": "^0.21.5",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-livereload": "^3.8.1",
