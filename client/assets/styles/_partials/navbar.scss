@@ -12,7 +12,7 @@ nav.nav-bar {
     max-width: 100%;
     top: 0;
     padding-top: 30px;
-    z-index: 1;
+    z-index: 99;
     transition: .5s all ease,  .2s .2s background cubic-bezier(0.4, 0, 1, 1)
 }
 nav > .wrapper{
@@ -66,11 +66,12 @@ nav > .wrapper{
 nav.scrolled {
     padding-top: 0;
     background: #4a96a3; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(right, #4CA1AF, #4a96a3);
-    background: -o-linear-gradient(right, #4CA1AF, #4a96a3);
-    background: linear-gradient(to left, #4CA1AF, #4a96a3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: -webkit-linear-gradient(right, #3a8cd1, #419fcf);
+    background: -o-linear-gradient(right, #3a8cd1, #419fcf);
+    background: linear-gradient(to left, #3a8cd1, #419fcf); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     box-shadow: 5px 0px 26px -10px;
 }
+
 
 nav.main-nav {
     position: fixed;

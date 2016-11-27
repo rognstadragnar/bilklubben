@@ -1,0 +1,38 @@
+.abonnement-section {
+    @include row();
+    padding-top: 50px;
+    h2 {
+        @include col(12);
+        text-align: center;
+        font-family: 'reklame-script';
+        font-size: 8rem;
+        color: #3d94d0;
+    }
+    > .content {
+        @include col(6);
+        @include push(3, 12);
+        .abonnement{
+            h3 {
+                color: #3d94d0;
+            }
+            padding: 20px;
+            ul li {
+                list-style-type: none;
+                list-style-position: inside;
+            }
+        }
+        .abonnement:nth-child(even) {
+            text-align: right;
+            border: 1px solid #ddd;
+            border-width: 1px 0;
+            
+        }
+
+        span.forsikring {
+            margin: 20px 0;
+            display: block; 
+            text-align: center;
+        }
+    }
+    
+}

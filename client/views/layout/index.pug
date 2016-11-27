@@ -1,0 +1,32 @@
+block variables
+
+doctype html
+html
+    head
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        title=tittel
+        link(rel='stylesheet' href='/assets/styles/main.css')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.5.1/css/pikaday.min.css')
+
+        script(src="https://use.typekit.net/qsq4ljb.js")
+        script.
+            try{Typekit.load({ async: true });}catch(e){}
+        include ../partials/preloader
+    body
+        #load-bar
+            .l-dot
+            .l-dot
+            .l-dot
+        #load-bg
+            
+        .main-content
+            
+
+            #actual-content
+                block content
+
+        include ../partials/registrering
+
+        include ../partials/navbar-index
+
+        block scripts

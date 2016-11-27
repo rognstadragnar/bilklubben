@@ -4,11 +4,11 @@
     background-size: cover;
     background-position: center top;
     min-height: 550px;
-    height: 100vh;
+    height: calc(100vh - 300px);
     //max-height: 800px;
     width: 100vw;
     box-sizing: border-box;
-    border: 15px solid white;
+    border: 0px solid white; //alt 15px
     display: flex; justify-content: center; align-items: center;
     &:before {
         content: '';
@@ -18,12 +18,14 @@
         width: 100%;
         height: 100%;
         background: #4CA1AF; /* fallback for old browsers */
-        background: -webkit-linear-gradient(to left, #4CA1AF , #C4E0E5); /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to left, #4CA1AF , #C4E0E5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: -webkit-linear-gradient(0deg, #2267cf,  #74c4ea); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(20deg, #2267cf,  #74c4ea); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         z-index: 1;
-        opacity: 0.9;
+        opacity: 0.95;
     }
+
     span#arrowdown {
+        display: none;
         content: '';
         position: absolute;
         bottom: 20px;
@@ -43,12 +45,48 @@
         flex-direction: column;
         h2.head {
             font-family: "reklame-script";
-            font-size: 7.5rem;
+            font-size: 10rem;
             text-align: center;
             //color: grey;
             //background: white;
         }
-        span {text-align: center;}
+        span.ta-del {
+            text-align: center;
+            font-size: 1.75rem
+        }
+        span.bli-medlem {
+            padding: 5px 0;
+            width: 150px;
+            margin: 10px auto;
+            text-align: center;
+            box-sizing: border-box;
+            font-weight: 500;
+            font-size: 1.9rem;
+            transition: .15s all ease;
+            position: relative;
+            border: 1px solid white;
+            &:before {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 0%;
+                background: white;
+                z-index: -1;
+                bottom: 0;
+                left: 0;
+                transition: .12s all ease;
+            }
+        }
+        &:hover {
+            cursor: pointer;
+            span.bli-medlem {
+                &:before {
+                    height: 100%;
+                }
+                color: #2a6dc9;
+            }
+        }
     }
+   
 
 }

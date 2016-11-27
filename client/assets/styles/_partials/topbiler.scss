@@ -1,0 +1,90 @@
+section.top-biler {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    width: 100%;
+    &:hover {
+        > .top-bil {
+            width: 23.33%;
+        }
+    }
+}
+
+
+ section.top-biler > .top-bil {
+     width: 25%;
+     height: 300px;
+     background: gray;
+     position: relative;
+     transition: .2s all ease;
+     .les-mer {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         background: rgba(66, 135, 211, 0.5);
+         display: flex; justify-content: center; align-items: center;
+         font-size: 3rem;
+         visibility: hidden;
+         opacity: 0;
+         transition: .2s all ease;
+         color: white;
+         text-transform: uppercase;
+     }
+     &:hover {
+         width: 30%;
+         .les-mer {
+             opacity: 1;
+             visibility: visible;
+         }
+     }
+     &:nth-child(odd){ 
+         .img-container {
+         background-position-x: right;
+        }
+    }
+    &:nth-child(even) {
+
+        .img-container {
+            background-position-x: left;
+        }
+    }
+    .desc-container {
+        position: absolute;
+        bottom: 20px;
+        right: 0;
+        color: white;
+        background: rgb(65, 159, 207);
+        background: -webkit-linear-gradient(20deg, #3a8cd1, rgb(65, 159, 207));
+        background: -o-linear-gradient(20deg, #3a8cd1, rgb(65, 159, 207));
+        background: linear-gradient(20deg, #3a8cd1, rgb(65, 159, 207)); 
+        padding: 5px 20px 5px 15px;
+        font-size: 2rem;
+        z-index: 2;
+        > span.merke {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        > span.modell {
+            text-transform: uppercase;
+            margin-left: 2px;
+        }
+    }
+    .img-container {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         background-size: cover;
+         background-position-y: center;
+         &:after {
+             content: '';
+             position: absolute;
+             width: 100%;
+             height: 100%;
+             background: rgb(206, 191, 13);
+             background: -webkit-radial-gradient(rgba(50, 155, 216, 0.2) 75%, rgba(17, 42, 53, 0.15));
+             background: -o-radial-gradient(rgba(50, 155, 216, 0.2) 75%, rgba(17, 42, 53, 0.15));
+             background: radial-gradient(rgba(50, 155, 216, 0.2) 75%, rgba(17, 42, 53, 0.15));
+             z-index: 1;
+         }
+     }
+ }

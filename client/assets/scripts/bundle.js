@@ -173,6 +173,28 @@
 	    });
 	}
 
+	var callToAction = document.getElementById('call-to-action');
+	if (callToAction && registrerReact) {
+	    callToAction.addEventListener('click', function (e) {
+	        registrerReact.classList.toggle('showing');
+	    });
+	    lukkRegistrer.addEventListener('click', function (e) {
+	        registrerReact.classList.remove('showing');
+	    });
+	}
+
+	var callGreia = document.getElementById('greia-call');
+	if (callGreia && registrerReact) {
+	    callGreia.addEventListener('click', function (e) {
+	        registrerReact.classList.toggle('showing');
+	    });
+	    lukkRegistrer.addEventListener('click', function (e) {
+	        registrerReact.classList.remove('showing');
+	    });
+	}
+
+	_simpleScroll2.default.internalLinks(70);
+
 	var profilReact = document.getElementById('profil-react');
 	if (profilReact) {
 	    _reactDom2.default.render(_react2.default.createElement(_ProfilSkjema2.default, null), profilReact);
@@ -41560,7 +41582,11 @@
 
 	var _BilVisning2 = _interopRequireDefault(_BilVisning);
 
-	var _SokeFelt = __webpack_require__(333);
+	var _BilInfo = __webpack_require__(333);
+
+	var _BilInfo2 = _interopRequireDefault(_BilInfo);
+
+	var _SokeFelt = __webpack_require__(334);
 
 	var _SokeFelt2 = _interopRequireDefault(_SokeFelt);
 
@@ -41677,6 +41703,8 @@
 	    }, {
 	        key: 'handleBilValg',
 	        value: function handleBilValg(val) {
+	            var _this2 = this;
+
 	            console.log('hop', val === this.state.valgtBil);
 	            if (this.state.velgBil) {
 	                this.updateOpptatteDatoer(val);
@@ -41688,6 +41716,10 @@
 	                    valgtBil: this.state.valgtBil === val ? null : val
 	                });
 	            }
+	            var car = this.state.biler.filter(function (cv) {
+	                return cv.id === _this2.state.valgtBil ? true : false;
+	            });
+	            console.log('111', car);
 	        }
 	    }, {
 	        key: 'resetBiler',
@@ -41700,11 +41732,11 @@
 	    }, {
 	        key: 'updateOpptatteDatoer',
 	        value: function updateOpptatteDatoer(val) {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            console.log('UPDATE OPPTATTE DATOER');
 	            _axios2.default.post('/api/finnOpptatteDatoer', { bilId: val }).then(function (res) {
-	                console.log(res.data);_this2.setState({ opptatteDatoer: res.data.opptatteDatoer.map(function (d) {
+	                console.log(res.data);_this3.setState({ opptatteDatoer: res.data.opptatteDatoer.map(function (d) {
 	                        return _moment2.default.range(d.start, d.slutt);
 	                    }) });
 	            });
@@ -41712,22 +41744,23 @@
 	    }, {
 	        key: 'updateOpptatteBiler',
 	        value: function updateOpptatteBiler() {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            _axios2.default.post('/api/finnOpptatteBiler', {
 	                startDato: this.state.startDato ? this.state.startDato : null,
 	                sluttDato: this.state.sluttDato ? this.state.sluttDato : null
 	            }).then(function (res) {
-	                return _this3.setState({ opptatteBiler: res.data.opptatteBiler });
+	                return _this4.setState({ opptatteBiler: res.data.opptatteBiler });
 	            }); //should retrun res.data.opptattebiler
 	        }
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            var _this4 = this;
+	            var _this5 = this;
 
+	            console.log('apparently mounting');
 	            _axios2.default.get('/api/getBiler').then(function (res) {
-	                return _this4.setState({ biler: res.data.biler });
+	                return _this5.setState({ biler: res.data.biler });
 	            });
 	            if (window.sessionStorage.getItem('bestillingsStartDato') && window.sessionStorage.getItem('bestillingsSluttDato')) {
 	                this.setState({
@@ -41735,7 +41768,7 @@
 	                    sluttDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsSluttDato'))
 	                });
 	                setTimeout(function () {
-	                    return _this4.updateOpptatteBiler();
+	                    return _this5.updateOpptatteBiler();
 	                }, 500);
 	            } else if (window.sessionStorage.getItem('bestillingsBil')) {
 	                var bilen = Number(window.sessionStorage.getItem('bestillingsBil'));
@@ -41751,6 +41784,8 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this6 = this;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { style: { margin: '250px 20px' } },
@@ -41769,7 +41804,10 @@
 	                    { onClick: this.handleToggleBilDato },
 	                    this.state.velgBil ? 'Velg basert på dato' : 'Velg basert på bil'
 	                ),
-	                _react2.default.createElement(_BilVisning2.default, { handleBilValg: this.handleBilValg, valgtBil: this.state.valgtBil, opptatteBiler: this.state.opptatteBiler, biler: this.state.biler })
+	                _react2.default.createElement(_BilVisning2.default, { handleBilValg: this.handleBilValg, valgtBil: this.state.valgtBil, opptatteBiler: this.state.opptatteBiler, biler: this.state.biler }),
+	                this.state.valgtBil ? _react2.default.createElement(_BilInfo2.default, { showing: true, bil: this.state.biler.filter(function (cv) {
+	                        return cv.id == _this6.state.valgtBil;
+	                    })[0] }) : ''
 	            );
 	        }
 	    }]);
@@ -41824,9 +41862,9 @@
 	            console.log(this.props.opptatteBiler);
 	            var biler = this.props.biler ? this.props.biler.map(function (b) {
 	                if (_this2.props.opptatteBiler && _this2.props.opptatteBiler.length) {
-	                    return _this2.props.opptatteBiler.indexOf(b.id) < 0 ? _react2.default.createElement(_EnBil2.default, { isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id + new Date(), bil: b }) : _react2.default.createElement(_EnBil2.default, { isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: true, handleClick: _this2.props.handleBilValg, key: b.id + new Date(), bil: b });
+	                    return _this2.props.opptatteBiler.indexOf(b.id) < 0 ? _react2.default.createElement(_EnBil2.default, { isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id, bil: b }) : _react2.default.createElement(_EnBil2.default, { isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: true, handleClick: _this2.props.handleBilValg, key: b.id, bil: b });
 	                } else {
-	                    return _react2.default.createElement(_EnBil2.default, { isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id + new Date(), bil: b });
+	                    return _react2.default.createElement(_EnBil2.default, { isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id, bil: b });
 	                }
 	            }) : null;
 	            return _react2.default.createElement(
@@ -41889,7 +41927,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { onClick: function onClick() {
-	                        return _this2.props.handleClick(_this2.props.bil.id);
+	                        return _this2.props.isDisabled ? null : _this2.props.handleClick(_this2.props.bil.id);
 	                    }, className: this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : '' },
 	                _react2.default.createElement('img', { src: '/assets/img/biler/' + this.props.bil.id + '/' + this.props.bil.imgsm }),
 	                _react2.default.createElement(
@@ -41908,6 +41946,37 @@
 
 /***/ },
 /* 333 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(29);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function (props) {
+	    var bilen = props.valgtBil ? props.biler.filter(function (cv) {
+	        return cv.id === props.valgtBil;
+	    }) : null;
+	    return _react2.default.createElement(
+	        'div',
+	        { className: 'bil-info showing' },
+	        _react2.default.createElement(
+	            'h1',
+	            null,
+	            props.bil.make
+	        )
+	    );
+	};
+
+/***/ },
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

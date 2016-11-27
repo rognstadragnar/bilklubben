@@ -2,6 +2,10 @@
 @import 'https://fonts.googleapis.com/css?family=Oxygen|Raleway:400,600';
 @include setFontFamily('"Europa", "Raleway"', 300, 400, "Oxygen", 400);
 
+$text-color: #333;
+$accent: #3d94d0;
+
+@import '../../../node_modules/simple-flexgrid/dist/simple-flexgrid.scss';
 
 
 @import './_partials/navbar.scss';
@@ -12,6 +16,11 @@
 
 
 @import './_partials/pakker.scss';
+@import './_partials/topbiler.scss';
+@import './_partials/greia.scss';
+@import './_partials/abonnement.scss';
+@import './_partials/varebiler.scss';
+
 
 
 body {
@@ -23,3 +32,11 @@ body {
 @import "../../../node_modules/simple-flexgrid/dist/simple-flexgrid.scss";
 
 @include simpleFlexgrid();
+
+.main-content {
+    /*background: #419fcf;
+    background: -webkit-linear-gradient(20deg, #3a8cd1, #419fcf);
+    background: -o-linear-gradient(20deg, #3a8cd1, #419fcf);
+    background: linear-gradient(20deg, #3a8cd1, #419fcf);*/
+    height: 100%;
+}

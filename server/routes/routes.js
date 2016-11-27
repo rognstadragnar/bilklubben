@@ -289,20 +289,8 @@ router.post('/api/finnOpptatteBiler', (req, res) => {
         slD = Moment(req.body.sluttDato) ? Moment(req.body.sluttDato) : req.body.startDato ? 
         Moment(req.body.startDato).add(1, 'days') : Moment().add(1, 'days')
       let opptatteBiler = []
-      console.log('!!!!' + stD, '---' + slD)
       Order.findAll({
         where: {
-          
-          //startdate: {$and: [{$gte: slD.subtract(1, 'days').toDate()}, {$lte: stD.toDate()}]}
-            
-            /*
-          $or: [
-            {startdate: 
-              {$gte: slD.subtract(1, 'days').toDate()}
-            }, 
-            {enddate: 
-              {$lte: stD.add(1, 'days').toDate()}
-          }]*/
           $or: [
             {$and: [
               {startdate: {$lte: stD.subtract(1, 'days').toDate()}}, 

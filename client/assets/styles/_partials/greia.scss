@@ -1,0 +1,63 @@
+.greia {
+    @include row();
+    padding-top: 50px;
+    h2 {
+        @include col(12);
+        text-align: center;
+        font-family: 'reklame-script';
+        font-size: 8rem;
+        color: #3d94d0;
+    }
+    .content {
+        @include col(6);
+        @include push(3, 12);
+
+
+        table {
+            margin: 40px auto;
+            border-collapse: collapse;
+            text-align: center;
+            th, td {
+                padding: 5px 20px
+            }
+            td > img {
+                vertical-align: bottom;
+            }
+            th:nth-child(odd), td:nth-child(odd) {
+                border-right: 1px solid #3d94d0;
+                text-align: right;
+            }
+            th:nth-child(even), td:nth-child(even) {
+                text-align: left;
+            }
+            th {
+                color: #3d94d0;
+                font-weight: lighter;
+                font-size: 2rem
+            }
+            tr:last-child, td:first-child {
+                border-bottom-left-radius: 10px;
+            }
+
+            table tr:last-child td:last-child {
+                border-bottom-right-radius: 10px;
+            }
+        }
+        .center {
+            text-align: center;
+            display: block;
+            font-size: 2rem;
+            .under {
+                border-bottom: 1px solid
+            }
+            .call {
+                color: #3d94d0;
+                transition: .2s all ease;
+                &:hover {
+                    cursor: pointer;
+                    color: #34acff;
+                }
+            }
+        }
+    }
+}

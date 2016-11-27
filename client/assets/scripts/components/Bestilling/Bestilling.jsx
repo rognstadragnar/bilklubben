@@ -5,6 +5,7 @@ require('moment-range');
 import Axios from 'axios';
 
 import BilVisning from './BilVisning.jsx';
+import BilInfo from './BilInfo.jsx';
 import SokeFelt from './SokeFelt.jsx';
 
 
@@ -112,6 +113,8 @@ export default class Bestilling extends React.Component {
                 valgtBil: this.state.valgtBil === val ? null : val
             })
         }
+        const car = this.state.biler.filter((cv) => cv.id === this.state.valgtBil ? true : false)
+        console.log('111', car)
     }
 
     resetBiler(){
@@ -123,7 +126,7 @@ export default class Bestilling extends React.Component {
 
 
     updateOpptatteDatoer(val){
-        console.log('UPDATE OPPTATTE DATOER')
+            console.log('UPDATE OPPTATTE DATOER')
         Axios.post('/api/finnOpptatteDatoer', {bilId: val})
         .then(res => {console.log(res.data);this.setState(
             {opptatteDatoer: res.data.opptatteDatoer.map(
@@ -145,6 +148,7 @@ export default class Bestilling extends React.Component {
 
 
     componentDidMount(){
+        console.log('apparently mounting')
         Axios.get('/api/getBiler')
         .then(res => this.setState({biler: res.data.biler}))
         if (window.sessionStorage.getItem('bestillingsStartDato') && 
@@ -180,8 +184,8 @@ export default class Bestilling extends React.Component {
                 />
                 <button onClick={this.handleToggleBilDato}>{this.state.velgBil ? 'Velg basert på dato' : 'Velg basert på bil'}</button>
                 <BilVisning handleBilValg={this.handleBilValg} valgtBil={this.state.valgtBil} opptatteBiler={this.state.opptatteBiler} biler={this.state.biler}/>
-                {/*<BilInfo />
-                <BekreftBestilling />*/}
+                {this.state.valgtBil ? <BilInfo showing={true} bil={this.state.biler.filter(cv => cv.id == this.state.valgtBil)[0]}/> : ''}
+                {/*<BekreftBestilling />*/}
             </div>
         )
     }

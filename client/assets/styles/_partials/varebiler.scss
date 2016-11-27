@@ -1,0 +1,15 @@
+section.biler-section {
+    .content {
+        @include row();
+        padding: 0 140px;
+    }
+    .bil {
+        @include col(2,10, 0px);
+        .img-container {
+            background-position: center center;
+            background-size: cover;
+            height: 200px;
+            width: 100%;
+        }
+    }
+}

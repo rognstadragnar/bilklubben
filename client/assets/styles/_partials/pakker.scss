@@ -8,53 +8,79 @@
 */
 .price-table {
     width: 100%;
-    padding: 0 10%;
+    padding: 0;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    margin: -10px 0
+    margin: 40px 0
 }
 
 .price-item {
     display: inline;
+    position: relative;
     width: 33.333%;
-    padding: 20px;
+    padding: 50px 0 30px;
     box-sizing: border-box;
-    margin: 10px 0;
-    transition: .5 all ease;
+    transition: .5s all ease;
     span {display: block; text-align: center;}
     span.tittel {font-size: 1.6rem;}
     span.price {font-size: 5rem;}
     span.i-mnd {font-size: 1.2rem;}
     span.price {font-size: 5rem;}
     span.points {font-size: 1.5rem;}
+    a.les-mer {
+        display: block; 
+        text-align: center; 
+        color: $text-color;
+        &:hover {
+            color: white;
+        }
+    }
+    &:before{
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-size: cover;
+        background-position: left top;
+        z-index: -1;
+        transition: .2s all ease;
+        opacity: 0.5
 
+    }
+    &:hover:before {
+        opacity: 1
+    }
 
     &:nth-child(1) {
-        background: rgba(lightblue,.6);
-        &:hover {
-            background: rgba(lightblue, .8);
-            box-shadow: 0px 2px 15px -5px;
-            margin: 5px 0;
+        &:before{
+            background-image: url('../img/pakker/1.jpg');
         }
+        background: rgba(207, 34, 34, 0.94); /* fallback for old browsers */
+        background: -webkit-linear-gradient(20deg, rgba(207, 34, 34, 0.94), rgba(236, 81, 35, 0.93)); /* Chrome 10-25, Safari 5.1-6 */
+        background: -o-linear-gradient(20deg, rgba(207, 34, 34, 0.94), rgba(236, 81, 35, 0.93));
+        background: linear-gradient(20deg, rgba(207, 34, 34, 0.94), rgba(236, 81, 35, 0.93));
     }
     &:nth-child(2) {
-        background: rgba(lightblue,1);
-        z-index: 1;
-        box-shadow: 0px 2px 15px -5px;
-        margin: 5px 0;
-        &:hover {
-            margin: 0;
+        &:before{
+            background-image: url('../img/pakker/2.jpg');
         }
+        background: rgba(35, 236, 153, 0.93); /* fallback for old browsers */
+        background: -webkit-linear-gradient(20deg, rgba(34, 207, 47, 0.94), rgba(35, 236, 153, 0.93)); /* Chrome 10-25, Safari 5.1-6 */
+        background: -o-linear-gradient(20deg, rgba(34, 207, 47, 0.94), rgba(35, 236, 153, 0.93));
+        background: linear-gradient(20deg, rgba(34, 207, 47, 0.94), rgba(35, 236, 153, 0.93));
     }
     &:nth-child(3) {
-        background: rgba(lightblue,.6);
-        &:hover {
-            background: rgba(lightblue, .8);
-            box-shadow: 0px 2px 15px -5px;
-            margin: 5px 0;
+        &:before{
+            background: url('../img/pakker/3.jpg');
         }
+        background: rgb(206, 191, 13); /* fallback for old browsers */
+        background: -webkit-linear-gradient(20deg, rgb(206, 191, 13), rgba(236, 202, 35, 0.72)); /* Chrome 10-25, Safari 5.1-6 */
+        background: -o-linear-gradient(20deg, rgb(206, 191, 13), rgba(236, 202, 35, 0.72));
+        background: linear-gradient(20deg, rgb(206, 191, 13), rgba(236, 202, 35, 0.72));
     }
 }
 
-body {background: #193452; height: 200vh}
+//body {background: #193452; height: 200vh}

@@ -94,6 +94,30 @@ if (registrerTrigger && registrerReact) {
     });
 }
 
+const callToAction = document.getElementById('call-to-action');
+if (callToAction && registrerReact) {
+    callToAction.addEventListener('click', (e) => {
+        registrerReact.classList.toggle('showing');
+
+    });
+    lukkRegistrer.addEventListener('click', (e) => {
+        registrerReact.classList.remove('showing');
+    });
+}
+
+const callGreia = document.getElementById('greia-call');
+if (callGreia && registrerReact) {
+    callGreia.addEventListener('click', (e) => {
+        registrerReact.classList.toggle('showing');
+
+    });
+    lukkRegistrer.addEventListener('click', (e) => {
+        registrerReact.classList.remove('showing');
+    });
+}
+
+simpleScroll.internalLinks(70);
+
 
 const profilReact = document.getElementById('profil-react');
 if (profilReact) {

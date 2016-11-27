@@ -1,50 +1,130 @@
-extends layout/main
-
+extends layout/index
 
 
 block content
-    include partials/header
-    section#bestillings-shortcut-react
-    section.biler
-        ul 
-            each bil in biler
-                li 
-                    a(href='/biler/' + bil.id) Merke: #{bil.make} 
+    if auth 
+        include partials/header
+        section#bestillings-shortcut-react
+        section.top-biler
+            - for (var i = 0; i < 4; ++i) //-bil in biler
+                .top-bil
+                    a(href='/biler/' + biler[i].id) 
+                        .img-container(style='background-image: url(/assets/img/biler/' + biler[i].id + '/' + biler[i].imglg + ')')
+                        .desc-container
+                            span.merke #{biler[i].make}
+                            span.modell #{biler[i].model}
+                        .les-mer Les mer 
 
-    section.hva
-        h2 Hva er egentlig greia?    
-        p Har du noen gang tenkt at det er sykt stress å leie bil?        
-        ul 
-            li yolo
-    section.priser
-        h2 Priser            
-        .price-table
-            .price-item
-                span.price 249,-
-                    span.i-mnd per mnd
-                span.tittel Gjerrigknarken
-                span.points 1000 BK-poeng hver måned!
-                ul
-                    li Gode 1
-                    li Gode 2
-            .price-item
-                span.price 490,-
-                    span.i-mnd per mnd
-                span.tittel Den middelmådige
-                span.points 2500 BK-poeng hver måned!
-                ul
-                    li Gode 1
-                    li Gode 2
-            .price-item
-                span.price 1499,-
-                    span.i-mnd per mnd
-                span.tittel Onkel Skrue
-                span.points 10000 BK-poeng hver måned!
-                ul
-                    li Gode 1
-                    li Gode 2
+        //- section om tilbud/nyheter
+            
+    else 
+        include partials/header
+        section.top-biler
+            - for (var i = 0; i < 4; ++i) //-bil in biler
+                .top-bil
+                    a(href='/biler/' + biler[i].id) 
+                        .img-container(style='background-image: url(/assets/img/biler/' + biler[i].id + '/' + biler[i].imglg + ')')
+                        .desc-container
+                            span.merke #{biler[i].make}
+                            span.modell #{biler[i].model}
+                        .les-mer Les mer      
+        
+        section.greia
+            h2 Hva er egentlig greia?   
+            div.content 
+                p
+                    | Har du noen gang tenkt at det er sykt stress å leie bil? 
+                    | Vi har alltid tenkt at det er sykt stress å leie bil, og vi, som alle, er sinnsykt fan av det å leie bil.
+                    | Derfor stiftet vi i 2017 Bilklubben, et tilbud som skal gjøre det sinnsykt enkelt å leie bil helt uten stress.
 
-    
+                p  
+                    | Som Bilklubben-medlem får du et fast antall BK-poeng hver måned, som du kan bruke på å leie sinnsykt sykt kule og fete biler som kjører skikkelig sinnsykt bra, og det er jo kjempe bra.     
+                    | 
+
+                table 
+                    tr
+                        th Bilklubben-medlem
+                        th Ola Normann
+                    tr
+                        td - Suksessfull
+                            img(src='/assets/img/icons/check.svg')
+                        td - Middelmådig
+                    tr
+                        td - Stressfri
+                            img(src='/assets/img/icons/check.svg')
+                        td - Sykt stressa
+                    tr
+                        td - Kjører fet doning
+                            img(src='/assets/img/icons/check.svg')
+                        td - Sitter i bilkø
+
+                span.center <span class='under'>Fakta lyver ikke</span>. Bli <span class='call' id='greia-call'>Bilklubben-meldem</span> i dag!
+        section.priser
+            .price-table
+                .price-item
+                    span.tittel Gjerrigknarken
+                    span.price 249,-
+                        span.i-mnd per mnd
+                    span.points 1000 BK-poeng hver måned!
+                    ul
+                    a(href='#gjerrigknarken').les-mer les mer
+
+                .price-item
+                    span.tittel Den middelmådige
+                    span.price 490,-
+                        span.i-mnd per mnd
+                    span.points 2500 BK-poeng hver måned!
+                    ul
+                    a(href='#middelmadige').les-mer les mer
+
+                .price-item
+                    span.tittel Onkel Skrue
+                    span.price 1499,-
+                        span.i-mnd per mnd
+                    span.points 10000 BK-poeng hver måned!
+                    ul
+                    a(href='#onkel-skrue').les-mer les mer
+
+        section.abonnement-section
+            h2 Våre abonnement
+            .content
+                .abonnement#onkel-skrue
+                    h3 Onkel Skrue
+                    p Vårt største og beste abonnement for deg som virkelig er best.
+                    ul
+                        li - 
+                            span Hele 10 000 BK-poeng hver eneste måned
+                        li - 
+                            span Rekordlav pris per poeng (0,14kr per poeng)
+                        li - 
+                            span Gratis BK-forsikring på hvert utleie*
+                .abonnement#middelmadige
+                    h3 Den middelmådige
+                    p Et abonnement for deg som er helt middelmådig.
+                    ul
+                        li - 
+                            span 2500 BK-poeng hver eneste måned
+                        li - 
+                            span 19 øre per BK-poeng
+
+                .abonnement#gjerrigknarken
+                    h3 Gjerrigknarken
+                    p For deg som enten har lite penger eller er veldig gjerrig.
+                    ul
+                        li - 
+                            span Bare 1000 BK-poeng hver måned
+                        li - 
+                            span 24 øre per BK-poeng
+                
+                span.forsikring 
+                    i *BK-forsikring er bare tull. Vi dekker ingen verdens ting.
+        section.biler-section
+            h2 Våre fantastiske biler
+            .content
+                each bil in biler
+                    .bil
+                        .img-container(style='background-image: url(/assets/img/biler/' + bil.id + '/' + bil.imgsm + ')')
+
 
 block scripts
     script(src='/assets/scripts/bundle.js')
