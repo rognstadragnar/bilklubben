@@ -98,26 +98,107 @@ nav > .wrapper {
   nav > .wrapper .main-nav-trigger {
     position: absolute;
     left: 0;
-    line-height: 70px;
-    color: white; }
+    line-height: 30px;
+    margin: 20px 0;
+    color: white;
+    font-size: 1.8rem;
+    padding: 0 0 0 40px;
+    transition: .2s all ease; }
+    nav > .wrapper .main-nav-trigger .trigger {
+      position: absolute;
+      top: calc(50% - 8px);
+      left: 0;
+      height: 16px;
+      width: 25px; }
+      nav > .wrapper .main-nav-trigger .trigger span {
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background: white;
+        transition: .2s all ease; }
+        nav > .wrapper .main-nav-trigger .trigger span:nth-child(2) {
+          top: calc(50% - 1px); }
+        nav > .wrapper .main-nav-trigger .trigger span:last-child {
+          bottom: 0; }
+    nav > .wrapper .main-nav-trigger:hover {
+      cursor: pointer; }
+      nav > .wrapper .main-nav-trigger:hover .trigger span:nth-child(2) {
+        transform: translateX(4px); }
+    @media screen and (max-width: 600px) {
+      nav > .wrapper .main-nav-trigger > span {
+        opacity: 0; } }
   nav > .wrapper .sec-nav {
     position: absolute;
-    right: 0; }
+    right: 0;
+    font-size: 1.8rem; }
+    nav > .wrapper .sec-nav span {
+      display: block;
+      line-height: 70px;
+      color: white; }
+    nav > .wrapper .sec-nav span:hover ul.dropdown {
+      max-height: 100%;
+      overflow: visible; }
     nav > .wrapper .sec-nav ul {
-      float: right;
-      color: white;
-      margin: 0;
-      padding: 0;
-      transition: .25s all ease-in-out; }
-      nav > .wrapper .sec-nav ul li {
-        line-height: 70px;
-        position: relative;
-        display: inline;
-        margin: 0 5px; }
-        nav > .wrapper .sec-nav ul li:last-child {
-          margin-right: 0; }
-        nav > .wrapper .sec-nav ul li a {
-          color: white; }
+      /*float: right;
+            color: white;
+            margin: 0;
+            padding: 0;
+            transition: .25s all ease-in-out;
+            .dropdown > ul {
+                max-height: 0;
+                overflow: hidden;
+                transition: .2s all ease;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 100%;
+            }
+            li.dropdown span {float: right;}
+            li.dropdown:hover > ul{
+                max-height: 100%;
+            }
+            li {
+                line-height: 70px;
+                position: relative;
+                display: inline;
+                margin: 0 5px;
+                &:last-child {
+                    margin-right: 0;
+                }
+                a {
+                    color: white;
+                }
+            } */ }
+      nav > .wrapper .sec-nav ul.dropdown {
+        max-height: 0;
+        overflow: hidden;
+        position: absolute;
+        right: -10px;
+        top: 60px;
+        width: 125px;
+        margin: 0;
+        padding: 0;
+        background: white;
+        color: #3d94d0;
+        border-radius: 3px;
+        transition: .2s all ease; }
+        nav > .wrapper .sec-nav ul.dropdown li {
+          list-style-type: none;
+          line-height: 35px;
+          font-size: 1.6rem;
+          text-align: center; }
+          nav > .wrapper .sec-nav ul.dropdown li:not(:last-child) {
+            border-bottom: 1px solid rgba(61, 148, 208, 0.2); }
+          nav > .wrapper .sec-nav ul.dropdown li:hover {
+            background: rgba(61, 148, 208, 0.2); }
+        nav > .wrapper .sec-nav ul.dropdown:after {
+          content: '';
+          position: absolute;
+          right: 15px;
+          top: -12px;
+          border: 6px solid transparent;
+          border-bottom-color: white;
+          box-sizing: border-box; }
 
 nav.scrolled {
   padding-top: 0;
@@ -189,7 +270,7 @@ body {
     background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.16));
     z-index: -1;
     opacity: 0;
-    transition: .5s all ease; }
+    transition: .2s all ease; }
 
 body.nav-open {
   left: 250px;
@@ -200,10 +281,11 @@ body.nav-open {
   body.nav-open > .main-content, body.nav-open .nav-bar {
     opacity: 0.5;
     transition: .5s all ease; }
+  body.nav-open:hover:after {
+    cursor: pointer; }
   body.nav-open:after {
-    left: 250px;
-    z-index: 1;
-    opacity: .7; }
+    transform: translateX(250px);
+    z-index: 100; }
 
 .logg-inn {
   position: absolute;
@@ -477,6 +559,26 @@ body.nav-open {
         color: #2a6dc9; }
         .hero-img div.call-to-action:hover span.bli-medlem:before {
           height: 100%; }
+  .hero-img .bestillings-shortcut .linje-1, .hero-img .bestillings-shortcut .linje-2 {
+    display: block;
+    text-align: center;
+    font-size: 2rem; }
+  .hero-img .bestillings-shortcut .linje-1.head {
+    font-size: 7rem; }
+  .hero-img .bestillings-shortcut .dato, .hero-img .bestillings-shortcut .activedato {
+    margin: 0 5px;
+    width: 50px;
+    font-style: italic;
+    border-bottom: 1px solid white;
+    text-align: center;
+    color: transparent;
+    background-color: rgba(255, 255, 255, 0);
+    transition: .4s all ease; }
+    .hero-img .bestillings-shortcut .dato.dirty, .hero-img .bestillings-shortcut .activedato.dirty {
+      color: white;
+      font-style: normal; }
+    .hero-img .bestillings-shortcut .dato:hover, .hero-img .bestillings-shortcut .activedato:hover {
+      background-color: rgba(255, 255, 255, 0.1); }
 
 .loader {
   width: 40px;
@@ -969,9 +1071,11 @@ footer {
       position: relative;
       top: 0; }
   .bestilling-content .main {
-    padding-left: 200px;
+    margin-left: 200px;
+    width: calc(100% - 200px);
     box-sizing: border-box;
-    background: rgba(142, 161, 169, 0.18); }
+    background: rgba(142, 161, 169, 0.18);
+    position: relative; }
   .bestilling-content .bil-visning {
     overflow-wrap: break-word;
     overflow-x: hidden;
@@ -990,13 +1094,14 @@ footer {
     justify-content: space-between;
     width: 100%;
     box-sizing: border-box;
-    padding: 50px; }
+    padding: 50px;
+    max-width: 1500px; }
     .bestilling-content .bil-visning .en-bil {
       position: relative;
-      width: -webkit-calc(33.33333% - 16px * 0.66667);
-      width: calc(33.33333% - 16px * 0.66667);
-      max-width: -webkit-calc(33.33333% - 16px * 0.66667);
-      max-width: calc(33.33333% - 16px * 0.66667);
+      width: -webkit-calc(25% - 16px * 0.75);
+      width: calc(25% - 16px * 0.75);
+      max-width: -webkit-calc(25% - 16px * 0.75);
+      max-width: calc(25% - 16px * 0.75);
       margin-bottom: 16px;
       box-sizing: border-box;
       display: block;
@@ -1009,6 +1114,33 @@ footer {
       height: 250px;
       overflow: hidden;
       box-shadow: 0 5px 30px -10px; }
+      @media screen and (max-width: 1150px) {
+        .bestilling-content .bil-visning .en-bil {
+          width: -webkit-calc(33.33333% - 16px * 0.66667);
+          width: calc(33.33333% - 16px * 0.66667);
+          max-width: -webkit-calc(33.33333% - 16px * 0.66667);
+          max-width: calc(33.33333% - 16px * 0.66667);
+          margin-bottom: 16px;
+          box-sizing: border-box;
+          display: block; } }
+      @media screen and (max-width: 950px) {
+        .bestilling-content .bil-visning .en-bil {
+          width: -webkit-calc(50% - 16px * 0.5);
+          width: calc(50% - 16px * 0.5);
+          max-width: -webkit-calc(50% - 16px * 0.5);
+          max-width: calc(50% - 16px * 0.5);
+          margin-bottom: 16px;
+          box-sizing: border-box;
+          display: block; } }
+      @media screen and (max-width: 750px) {
+        .bestilling-content .bil-visning .en-bil {
+          width: -webkit-calc(100%);
+          width: calc(100%);
+          max-width: -webkit-calc(100%);
+          max-width: calc(100%);
+          margin-bottom: 16px;
+          box-sizing: border-box;
+          display: block; } }
       .bestilling-content .bil-visning .en-bil .en-bil-img {
         height: 100%;
         width: 100%;
@@ -1022,7 +1154,8 @@ footer {
         right: 0;
         width: 100%;
         background: rgba(75, 149, 204, 0.85);
-        color: white; }
+        color: white;
+        z-index: 1; }
         .bestilling-content .bil-visning .en-bil .en-bil-desc .en-bil-desc-left {
           float: left;
           padding: 5px; }
@@ -1030,16 +1163,17 @@ footer {
           float: right;
           padding: 5px 5px 5px 10px;
           background: rgba(54, 118, 140, 0.62); }
-        .bestilling-content .bil-visning .en-bil .en-bil-desc .make {
-          font-weight: 500;
-          text-transform: uppercase; }
+        .bestilling-content .bil-visning .en-bil .en-bil-desc .fat {
+          font-weight: bold;
+          text-transform: uppercase;
+          margin-right: 2px; }
       .bestilling-content .bil-visning .en-bil .en-bil-overlay {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.5);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1095,20 +1229,54 @@ footer {
         transition: 0.2s all ease-in-out, 0.5s transform cubic-bezier(0.37, 1.67, 1, 1);
         background: rgba(81, 171, 82, 0.7);
         visibility: hidden;
-        opacity: 0; }
+        opacity: 0;
+        top: 0;
+        left: 0; }
       .bestilling-content .bil-visning .en-bil.valgt .en-bil-img {
         transform: scale(1.15); }
+      .bestilling-content .bil-visning .en-bil.valgt .en-bil-desc {
+        z-index: 1;
+        color: green;
+        background: rgba(255, 255, 255, 0.9); }
+        .bestilling-content .bil-visning .en-bil.valgt .en-bil-desc .en-bil-desc-right {
+          background: white; }
       .bestilling-content .bil-visning .en-bil.valgt:after {
         transform: scale(2);
         visibility: visible;
         opacity: 1; }
       .bestilling-content .bil-visning .en-bil.disabled {
-        opacity: .6; }
+        opacity: .1;
+        box-shadow: none; }
         .bestilling-content .bil-visning .en-bil.disabled:after {
           content: '';
           background: rgba(128, 128, 128, 0.7);
           visibility: visible;
           opacity: 1; }
+  .bestilling-content .bil-info {
+    position: absolute;
+    top: calc(50% - 500px);
+    left: 0;
+    width: calc(100%);
+    min-height: 300px;
+    visibility: hidden;
+    z-index: -1;
+    opacity: 0;
+    transition: .2s all ease; }
+  .bestilling-content .bil-info.showing {
+    height: 100%;
+    top: 0;
+    z-index: 1;
+    opacity: 1;
+    visibility: visible;
+    background: rgba(61, 148, 208, 0.2);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 50px; }
+    .bestilling-content .bil-info.showing .bil-info-container {
+      background: white;
+      border-radius: 5px;
+      padding: 20px; }
 
 body {
   background: white;

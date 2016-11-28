@@ -1,6 +1,10 @@
-.hero-img
-    div.call-to-action#call-to-action
-        h2.head Revolusjonerende.
-        span.ta-del Bilutleie gjort enkelt. Ta del i revolusjonen i dag. 
-        span.bli-medlem Bli medlem!
-    span#arrowdown
+if !auth
+    .hero-img
+        div.call-to-action#call-to-action
+            h2.head Revolusjonerende.
+            span.ta-del Bilutleie gjort enkelt. Ta del i revolusjonen i dag. 
+            span.bli-medlem Bli medlem!
+else 
+    .hero-img
+        div.call-to-action#call-to-action
+            #bestillings-shortcut-react

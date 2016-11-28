@@ -222,8 +222,11 @@ export default class Bestilling extends React.Component {
                     />}
                 </div>
                 <div className='main'>
-                <BilVisning handleVisInfo={this.handleVisInfo} handleBilValg={this.handleBilValg} valgtBil={this.state.valgtBil} opptatteBiler={this.state.opptatteBiler} biler={this.state.biler}/>
-                {this.state.visInfo ? <BilInfo showing={true} handleLukk={this.handleVisInfo} bil={this.state.biler.filter(cv => cv.id == this.state.visInfo)[0]}/> : ''}
+                    <BilVisning handleVisInfo={this.handleVisInfo} handleBilValg={this.handleBilValg} valgtBil={this.state.valgtBil} opptatteBiler={this.state.opptatteBiler} biler={this.state.biler}/>
+                    {this.state.visInfo ? 
+                        <div className='bil-info showing' onClick={() => this.handleVisInfo(false)}><BilInfo showing={true} handleLukk={this.handleVisInfo} bil={this.state.biler.filter(cv => cv.id == this.state.visInfo)[0]}/></div> :
+                        <div className='bil-info'></div>
+                    }
                 </div>
             </div>
         )

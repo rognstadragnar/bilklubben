@@ -69,16 +69,30 @@
         }
     }
     .main {
-        padding-left: 200px;
+        margin-left: 200px;
+        width: calc(100% - 200px);
         box-sizing: border-box;
         background:rgba(142, 161, 169, 0.18);
+        position: relative;
+         //pointer-events: none;
     }
     .bil-visning {
         @include row();
         padding: 50px;
+        max-width: 1500px;
         .en-bil {
             position: relative;
-            @include col(4);
+            @include col(3);
+
+            @include mq('max-width: 1150px') {
+                @include col(4)
+            }
+            @include mq('max-width: 950px') {
+                @include col(6)
+            }
+            @include mq('max-width: 750px') {
+                @include col(12)
+            }
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -103,6 +117,7 @@
                 width: 100%;
                 background: rgba(75, 149, 204, 0.85);
                 color: white;
+                z-index: 1;
                 .en-bil-desc-left {
                     float: left;
                     padding: 5px;
@@ -112,9 +127,10 @@
                     padding: 5px 5px 5px 10px;
                     background: rgba(54, 118, 140, 0.62)
                 }
-                .make {
-                    font-weight: 500;
+                .fat {
+                    font-weight: bold;
                     text-transform: uppercase;
+                    margin-right: 2px
                 }
             }
             .en-bil-overlay {
@@ -123,7 +139,7 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0,0,0,.2);
+                background: rgba(0,0,0,.5);
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -180,9 +196,17 @@
                     background: rgba(81, 171, 82, .7);
                     visibility: hidden; 
                     opacity: 0;
+                    top: 0; 
+                    left: 0;
                 }
             &.valgt {
                 .en-bil-img {transform: scale(1.15);}
+                .en-bil-desc {
+                    z-index: 1; 
+                    color: green; 
+                    background: rgba(white, .9);
+                    .en-bil-desc-right {background: rgba(white, 1)}
+                }
                 &:after {
                     transform: scale(2);
                     visibility: visible;
@@ -190,7 +214,8 @@
                 }
             }
             &.disabled {
-                opacity: .6;
+                opacity: .1;
+                box-shadow: none;
                 &:after {
                     content: '';
                     background: rgba(gray, .7);
@@ -199,7 +224,36 @@
                 }
             }
         }
+        
     }
+    .bil-info{
+        position: absolute;
+        top: calc(50% - 500px);
+        left: 0;
+        width: calc(100%);
+        min-height: 300px;
+        visibility: hidden;
+        z-index: -1;
 
+        opacity: 0;
+        transition: .2s all ease;
+    }
+    .bil-info.showing {
+        height: 100%;
+        top: 0;
+        z-index: 1;
+        opacity: 1;
+        visibility: visible;
+        background: rgba($accent, 0.2);
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: 50px;
+        .bil-info-container {
+            background: white;
+            border-radius: 5px;
+            padding: 20px;
+        }
+    }
 
 }

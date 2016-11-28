@@ -87,6 +87,34 @@
             }
         }
     }
+
+    .bestillings-shortcut{
+        .linje-1, .linje-2 {
+            display: block;
+            text-align: center;
+            font-size: 2rem
+        }
+        .linje-1.head {
+            font-size: 7rem
+        }
+        .dato, .activedato {
+            margin: 0 5px;
+            width: 50px;
+            font-style: italic;
+            border-bottom: 1px solid white;
+            text-align: center;
+            color: transparent;
+            background-color: rgba(white, 0);
+            transition: .4s all ease;
+            &.dirty {
+                color: white;
+                font-style: normal;
+            }
+            &:hover {
+                background-color: rgba(white, 0.1);
+            }
+        }
+    }
    
 
 }

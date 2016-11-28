@@ -2,6 +2,10 @@ if auth
     nav#navigationBar-scroll.nav-bar
         .wrapper
             #main-nav-trigger.main-nav-trigger
+                div.trigger
+                    span
+                    span
+                    span
                 span Meny
                 
             .nav-logo
@@ -9,9 +13,12 @@ if auth
                     img(src='/assets/img/logo.svg')
             
             .sec-nav
-                ul.sec-nav-ul 
-                    li.navigation-li Du er logget inn som #{bruker.fulltNavn}
-                    li.navigation-i#loggUt Logg ut
+                span God dag, #{bruker.fulltNavn}!
+                    ul.dropdown
+                        li.navigation-li 
+                            a profil
+                        li.navigation-i#loggUt Logg ut
+                    
     nav.main-nav
         a(href='/') 
             img(src='/assets/img/logo.svg')
@@ -27,6 +34,10 @@ else
     nav#navigationBar-scroll.nav-bar
         .wrapper
             #main-nav-trigger.main-nav-trigger
+                div.trigger
+                    span
+                    span
+                    span
                 span Meny
             .nav-logo
                 a(href='/')

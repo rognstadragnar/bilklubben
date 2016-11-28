@@ -7,8 +7,8 @@ export default (props) => {
     const Marker = (props) => <span style={{position: 'absolute', bottom: '0', right: '0', height: '30px', width: '20px', backgroundImage: 'url("/assets/img/icons/mapmarker.svg")', backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}></span>
 
     return (
-        <div className={'bil-info showing'}>
-            <h1>{props.bil.year}:{props.bil.make} {props.bil.model}</h1>
+        <div className='bil-info-container' onClick={(e => e.stopPropagation())} >
+            <span className='bil-info-header'>{props.bil.year}:{props.bil.make} {props.bil.model}</span>
             <div className='img-container' style={{background: 'url("/assets/img/' + props.bil.id + '/' + props.bil.imglg + '")'}}></div>
             <span>Døgnpris: {props.bil.price}</span>
             <table>

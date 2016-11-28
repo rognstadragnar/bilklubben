@@ -39970,23 +39970,22 @@
 	        value: function handleShowCar() {
 	            var _this2 = this;
 
-	            _axios2.default.get('/api/getbiler').then(function (res) {
-	                return _this2.setState({ biler: res.data.biler });
-	            }).then(console.log(this.state.biler));
+	            this.setState({ shouldShow: this.state.shouldShow ? false : true });
+	            if (!this.state.biler.length) {
+	                _axios2.default.get('/api/getbiler').then(function (res) {
+	                    return _this2.setState({ biler: res.data.biler });
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'handleSelect',
 	        value: function handleSelect(val) {
 	            this.setState({ selected: val });
-	            console.log(val, 'triggered');
 	        }
 	    }, {
 	        key: 'handleConfirmBil',
 	        value: function handleConfirmBil() {
-	            console.log('triggered11');
-
 	            if (this.state.selected) {
-	                console.log('triggered');
 	                window.sessionStorage.setItem('bestillingsBil', this.state.selected);
 	                window.location = '/bestilling';
 	            }
@@ -40043,40 +40042,37 @@
 
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'bestillings-shortcut' },
 	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    '\xC5 leie en bil hos Bilklubben er enkelt, slik det skal v\xE6re. La oss starte med velge '
+	                    'h2',
+	                    { className: 'linje-1 head' },
+	                    '\xC5 leie bil skal v\xE6re enkelt.'
 	                ),
 	                _react2.default.createElement(
 	                    'span',
-	                    { className: this.state.startDatoClass + (this.state.startDato ? ' dirty' : ''), ref: 'start' },
-	                    'startdato ',
-	                    this.state.startDato ? this.state.startDato.format('DD/MM/YY') : '_______'
+	                    { className: 'linje-1' },
+	                    'La oss starte. Jeg vil leie bil fra',
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this.state.startDatoClass + (this.state.startDato ? 'dato dirty' : 'dato'), ref: 'start' },
+	                        this.state.startDato ? this.state.startDato.format('LL') : 'superplaceholder'
+	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'span',
-	                    null,
-	                    ' og '
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    { className: this.state.sluttDatoClass + (this.state.sluttDato ? ' dirty' : ''), ref: 'slutt' },
-	                    'sluttdato ',
-	                    this.state.sluttDato ? this.state.sluttDato.format('DD/MM/YY') : '_______'
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    ', eller '
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    { onClick: this.handleShowCar },
-	                    'velge bil.'
-	                ),
-	                _react2.default.createElement(_BilListe2.default, { confirm: this.handleConfirmBil, selected: this.state.selected, select: this.handleSelect, shouldShow: this.state.bilListe, biler: this.state.biler })
+	                    { className: 'linje-2' },
+	                    _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        'og jeg vil ha den helt til'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this.state.sluttDatoClass + (this.state.sluttDato ? 'dato dirty' : 'dato'), ref: 'slutt' },
+	                        this.state.sluttDato ? this.state.sluttDato.format('LL') : 'superplaceholder'
+	                    ),
+	                    '.'
+	                )
 	            );
 	        }
 	    }]);
@@ -41512,7 +41508,7 @@
 
 	var bilListe = function bilListe(_ref) {
 	    var biler = _ref.biler,
-	        showing = _ref.showing,
+	        shouldShow = _ref.shouldShow,
 	        select = _ref.select,
 	        selected = _ref.selected,
 	        confirm = _ref.confirm;
@@ -41535,19 +41531,23 @@
 	    });
 	    return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(
-	            'ul',
-	            null,
-	            visBiler
-	        ),
-	        _react2.default.createElement(
-	            'button',
-	            { onClick: function onClick(e) {
-	                    e.preventDefault();confirm();
-	                } },
-	            'Velg'
-	        )
+	        { className: shouldShow ? 'bil-liste showing' : 'bil-liste' },
+	        shouldShow ? _react2.default.createElement(
+	            'div',
+	            { 'class-liste': 'bil-liste-content' },
+	            _react2.default.createElement(
+	                'ul',
+	                null,
+	                visBiler
+	            ),
+	            _react2.default.createElement(
+	                'button',
+	                { onClick: function onClick(e) {
+	                        e.preventDefault();confirm();
+	                    } },
+	                'Velg'
+	            )
+	        ) : null
 	    );
 	};
 	exports.default = bilListe;
@@ -41860,9 +41860,15 @@
 	                    'div',
 	                    { className: 'main' },
 	                    _react2.default.createElement(_BilVisning2.default, { handleVisInfo: this.handleVisInfo, handleBilValg: this.handleBilValg, valgtBil: this.state.valgtBil, opptatteBiler: this.state.opptatteBiler, biler: this.state.biler }),
-	                    this.state.visInfo ? _react2.default.createElement(_BilInfo2.default, { showing: true, handleLukk: this.handleVisInfo, bil: this.state.biler.filter(function (cv) {
-	                            return cv.id == _this6.state.visInfo;
-	                        })[0] }) : ''
+	                    this.state.visInfo ? _react2.default.createElement(
+	                        'div',
+	                        { className: 'bil-info showing', onClick: function onClick() {
+	                                return _this6.handleVisInfo(false);
+	                            } },
+	                        _react2.default.createElement(_BilInfo2.default, { showing: true, handleLukk: this.handleVisInfo, bil: this.state.biler.filter(function (cv) {
+	                                return cv.id == _this6.state.visInfo;
+	                            })[0] })
+	                    ) : _react2.default.createElement('div', { className: 'bil-info' })
 	                )
 	            );
 	        }
@@ -42053,10 +42059,12 @@
 
 	    return _react2.default.createElement(
 	        'div',
-	        { className: 'bil-info showing' },
+	        { className: 'bil-info-container', onClick: function onClick(e) {
+	                return e.stopPropagation();
+	            } },
 	        _react2.default.createElement(
-	            'h1',
-	            null,
+	            'span',
+	            { className: 'bil-info-header' },
 	            props.bil.year,
 	            ':',
 	            props.bil.make,

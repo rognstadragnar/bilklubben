@@ -37,19 +37,15 @@ export default class BestillingsShortcut extends React.Component {
     }
     
     handleShowCar(){
-        Axios.get('/api/getbiler')
-        .then(res => this.setState({biler: res.data.biler}))
-        .then(console.log(this.state.biler))
+        this.setState({shouldShow: this.state.shouldShow ? false : true})
+        if (!this.state.biler.length){Axios.get('/api/getbiler')
+        .then(res => this.setState({biler: res.data.biler}))}
     }
     handleSelect(val){
         this.setState({selected: val})
-        console.log(val, 'triggered')
     }
     handleConfirmBil(){
-                    console.log('triggered11')
-
         if (this.state.selected) {
-            console.log('triggered')
             window.sessionStorage.setItem('bestillingsBil', this.state.selected)
             window.location = '/bestilling';
         }
@@ -92,13 +88,15 @@ export default class BestillingsShortcut extends React.Component {
     render() {
         
         return (
-            <div>
-            <span>Å leie en bil hos Bilklubben er enkelt, slik det skal være. La oss starte med velge </span>
-            <span className={this.state.startDatoClass + (this.state.startDato ? ' dirty' : '')} ref='start'>startdato {this.state.startDato ? this.state.startDato.format('DD/MM/YY') : '_______'}</span>
-            <span> og </span>
-            <span className={this.state.sluttDatoClass + (this.state.sluttDato ? ' dirty' : '')} ref='slutt'>sluttdato {this.state.sluttDato ? this.state.sluttDato.format('DD/MM/YY') : '_______'}</span>
-            <span>, eller </span><span onClick={this.handleShowCar}>velge bil.</span>
-            {<BilListe confirm={this.handleConfirmBil} selected={this.state.selected} select={this.handleSelect} shouldShow={this.state.bilListe} biler={this.state.biler}/>}
+            <div className='bestillings-shortcut'>
+            <h2 className='linje-1 head'>Å leie bil skal være enkelt.</h2>
+            <span className='linje-1'>La oss starte. Jeg vil leie bil fra 
+                <span className={this.state.startDatoClass + (this.state.startDato ? 'dato dirty' : 'dato')} ref='start'>{this.state.startDato ? this.state.startDato.format('LL') : 'superplaceholder'}</span>
+            </span>
+            <span className='linje-2'>
+                <span>og jeg vil ha den helt til</span>
+                <span className={this.state.sluttDatoClass + (this.state.sluttDato ? 'dato dirty' : 'dato')} ref='slutt'>{this.state.sluttDato ? this.state.sluttDato.format('LL') : 'superplaceholder'}</span>.
+            </span>
         </div>
         )
     }

@@ -34,19 +34,111 @@ nav > .wrapper{
     .main-nav-trigger {
         position: absolute;
         left: 0;
-        line-height: 70px;
+        line-height: 30px;
+        margin: 20px 0;
         color: white;
+        font-size: 1.8rem;
+        padding: 0 0 0 40px;
+        transition: .2s all ease;
+        .trigger {
+            position: absolute;
+            top: calc(50% - 8px);
+            left: 0;
+            //background: red;
+            height: 16px;
+            width: 25px;
+            
+            span {
+                position: absolute;
+                width: 100%;
+                height: 2px;
+                background: white;
+                transition: .2s all ease;
+
+                &:nth-child(2) {
+                    top: calc(50% - 1px);
+                }
+                &:last-child {
+                    bottom: 0;
+                }
+            }
+            
+        }
+        &:hover {
+            cursor: pointer;
+            .trigger span:nth-child(2) {
+                transform: translateX(4px)
+            }
+        }
+        @include mq('max-width: 600px') {
+            > span {opacity: 0;}
+        }
     } 
     .sec-nav {
         position: absolute;
         right: 0; 
-     
+        font-size: 1.8rem;
+        span {
+            display: block;
+            line-height: 70px;
+            color: white;
+        }
+        span:hover ul.dropdown {max-height: 100%; overflow: visible;}
         ul {
-            float: right;
+            &.dropdown {
+                max-height: 0;
+                overflow: hidden;
+                position: absolute;
+                right: -10px;
+                top: 60px;
+                width: 125px;
+                margin: 0;
+                padding: 0;
+                background: white;
+                color: $accent;
+                border-radius: 3px;
+                transition: .2s all ease;
+                li {
+                    list-style-type: none;
+                    line-height: 35px;
+                    font-size: 1.6rem;
+                    text-align: center;
+                    &:not(:last-child) {
+                        border-bottom: 1px solid rgba($accent, 0.2)
+                    }
+                    &:hover {
+                        background: rgba($accent, 0.2)
+                    }
+                }
+                &:after {
+                    content: '';
+                    position: absolute;
+                    right: 15px;
+                    top: -12px;
+ 
+                    border: 6px solid transparent;
+                    border-bottom-color: white;
+                    box-sizing: border-box;
+                }
+            }
+            /*float: right;
             color: white;
             margin: 0;
             padding: 0;
             transition: .25s all ease-in-out;
+            .dropdown > ul {
+                max-height: 0;
+                overflow: hidden;
+                transition: .2s all ease;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 100%;
+            }
+            li.dropdown span {float: right;}
+            li.dropdown:hover > ul{
+                max-height: 100%;
+            }
             li {
                 line-height: 70px;
                 position: relative;
@@ -58,7 +150,7 @@ nav > .wrapper{
                 a {
                     color: white;
                 }
-            } 
+            } */
         }
     }
 }
@@ -136,7 +228,7 @@ body {
         background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.16));
         z-index: -1;
         opacity: 0;
-        transition: .5s all ease;
+        transition: .2s all ease
     }
 }
 
@@ -151,10 +243,12 @@ body.nav-open {
         opacity: 0.5; 
         transition: .5s all ease;
     }
+    &:hover:after {
+        cursor: pointer;
+    }
     &:after {
-        left: 250px;
-        z-index: 1;
-        opacity: .7;
+        transform: translateX(250px);
+        z-index: 100;        
     }
 
 }
