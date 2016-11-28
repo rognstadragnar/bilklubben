@@ -18,7 +18,7 @@
         align-items: flex-start;
         padding: 20px 20px;
         box-sizing: border-box;
-        background: $accent;
+        background: white;
         .sok-content {
             position: relative;
             top: 0;
@@ -26,14 +26,33 @@
             width: 100%;
         }
         .sokefelt {
+            position: relative;
             background: white;
-            border: 2px solid $accent;
-            padding: 3px;
-            font-size: 1.7rem;
+            border: 1px solid $accent;
+            padding: 3px 10px 3px 3px;
+            font-size: 1.6rem;
             margin: 10px 0;
             text-align: center;
-            font-weight: 500;
+            font-weight: 300;
             color: $accent;
+            &:hover {
+                cursor: pointer; 
+                color: rgba($accent, .7);
+                border-color: rgba($accent, .7);
+                &:after {opacity: .7}
+            }
+            &:after {
+                content: '';
+                background-image: url('/assets/img/icons/expand-accent.svg');
+                background-position: center bottom;
+                background-repeat: no-repeat;
+                background-size: contain;
+                position: absolute;
+                right: 2px;
+                top: calc(50% - 7px);
+                height: 15px;
+                width: 15px;
+            }
             &.grayed {
                 font-style: italic;
                 color: rgba($accent, 0.8)
@@ -52,6 +71,7 @@
     .main {
         padding-left: 200px;
         box-sizing: border-box;
+        background:rgba(142, 161, 169, 0.18);
     }
     .bil-visning {
         @include row();
@@ -64,18 +84,37 @@
             justify-content: center;
             align-self: center;
             box-sizing: border-box;
-            border: 2px solid transparent;
+            border: 0px solid transparent;
             height: 250px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px -10px;
             .en-bil-img {
                 height: 100%;
                 width: 100%;
                 background-position: center center;
                 background-size: cover;
+                transition: .2s all ease;
             }
             .en-bil-desc {
                 position: absolute;
                 padding: 5px 0;
-                background: gray;
+                bottom: 10px;
+                right: 0;
+                width: 100%;
+                background: rgba(75, 149, 204, 0.85);
+                color: white;
+                .en-bil-desc-left {
+                    float: left;
+                    margin: 0 0 0 5px;
+                }
+                .en-bil-desc-right {
+                    float: right;
+                    margin: 0 5px 0 0;
+                }
+                .make {
+                    font-weight: 500;
+                    text-transform: uppercase;
+                }
             }
             .en-bil-overlay {
                 position: absolute;
@@ -97,7 +136,7 @@
                     background-position: center center;
                     background-size: contain;
                     z-index: 1;
-                    background: rgba(85, 95, 111, 0.81);
+                    background: rgba(85, 95, 111, 0.91);
                     transform: translateY(50px);
                     transition: .2s all ease-in-out, .2s transform cubic-bezier(0.37, 1.67, 1, 1);
                     &:before {
@@ -121,18 +160,42 @@
                 }
                 
             }
-            &:hover {
+            &:hover:not(.valgt):not(.disabled) {
                 cursor: pointer;
                 .en-bil-overlay {opacity: 1;}  
                 .en-bil-velg, .en-bil-info {transform: translateY(0px);}
                 .en-bil-velg:hover {background: rgb(81, 171, 82)}
                 .en-bil-info:hover {background: #8a9fbf}
+                .en-bil-img {transform: scale(1.05);}
+
             }
+            &:after {
+                    content: url('/assets/img/icons/check-white.svg');
+                    display: flex;justify-content: center;
+                    align-items: center;    
+                    position: absolute;
+                    width: 100%; height: 100%;
+                    transition: .2s all ease-in-out, .5s transform cubic-bezier(0.37, 1.67, 1, 1);
+                    background: rgba(81, 171, 82, .7);
+                    visibility: hidden; 
+                    opacity: 0;
+                }
             &.valgt {
-                border-color: rgb(81, 171, 82);
+                .en-bil-img {transform: scale(1.15);}
+                &:after {
+                    transform: scale(2);
+                    visibility: visible;
+                    opacity: 1;
+                }
             }
             &.disabled {
-                opacity: 0.2;
+                opacity: .6;
+                &:after {
+                    content: '';
+                    background: rgba(gray, .7);
+                    visibility: visible;
+                    opacity: 1;
+                }
             }
         }
     }

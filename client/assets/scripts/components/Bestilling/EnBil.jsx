@@ -9,8 +9,10 @@ export default class EnBil extends React.Component{
             <div className={ this.props.isDisabled ? 'en-bil disabled ' : this.props.isValgt ? 'en-bil valgt' : 'en-bil'}>
                 <div className='en-bil-img' style={{backgroundImage: 'url(/assets/img/biler/' + this.props.bil.id + '/' + this.props.bil.imgsm +')'}} />
                 <div className='en-bil-desc'>
-                    <span>{this.props.bil.year + ' ' + this.props.bil.make + ' - ' + this.props.bil.model}</span>
-                    <span>{this.props.bil.price} BK-poeng</span>
+                    <span className='en-bil-desc-left'>
+                        <span className='fat'>{this.props.bil.make}</span><span className='slim'>{this.props.bil.model}</span>
+                    </span>
+                    <span className='en-bil-desc-right'>{this.props.bil.price}bkp</span>
                 </div>
                 <div className='en-bil-overlay'>
                     <div className='en-bil-velg' onClick={(e) => {e.stopPropagation(); this.props.isDisabled ? null : this.props.handleClick(this.props.bil.id)}}></div>

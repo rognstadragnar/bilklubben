@@ -39,7 +39,9 @@ export default class Bestilling extends React.Component {
             maxDato: Moment('12/12/2999'),
             startDato: Moment(val),
         })
-        
+        if (this.state.valgtBil && this.state.opptatteBiler.indexOf(this.state.valgtBil)) {
+            this.setState({valgtBil: null})
+        }
         if (this.state.sluttDato && !Moment(val).isBefore(this.state.sluttDato)) {
             console.log('it is')
             this.setState({
@@ -50,7 +52,7 @@ export default class Bestilling extends React.Component {
             this.updateOpptatteBiler()
         }
 
-        if (this.state.velgBil && this.state.valgtBil) {
+        if (this.state.valgtBil) {
             const dateArr = this.state.opptatteDatoer.sort((a, b) => {
                 if (a > b) return 1
                 else if (a > b) return -1

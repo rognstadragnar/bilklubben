@@ -41588,11 +41588,11 @@
 
 	var _BilInfo2 = _interopRequireDefault(_BilInfo);
 
-	var _SokeFelt = __webpack_require__(357);
+	var _SokeFelt = __webpack_require__(334);
 
 	var _SokeFelt2 = _interopRequireDefault(_SokeFelt);
 
-	var _BekreftBestilling = __webpack_require__(358);
+	var _BekreftBestilling = __webpack_require__(335);
 
 	var _BekreftBestilling2 = _interopRequireDefault(_BekreftBestilling);
 
@@ -41644,7 +41644,9 @@
 	                maxDato: (0, _moment2.default)('12/12/2999'),
 	                startDato: (0, _moment2.default)(val)
 	            });
-
+	            if (this.state.valgtBil && this.state.opptatteBiler.indexOf(this.state.valgtBil)) {
+	                this.setState({ valgtBil: null });
+	            }
 	            if (this.state.sluttDato && !(0, _moment2.default)(val).isBefore(this.state.sluttDato)) {
 	                console.log('it is');
 	                this.setState({
@@ -41655,7 +41657,7 @@
 	                this.updateOpptatteBiler();
 	            }
 
-	            if (this.state.velgBil && this.state.valgtBil) {
+	            if (this.state.valgtBil) {
 	                var dateArr = this.state.opptatteDatoer.sort(function (a, b) {
 	                    if (a > b) return 1;else if (a > b) return -1;else return 0;
 	                });
@@ -41982,14 +41984,23 @@
 	                    { className: 'en-bil-desc' },
 	                    _react2.default.createElement(
 	                        'span',
-	                        null,
-	                        this.props.bil.year + ' ' + this.props.bil.make + ' - ' + this.props.bil.model
+	                        { className: 'en-bil-desc-left' },
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'fat' },
+	                            this.props.bil.make
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'slim' },
+	                            this.props.bil.model
+	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',
-	                        null,
+	                        { className: 'en-bil-desc-right' },
 	                        this.props.bil.price,
-	                        ' BK-poeng'
+	                        'bkp'
 	                    )
 	                ),
 	                _react2.default.createElement(
@@ -42025,7 +42036,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _googleMapReact = __webpack_require__(334);
+	var _googleMapReact = __webpack_require__(336);
 
 	var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
 
@@ -42229,11 +42240,233 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(29);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _pikaday = __webpack_require__(328);
+
+	var _pikaday2 = _interopRequireDefault(_pikaday);
+
+	var _moment = __webpack_require__(212);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	__webpack_require__(325);
+
+	var startPicker = void 0,
+	    sluttPicker = void 0;
+
+	var BestillingsShortcut = function (_React$Component) {
+	    _inherits(BestillingsShortcut, _React$Component);
+
+	    function BestillingsShortcut() {
+	        _classCallCheck(this, BestillingsShortcut);
+
+	        var _this = _possibleConstructorReturn(this, (BestillingsShortcut.__proto__ || Object.getPrototypeOf(BestillingsShortcut)).call(this));
+
+	        _this.disableDayFn = _this.disableDayFn.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(BestillingsShortcut, [{
+	        key: 'disableDayFn',
+	        value: function disableDayFn(day) {
+	            if (!this.props.opptatteDatoer) return false;
+	            for (var i = 0; i < this.props.opptatteDatoer.length; i++) {
+	                if ((0, _moment2.default)(day).within(this.props.opptatteDatoer[i])) return true;
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            var i18n = {
+	                previousMonth: 'Forrige måned',
+	                nextMonth: 'Next måned',
+	                months: ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'],
+	                weekdays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
+	                weekdaysShort: ['Søn', 'Man', 'Tirs', 'Ons', 'Tho', 'Fre', 'Lør']
+	            };
+
+	            startPicker = new _pikaday2.default({
+	                placeholder: "Velg startdato",
+	                format: "LL",
+	                minDate: (0, _moment2.default)().toDate(),
+	                defaultDate: this.props.startDato ? this.props.startDato.toDate() : null,
+	                setDefaultDate: true,
+	                onSelect: function onSelect(v) {
+	                    _this2.props.handleStartChange(v);
+	                },
+	                disableDayFn: this.disableDayFn,
+	                i18n: i18n,
+	                firstDay: 1,
+
+	                field: this.refs.startPickerDiv
+
+	            });
+
+	            sluttPicker = new _pikaday2.default({
+	                placeholder: "Velg sluttdato",
+	                format: "LL",
+	                minDate: this.props.startDato ? (0, _moment2.default)(this.props.startDato).add(1, 'days').toDate() : (0, _moment2.default)().add(1, 'days').toDate(),
+	                maxDate: this.props.maxDato.toDate() ? this.props.maxDato.toDate() : new Date('12/12/2999'),
+	                defaultDate: this.props.sluttDato ? this.props.sluttDato.toDate() : null,
+	                setDefaultDate: true,
+	                onSelect: function onSelect(v) {
+	                    _this2.props.handleSluttChange(v);console.log(_this2.props.startDato);
+	                },
+	                onOpen: function onOpen(v) {
+	                    _this2.props.startDato ? sluttPicker.setMinDate((0, _moment2.default)(_this2.props.startDato).add(1, 'days').toDate()) : sluttPicker.setMinDate((0, _moment2.default)().add(1, 'days').toDate());
+	                    sluttPicker.setMaxDate(_this2.props.maxDato.toDate());
+	                },
+	                i18n: i18n,
+	                disableDayFn: this.disableDayFn,
+	                firstDay: 1,
+	                field: this.refs.sluttPickerDiv
+
+	            });
+	            sluttPicker.setDate(null);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'sok-content' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'sokefelt startfelt' + (this.props.startDato ? '' : ' grayed'), ref: 'startPickerDiv' },
+	                    this.props.startDato ? this.props.startDato.format('LL') : 'Velg startdato'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'sokefelt sluttfelt' + (this.props.sluttDato ? '' : ' grayed'), ref: 'sluttPickerDiv' },
+	                    this.props.sluttDato ? this.props.sluttDato.format('LL') : 'Velg sluttdato',
+	                    ' '
+	                ),
+	                _react2.default.createElement(
+	                    'span',
+	                    { onClick: this.props.handleToggle },
+	                    this.props.toggleHva
+	                )
+	            );
+	        }
+	    }]);
+
+	    return BestillingsShortcut;
+	}(_react2.default.Component);
+
+	exports.default = BestillingsShortcut;
+
+/***/ },
+/* 335 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(29);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _moment = __webpack_require__(212);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	__webpack_require__(325);
+
+	exports.default = function (props) {
+
+	    var bekreftBestilling = props.showing && props.bil && props.lengde > 0 ? _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'bb-din-bestilling' },
+	            'Din bestilling:'
+	        ),
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'bb-bil' },
+	            props.bil.year,
+	            ' ',
+	            props.bil.make,
+	            ' ',
+	            props.bil.model
+	        ),
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'bb-lengde' },
+	            ' \xE1 ',
+	            props.lengde,
+	            ' d\xF8gn (',
+	            props.startDato,
+	            ' - ',
+	            props.sluttDato,
+	            ')'
+	        ),
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'bb-pris' },
+	            props.bil.price * props.lengde,
+	            ' BK-poeng'
+	        ),
+	        _react2.default.createElement(
+	            'button',
+	            { className: 'bb-send', disabled: props.showing ? false : true, onClick: function onClick() {
+	                    return props.handleBestill();
+	                } },
+	            'Fullf\xF8r bestilling'
+	        )
+	    ) : _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'bb-din-bestilling' },
+	            'Din bestilling:'
+	        )
+	    );
+	    return _react2.default.createElement(
+	        'div',
+	        { className: props.showing && props.bil && props.lengde > 0 ? 'bekreft-bestilling showing' : 'bekreft-bestilling' },
+	        bekreftBestilling
+	    );
+	};
+
+/***/ },
+/* 336 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = undefined;
 
-	var _google_map = __webpack_require__(335);
+	var _google_map = __webpack_require__(337);
 
 	var _google_map2 = _interopRequireDefault(_google_map);
 
@@ -42242,7 +42475,7 @@
 	exports.default = _google_map2.default;
 
 /***/ },
-/* 335 */
+/* 337 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -42267,63 +42500,63 @@
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _marker_dispatcher = __webpack_require__(336);
+	var _marker_dispatcher = __webpack_require__(338);
 
 	var _marker_dispatcher2 = _interopRequireDefault(_marker_dispatcher);
 
-	var _google_map_map = __webpack_require__(338);
+	var _google_map_map = __webpack_require__(340);
 
 	var _google_map_map2 = _interopRequireDefault(_google_map_map);
 
-	var _google_map_markers = __webpack_require__(339);
+	var _google_map_markers = __webpack_require__(341);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
-	var _google_map_markers_prerender = __webpack_require__(341);
+	var _google_map_markers_prerender = __webpack_require__(343);
 
 	var _google_map_markers_prerender2 = _interopRequireDefault(_google_map_markers_prerender);
 
-	var _google_map_loader = __webpack_require__(342);
+	var _google_map_loader = __webpack_require__(344);
 
 	var _google_map_loader2 = _interopRequireDefault(_google_map_loader);
 
-	var _detect = __webpack_require__(344);
+	var _detect = __webpack_require__(346);
 
 	var _detect2 = _interopRequireDefault(_detect);
 
-	var _geo = __webpack_require__(345);
+	var _geo = __webpack_require__(347);
 
 	var _geo2 = _interopRequireDefault(_geo);
 
-	var _array_helper = __webpack_require__(350);
+	var _array_helper = __webpack_require__(352);
 
 	var _array_helper2 = _interopRequireDefault(_array_helper);
 
-	var _is_plain_object = __webpack_require__(351);
+	var _is_plain_object = __webpack_require__(353);
 
 	var _is_plain_object2 = _interopRequireDefault(_is_plain_object);
 
-	var _pick = __webpack_require__(352);
+	var _pick = __webpack_require__(354);
 
 	var _pick2 = _interopRequireDefault(_pick);
 
-	var _raf = __webpack_require__(353);
+	var _raf = __webpack_require__(355);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
-	var _log = __webpack_require__(354);
+	var _log = __webpack_require__(356);
 
 	var _log2 = _interopRequireDefault(_log);
 
-	var _isNumber = __webpack_require__(355);
+	var _isNumber = __webpack_require__(357);
 
 	var _isNumber2 = _interopRequireDefault(_isNumber);
 
-	var _omit = __webpack_require__(340);
+	var _omit = __webpack_require__(342);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
-	var _detectElementResize = __webpack_require__(356);
+	var _detectElementResize = __webpack_require__(358);
 
 	var _detectElementResize2 = _interopRequireDefault(_detectElementResize);
 
@@ -43283,7 +43516,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ },
-/* 336 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43294,7 +43527,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _eventemitter = __webpack_require__(337);
+	var _eventemitter = __webpack_require__(339);
 
 	var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
@@ -43347,7 +43580,7 @@
 	exports.default = MarkerDispatcher;
 
 /***/ },
-/* 337 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43642,7 +43875,7 @@
 
 
 /***/ },
-/* 338 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43702,7 +43935,7 @@
 	exports.default = GoogleMapMap;
 
 /***/ },
-/* 339 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43723,7 +43956,7 @@
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _omit = __webpack_require__(340);
+	var _omit = __webpack_require__(342);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
@@ -44037,7 +44270,7 @@
 	exports.default = GoogleMapMarkers;
 
 /***/ },
-/* 340 */
+/* 342 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -44064,7 +44297,7 @@
 	exports.default = omit;
 
 /***/ },
-/* 341 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44087,7 +44320,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _google_map_markers = __webpack_require__(339);
+	var _google_map_markers = __webpack_require__(341);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
@@ -44105,7 +44338,7 @@
 	};
 
 /***/ },
-/* 342 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -44126,7 +44359,7 @@
 	// TODO add libraries language and other map options
 	function googleMapLoader(bootstrapURLKeys) {
 	  if (!$script_) {
-	    $script_ = __webpack_require__(343); // eslint-disable-line
+	    $script_ = __webpack_require__(345); // eslint-disable-line
 	  }
 
 	  // call from outside google-map-react
@@ -44183,7 +44416,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ },
-/* 343 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -44312,7 +44545,7 @@
 
 
 /***/ },
-/* 344 */
+/* 346 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -44361,7 +44594,7 @@
 	}
 
 /***/ },
-/* 345 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44374,15 +44607,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(346);
+	var _lat_lng = __webpack_require__(348);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(348);
+	var _pointGeometry = __webpack_require__(350);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _transform = __webpack_require__(349);
+	var _transform = __webpack_require__(351);
 
 	var _transform2 = _interopRequireDefault(_transform);
 
@@ -44517,7 +44750,7 @@
 	exports.default = Geo;
 
 /***/ },
-/* 346 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44528,7 +44761,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _wrap2 = __webpack_require__(347);
+	var _wrap2 = __webpack_require__(349);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -44572,7 +44805,7 @@
 	exports.default = LatLng;
 
 /***/ },
-/* 347 */
+/* 349 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -44587,7 +44820,7 @@
 	}
 
 /***/ },
-/* 348 */
+/* 350 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -44724,7 +44957,7 @@
 
 
 /***/ },
-/* 349 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44735,15 +44968,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(346);
+	var _lat_lng = __webpack_require__(348);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(348);
+	var _pointGeometry = __webpack_require__(350);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _wrap = __webpack_require__(347);
+	var _wrap = __webpack_require__(349);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44904,7 +45137,7 @@
 	exports.default = Transform;
 
 /***/ },
-/* 350 */
+/* 352 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -44926,7 +45159,7 @@
 	}
 
 /***/ },
-/* 351 */
+/* 353 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -44964,7 +45197,7 @@
 	}
 
 /***/ },
-/* 352 */
+/* 354 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -44985,7 +45218,7 @@
 	}
 
 /***/ },
-/* 353 */
+/* 355 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -45005,7 +45238,7 @@
 	}
 
 /***/ },
-/* 354 */
+/* 356 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -45021,7 +45254,7 @@
 	exports.default = log2;
 
 /***/ },
-/* 355 */
+/* 357 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45046,7 +45279,7 @@
 	}
 
 /***/ },
-/* 356 */
+/* 358 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45221,228 +45454,6 @@
 	module.exports = {
 	  addResizeListener: addResizeListener,
 	  removeResizeListener: removeResizeListener
-	};
-
-/***/ },
-/* 357 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(29);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _pikaday = __webpack_require__(328);
-
-	var _pikaday2 = _interopRequireDefault(_pikaday);
-
-	var _moment = __webpack_require__(212);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	__webpack_require__(325);
-
-	var startPicker = void 0,
-	    sluttPicker = void 0;
-
-	var BestillingsShortcut = function (_React$Component) {
-	    _inherits(BestillingsShortcut, _React$Component);
-
-	    function BestillingsShortcut() {
-	        _classCallCheck(this, BestillingsShortcut);
-
-	        var _this = _possibleConstructorReturn(this, (BestillingsShortcut.__proto__ || Object.getPrototypeOf(BestillingsShortcut)).call(this));
-
-	        _this.disableDayFn = _this.disableDayFn.bind(_this);
-	        return _this;
-	    }
-
-	    _createClass(BestillingsShortcut, [{
-	        key: 'disableDayFn',
-	        value: function disableDayFn(day) {
-	            if (!this.props.opptatteDatoer) return false;
-	            for (var i = 0; i < this.props.opptatteDatoer.length; i++) {
-	                if ((0, _moment2.default)(day).within(this.props.opptatteDatoer[i])) return true;
-	            }
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
-
-	            var i18n = {
-	                previousMonth: 'Forrige måned',
-	                nextMonth: 'Next måned',
-	                months: ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'],
-	                weekdays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
-	                weekdaysShort: ['Søn', 'Man', 'Tirs', 'Ons', 'Tho', 'Fre', 'Lør']
-	            };
-
-	            startPicker = new _pikaday2.default({
-	                placeholder: "Velg startdato",
-	                format: "LL",
-	                minDate: (0, _moment2.default)().toDate(),
-	                defaultDate: this.props.startDato ? this.props.startDato.toDate() : null,
-	                setDefaultDate: true,
-	                onSelect: function onSelect(v) {
-	                    _this2.props.handleStartChange(v);
-	                },
-	                disableDayFn: this.disableDayFn,
-	                i18n: i18n,
-	                firstDay: 1,
-
-	                field: this.refs.startPickerDiv
-
-	            });
-
-	            sluttPicker = new _pikaday2.default({
-	                placeholder: "Velg sluttdato",
-	                format: "LL",
-	                minDate: this.props.startDato ? (0, _moment2.default)(this.props.startDato).add(1, 'days').toDate() : (0, _moment2.default)().add(1, 'days').toDate(),
-	                maxDate: this.props.maxDato.toDate() ? this.props.maxDato.toDate() : new Date('12/12/2999'),
-	                defaultDate: this.props.sluttDato ? this.props.sluttDato.toDate() : null,
-	                setDefaultDate: true,
-	                onSelect: function onSelect(v) {
-	                    _this2.props.handleSluttChange(v);console.log(_this2.props.startDato);
-	                },
-	                onOpen: function onOpen(v) {
-	                    _this2.props.startDato ? sluttPicker.setMinDate((0, _moment2.default)(_this2.props.startDato).add(1, 'days').toDate()) : sluttPicker.setMinDate((0, _moment2.default)().add(1, 'days').toDate());
-	                    sluttPicker.setMaxDate(_this2.props.maxDato.toDate());
-	                },
-	                i18n: i18n,
-	                disableDayFn: this.disableDayFn,
-	                firstDay: 1,
-	                field: this.refs.sluttPickerDiv
-
-	            });
-	            sluttPicker.setDate(null);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'sok-content' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'sokefelt startfelt' + (this.props.startDato ? '' : ' grayed'), ref: 'startPickerDiv' },
-	                    this.props.startDato ? this.props.startDato.format('LL') : 'Velg startdato'
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'sokefelt sluttfelt' + (this.props.sluttDato ? '' : ' grayed'), ref: 'sluttPickerDiv' },
-	                    this.props.sluttDato ? this.props.sluttDato.format('LL') : 'Velg sluttdato',
-	                    ' '
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    { onClick: this.props.handleToggle },
-	                    this.props.toggleHva
-	                )
-	            );
-	        }
-	    }]);
-
-	    return BestillingsShortcut;
-	}(_react2.default.Component);
-
-	exports.default = BestillingsShortcut;
-
-/***/ },
-/* 358 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(29);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _moment = __webpack_require__(212);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	__webpack_require__(325);
-
-	exports.default = function (props) {
-
-	    var bekreftBestilling = props.showing && props.bil && props.lengde > 0 ? _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-din-bestilling' },
-	            'Din bestilling:'
-	        ),
-	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-bil' },
-	            props.bil.year,
-	            ' ',
-	            props.bil.make,
-	            ' ',
-	            props.bil.model
-	        ),
-	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-lengde' },
-	            ' \xE1 ',
-	            props.lengde,
-	            ' d\xF8gn (',
-	            props.startDato,
-	            ' - ',
-	            props.sluttDato,
-	            ')'
-	        ),
-	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-pris' },
-	            props.bil.price * props.lengde,
-	            ' BK-poeng'
-	        ),
-	        _react2.default.createElement(
-	            'button',
-	            { className: 'bb-send', disabled: props.showing ? false : true, onClick: function onClick() {
-	                    return props.handleBestill();
-	                } },
-	            'Fullf\xF8r bestilling'
-	        )
-	    ) : _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-din-bestilling' },
-	            'Din bestilling:'
-	        )
-	    );
-	    return _react2.default.createElement(
-	        'div',
-	        { className: props.showing && props.bil && props.lengde > 0 ? 'bekreft-bestilling showing' : 'bekreft-bestilling' },
-	        bekreftBestilling
-	    );
 	};
 
 /***/ }
