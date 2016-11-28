@@ -1017,7 +1017,7 @@ footer {
         transition: .2s all ease; }
       .bestilling-content .bil-visning .en-bil .en-bil-desc {
         position: absolute;
-        padding: 5px 0;
+        padding: 0;
         bottom: 10px;
         right: 0;
         width: 100%;
@@ -1025,10 +1025,11 @@ footer {
         color: white; }
         .bestilling-content .bil-visning .en-bil .en-bil-desc .en-bil-desc-left {
           float: left;
-          margin: 0 0 0 5px; }
+          padding: 5px; }
         .bestilling-content .bil-visning .en-bil .en-bil-desc .en-bil-desc-right {
           float: right;
-          margin: 0 5px 0 0; }
+          padding: 5px 5px 5px 10px;
+          background: rgba(54, 118, 140, 0.62); }
         .bestilling-content .bil-visning .en-bil .en-bil-desc .make {
           font-weight: 500;
           text-transform: uppercase; }
