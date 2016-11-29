@@ -29,9 +29,9 @@ export default class LoggInnSkjema extends React.Component {
     }
     render(){
         return (
-            <div>
+            <div className='logg-inn-parent'>
+                <span id='lukk-logg-inn' className='lukk'></span>
                 <h5>Logg inn</h5>
-                <span id='lukk-logg-inn'>Lukk</span>
                 <form onSubmit={this.handleSubmit}> 
                     <TextFieldGroup icon='../assets/img/icons/person.svg' value={this.state.brukernavn} name='brukernavn' onChange={this.handleChange} placeholder='brukernavn'/>
                     <TextFieldGroup icon='../assets/img/icons/lock.svg' value={this.state.passord} name='passord' field='password' onChange={this.handleChange} placeholder='passord'/>

@@ -5,6 +5,12 @@ section.top-biler {
     width: 100%;
     &:hover {
         > .top-bil {
+            @include mq('max-width: 1200px'){
+                width: 25%
+            }
+            @include mq('max-width: 850px'){
+                width: 40% //not right
+            }
             width: 23.33%;
         }
     }
@@ -17,6 +23,20 @@ section.top-biler {
      background: gray;
      position: relative;
      transition: .2s all ease;
+     @include mq('max-width: 1200px'){
+         width: 33.333%;
+         &:nth-child(4) {width: 0}
+    }
+    @include mq('max-width: 850px'){
+         width: 50%;
+         &:nth-child(3) {width: 0}
+    }
+    @include mq('max-width: 700px'){
+        height: 250px //not right
+    }
+    @include mq('max-width: 500px'){
+        height: 150px //not right
+    }
      .les-mer {
          position: absolute;
          width: 100%;
@@ -31,11 +51,18 @@ section.top-biler {
          text-transform: uppercase;
      }
      &:hover {
+         @include mq('max-width: 1200px'){
+            width: 50%
+        }
+        @include mq('max-width: 850px'){
+            width: 60% //not right
+        }
          width: 30%;
          .les-mer {
              opacity: 1;
              visibility: visible;
          }
+         
      }
      &:nth-child(odd){ 
          .img-container {

@@ -7,18 +7,17 @@
 
 */
 .price-table {
-    width: 100%;
-    padding: 0;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
+    @include row();
     margin: 40px 0
 }
 
 .price-item {
     display: inline;
     position: relative;
-    width: 33.333%;
+    @include col(4, 12, 0px);
+    @include mq('max-width: 700px') {
+        @include col(12, 12, 0px);
+    }
     padding: 50px 0 30px;
     box-sizing: border-box;
     transition: .5s all ease;

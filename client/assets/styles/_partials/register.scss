@@ -1,10 +1,10 @@
-.registrer {
+.registrer, .logginn {
     position: fixed;
     top: 0; left: 0;
     width: 100vw;
     min-height: 100vh;
-    background: rgba(white, 0.5);
-    z-index: 2;
+    background: rgba(white, 0.9);
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,8 +16,107 @@
         opacity: 1;
     }
 }
-.registrer-parent {
-    background: white;
+
+.registrer-parent, .logg-inn-parent {
+    position: relative;
+    background: linear-gradient(20deg, #2267cf, #74c4ea);
+    padding: 20px 30px 10px;
+    @include mq('max-width: 400px') {
+        padding: 30px 10px 10px;
+        margin: 10px 0;
+    }
+    h5, h6 {
+        color: white;
+        
+        font-weight: 300;
+        text-align: center;
+        margin: 20px 0 0px 0;
+    }
+    h5 {
+        font-size: 4rem;
+        font-family: 'reklame-script';
+        letter-spacing: .2rem;
+
+    }
+    h6 {
+        font-size: 2rem;
+        font-weight: 200;
+
+    }
+    form {
+        text-align: center;
+    }
+    .form-group {
+        margin: 10px 0;
+        position: relative;
+        img {
+            height: 30px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0; 
+            left: 0;
+            padding: 5px 5px;
+            background: none;
+            //margin-left: 2px;
+            //border-radius: 5px 0 0 5px;
+            opacity: 1;
+            transition: .2s all ease;
+
+        }
+        input[type='text'], input[type='password'] {
+            font-size: 1.5rem;
+            background: none;
+            border: 1px solid white;
+            padding: 5px 0 5px 30px;
+            //border-radius: 5px;
+            color: white;
+            width: 150px;
+            height: 30px;
+            font-family: "europa";
+            font-weight: 300;
+            box-sizing: border-box;
+            transition: .2s all ease;
+            
+            &:focus {
+                background: rgba(white, 0.1);
+                outline: none;
+                ~ img{
+                    background: none;
+                }
+            }
+        }
+        label {color: white; margin-right: 10px;}
+    }
+    input[type='submit'], button {
+        background: none;
+        color: white;
+        border: 1px solid;
+        border-radius: 0px;
+        font-family: "europa";
+        font-size: 1.5rem;
+        font-weight: 500;
+        padding: 8px 10px;
+        margin: 5px 0;
+        transition: .2s all ease;
+        text-align: center;
+        text-transform: uppercase;
+                margin: 10px 5px 20px; font-size: 1.2rem;
+
+        &:hover, &:focus {background: white; color: $accent; outline: none; cursor: pointer;}
+    }
+    button {
+        margin: 10px 5px 20px; font-size: 1.2rem;
+    }
+    span.error {display: block; color: #ff7575; font-weight: 500; margin: 5px 0 0; text-align: center} 
+
+    .lukk {height: 26px; width: 26px;}
+    box-shadow: 0 5px 10px -5px;
+}
+
+.registrer-parent {width: 250px;
+ .form-group input[type='text'], .form-group input[type='password']{
+     padding-left: 5px;
+ }
 }
 
 .carousel-parent {
@@ -25,20 +124,23 @@
     overflow-x: hidden;
     min-height: 200px;
     width: 100%;
-    overflow-y: visible;
+    overflow-y: hidden;
+    transition: .2s all ease;
+    padding-bottom: 20px;
     > .indicators {
         position: absolute;
-        bottom: 0;
+        bottom: 5px;
+        left: 0;
         //background: red;
         width: 100%;
         display: flex;
         justify-content: center;
         > .dot {
             position: relative;
-            width: 10px;
-            height: 10px;
-            margin: 0 5px;
-            background: gray;
+            width: 6px;
+            height: 6px;
+            margin: 0 3px;
+            background: white;
             border-radius: 100%;
             opacity: 0.5;
             &.active {opacity: 1}
@@ -53,7 +155,8 @@
     width: 100%;
 }
 
-.showing1 {
+.carousel-parent.showing1 {
+    min-height: 230px;
     > .carousel-page:nth-child(1) {
         left: 0;
     }
@@ -67,7 +170,8 @@
         left: 300%;
     }
 }
-.showing2 {
+.carousel-parent.showing2 {
+    min-height: 300px;
     > .carousel-page:nth-child(1) {
         left: -100%;
     }
@@ -81,7 +185,9 @@
         left: 200%;
     }
 }
-.showing3 {
+.carousel-parent.showing3 {
+    min-height: 250px;
+    
     > .carousel-page:nth-child(1) {
         left: -200%;
     }
@@ -95,7 +201,9 @@
         left: 100%;
     }
 }
-.showing4 {
+.carousel-parent.showing4 {
+    min-height: 200px;
+
     > .carousel-page:nth-child(1) {
         left: -300%;
     }

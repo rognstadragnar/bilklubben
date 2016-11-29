@@ -11,11 +11,6 @@ import BestillingsShortcut from './components/BestillingsShortcut/BestillingsSho
 import Bestilling from './components/Bestilling/Bestilling.jsx';
 
 
-if (loggInnKryssUt) {
-    loggInnKryssUt.addEventListener('click', () => {
-        loggInnForm.classList.remove('showing');
-    });
-}
 
 const loggUt = document.getElementById('loggUt');
 if (loggUt) {
@@ -47,19 +42,19 @@ if (arrowDown) {
 }
 
 const mainNavTrigger = document.getElementById('main-nav-trigger');
+const mainNav = document.getElementById('main-nav');
+const navLukk = document.getElementById('nav-lukk');
+
 if (mainNavTrigger) {
     mainNavTrigger.addEventListener('click', () => {
-        document.body.classList.add('nav-open');
-        
+        mainNav.classList.add('nav-open');
     });
 }
-
-
-document.body.addEventListener('click', (e) => {
-    if (document.body.classList.contains('nav-open') && e.target === document.body){
-        document.body.classList.remove('nav-open');
-    }
-})
+if (navLukk) {
+    navLukk.addEventListener('click', () => {
+        mainNav.classList.remove('nav-open');
+    });
+}
 
 
 if (document.getElementById('registrer-react')) ReactDom.render(<RegistreringsSkjema />, document.getElementById('registrer-react'))
@@ -67,28 +62,38 @@ if (document.getElementById('registrer-react')) ReactDom.render(<RegistreringsSk
 
 
 const loggInnTrigger = document.getElementById('logg-inn-trigger');
+const DDloggInnTrigger = document.getElementById('dd-logg-inn-trigger');
 const loggInnReact = document.getElementById('logg-inn-react');
-const loggInnKryssUt = document.getElementById('loggInnKryssUt');
 if (loggInnTrigger && loggInnReact) {
     ReactDom.render(<LoggInnSkjema />, document.getElementById('logg-inn-react'))
     loggInnTrigger.addEventListener('click', (e) => {
-        if (e.target === loggInnTrigger) {
-            loggInnReact.classList.toggle('showing');
-        }
+        loggInnReact.classList.add('showing');
+        const loggInnKryssUt = document.getElementById('lukk-logg-inn');
+        loggInnKryssUt.addEventListener('click', () => {loggInnReact.classList.remove('showing')})
     });
-    document.getElementById('lukk-logg-inn').addEventListener('click', (e) => {
-        loggInnReact.classList.remove('showing');
+    DDloggInnTrigger.addEventListener('click', (e) => {
+        loggInnReact.classList.add('showing');
+        const loggInnKryssUt = document.getElementById('lukk-logg-inn');
+        loggInnKryssUt.addEventListener('click', () => {loggInnReact.classList.remove('showing')})
     });
 }
 
 
+
+
 const registrerTrigger = document.getElementById('registrer-trigger');
+const DDregistrerTrigger = document.getElementById('dd-registrer-trigger');
 const registrerReact = document.getElementById('registrer-react');
 const lukkRegistrer = document.getElementById('lukk-registrering');
 if (registrerTrigger && registrerReact) {
     ReactDom.render(<RegistreringsSkjema />, document.getElementById('registrer-react'))    
     registrerTrigger.addEventListener('click', (e) => {
         if (e.target === registrerTrigger) {
+            registrerReact.classList.toggle('showing');
+        }
+    });
+    DDregistrerTrigger.addEventListener('click', (e) => {
+        if (e.target === DDregistrerTrigger) {
             registrerReact.classList.toggle('showing');
         }
     });

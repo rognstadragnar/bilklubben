@@ -31,6 +31,26 @@ body {
     max-width: 100vw;
     width: 100vw;
 }
+.body-container {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+::-webkit-input-placeholder{  
+   color: rgba(white, 0.6);  
+}
+:-moz-placeholder {
+   color: rgba(white, 0.6);
+   opacity: 1;
+}
+::-moz-placeholder {
+   color: rgba(white, 0.6);
+   opacity: 1;
+}
+::-ms-input-placeholder{  
+   color: rgba(white, 0.6);  
+}
+
 
 @import "../../../node_modules/simple-flexgrid/dist/simple-flexgrid.scss";
 

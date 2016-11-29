@@ -89,12 +89,11 @@ export default class BestillingsShortcut extends React.Component {
         
         return (
             <div className='bestillings-shortcut'>
-            <h2 className='linje-1 head'>Å leie bil skal være enkelt.</h2>
-            <span className='linje-1'>La oss starte. Jeg vil leie bil fra 
+            <span className='linje-1'>Jeg vil leie bil fra 
                 <span className={this.state.startDatoClass + (this.state.startDato ? 'dato dirty' : 'dato')} ref='start'>{this.state.startDato ? this.state.startDato.format('LL') : 'superplaceholder'}</span>
             </span>
             <span className='linje-2'>
-                <span>og jeg vil ha den helt til</span>
+                <span>til og med </span>
                 <span className={this.state.sluttDatoClass + (this.state.sluttDato ? 'dato dirty' : 'dato')} ref='slutt'>{this.state.sluttDato ? this.state.sluttDato.format('LL') : 'superplaceholder'}</span>.
             </span>
         </div>

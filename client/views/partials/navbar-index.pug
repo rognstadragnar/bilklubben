@@ -13,15 +13,17 @@ if auth
                     img(src='/assets/img/logo.svg')
             
             .sec-nav
-                span God dag, #{bruker.fulltNavn}!
-                    ul.dropdown
-                        li.navigation-li 
-                            a profil
-                        li.navigation-i#loggUt Logg ut
                     
-    nav.main-nav
-        a(href='/') 
-            img(src='/assets/img/logo.svg')
+                    span.text.has-dd 
+                        span.navn #{bruker.fulltNavn}
+                        span.icon
+                        ul.dropdown
+                            li.navigation-li 
+                                a profil
+                            li.navigation-i#loggUt Logg ut
+                    
+    nav.main-nav#main-nav
+        span.lukk#nav-lukk
         ul.main-nav-ul 
             li.navigation-li 
                 a(href='/bestilling') Lei en bil
@@ -44,16 +46,14 @@ else
                     img(src='/assets/img/logo.svg')
             
             .sec-nav
-            
-                ul.sec-nav-ul 
-                
-                    li.navigation-li#logg-inn-trigger Logg inn
-                        .logg-inn#logg-inn-react
-
-                    li.navigation-li#registrer-trigger Bli medlem
-                
-    nav.main-nav
-        a(href='/') 
-            img(src='/assets/img/logo.svg')
+                span.main.text#logg-inn-trigger Logg inn
+                span.main.text.call#registrer-trigger Bli Medlem
+                span.sec.text.has-dd 
+                    span.more
+                    ul.dropdown
+                        li.navigation-li#dd-logg-inn-trigger Logg inn
+                        li.navigation-li#dd-registrer-trigger Bli Medlem
+    nav.main-nav#main-nav
+        span.lukk#nav-lukk
         ul.main-nav-ul 
             li.navigation-li Nyheter

@@ -91,43 +91,44 @@ export default class RegistreringsSkjema extends React.Component {
     render(){
         return (
             <div className='registrer-parent'>
-                <span id='lukk-registrering'>Lukk</span>
-                <h5>RegistreringsSkjema</h5>
+                <span id='lukk-registrering' className='lukk'></span>
+                <h5>Registrering</h5>
                 <form onSubmit={this.handleSubmit}>
                    <CarouselParent 
                     currentPage={this.state.currentPage} 
                     totalPages={this.state.totalPages} 
                     >
                         <CarouselPage>
-                            <p>Kontaktinformasjon</p>
-                            <TextFieldGroup value={this.state.fulltNavn} name='fulltNavn' onChange={this.handleChange} labelName='Fullt navn*'/>
-                            <TextFieldGroup value={this.state.brukernavn} name='brukernavn' onChange={this.handleChange} labelName='Brukernavn*'/>
-                            <TextFieldGroup value={this.state.passord} field='password' name='passord' onChange={this.handleChange} labelName='Passord*'/>
+                            <h6>Kontaktinformasjon</h6>
+                            <TextFieldGroup value={this.state.fulltNavn} name='fulltNavn' onChange={this.handleChange} placeholder='Fullt navn*'/>
+                            <TextFieldGroup value={this.state.brukernavn} name='brukernavn' onChange={this.handleChange} placeholder='Brukernavn*'/>
+                            <TextFieldGroup value={this.state.passord} field='password' name='passord' onChange={this.handleChange} placeholder='Passord*'/>
                             <button type='button' onClick={this.goTo2}>Neste</button>
                         </CarouselPage>
                         <CarouselPage>
-                           <p>Betalingsinformasjon</p>
+                           <h6>Betalingsinformasjon</h6>
                            <TextFieldGroup value={this.state.fulltNavn} name='kortholder' onChange={() => {}} 
-                           labelName='Navn på kortholder' disabled={true}/>
-                            <TextFieldGroup value='1234-5678-9876-5432-1234' name='kortnummer' onChange={() => {}} labelName='Kortnummer' disabled={true}/>
-                            <TextFieldGroup value='01/17' name='utløpsdato' onChange={()=> {}} labelName='Utløpsdato' disabled={true}/>
-                            <TextFieldGroup value='123' name='sikkerhetskode' onChange={()=> {}} labelName='sikkerhetskode' disabled={true}/>
+                           placeholder='Navn på kortholder' disabled={true}/>
+                            <TextFieldGroup value='1234-5678-9876-5432-1234' name='kortnummer' onChange={() => {}} placeholder='Kortnummer' disabled={true}/>
+                            <TextFieldGroup value='01/17' name='utløpsdato' onChange={()=> {}} placeholder='Utløpsdato' disabled={true}/>
+                            <TextFieldGroup value='123' name='sikkerhetskode' onChange={()=> {}} placeholder='sikkerhetskode' disabled={true}/>
                             <button type='button' onClick={this.goBack}>Forrige</button>
                             <button type='button' onClick={this.goTo3}>Neste</button>
                         </CarouselPage>
                         <CarouselPage>
-                            <p>Velg abonnement</p>
+                            <h6>Velg abonnement</h6>
                             <TextFieldGroup field='radio' value='1' name='abonnement' onChange={this.handleRadioChange} labelName='Gjerrigknarken(249,-/mnd)'/>
                             <TextFieldGroup field='radio' value='2' name='abonnement' onChange={this.handleRadioChange} labelName='Den middlemådige(490,-/mnd)'/>
                             <TextFieldGroup field='radio' value='3' name='abonnement' onChange={this.handleRadioChange} labelName='Onkelskrue(1499,-/mnd)'/>
                             <TextFieldGroup field='radio' value='0' name='abonnement' onChange={this.handleRadioChange} labelName='Det tar vi senere.'/>
-                            <button type='button' onClick={this.goBack}>Forrige</button>
+                            <button type='button' onClick={this.goBack}>Forrige</button><input type='submit' value='Registrer meg'/>
+
                         </CarouselPage>
                         <CarouselPage><span>SKITBRA!</span></CarouselPage>
+                       
                     </CarouselParent>
-                    <input type='submit' value='asd'/>
                 </form>
-                {this.state.error ? <span>{this.state.error}</span> : ''}
+                <span className='error'>{this.state.error ? this.state.error : ''}</span>
             </div>
         )
     }

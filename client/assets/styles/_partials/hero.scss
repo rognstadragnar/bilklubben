@@ -45,10 +45,11 @@
         flex-direction: column;
         h2.head {
             font-family: "reklame-script";
-            font-size: 10rem;
+            font-size: 8rem;
             text-align: center;
-            //color: grey;
-            //background: white;
+            @include mq('max-width: 600px') {
+                font-size: 5rem
+            }
         }
         span.ta-del {
             text-align: center;
@@ -89,10 +90,15 @@
     }
 
     .bestillings-shortcut{
+        margin: 20px 0;
         .linje-1, .linje-2 {
             display: block;
             text-align: center;
-            font-size: 2rem
+            font-size: 2rem;
+            margin: 5px;
+            @include mq('max-width: 600px') {
+                font-size: 1.6rem
+            }
         }
         .linje-1.head {
             font-size: 7rem
