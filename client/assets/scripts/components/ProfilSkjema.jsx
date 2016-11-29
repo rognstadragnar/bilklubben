@@ -10,6 +10,7 @@ export default class ProfilSkjema extends React.Component {
         this.state = {
             isLoading: true,
             nyttBrukernavn: '',
+            brukernavn: '',
             nyttNavn: '',
             nyEpost: '',
             currentPassord: '',
@@ -50,7 +51,7 @@ export default class ProfilSkjema extends React.Component {
                 return res
             })
             .then((res ) => console.log(res))
-            .catch(err => console.log(err))
+            .catch(err => this.setState({error: err.response.data.error}))
     }
     handleChange(e){
         this.setState({ [e.target.name]: e.target.value})
@@ -58,6 +59,12 @@ export default class ProfilSkjema extends React.Component {
     handleSubmit(e){
         console.log(window.location.href)
         e.preventDefault();
+        if (this.state.nyEpost !== '' && !this.state.nyEpost.match(/^[\w\.\+\_]+\@\w+\.[a-z]+$/i)) {
+            return this.setState({errors: 'Ugyldig epost'})
+        }
+        if ((this.state.nyttPassord !== '' && this.state.currentPassord === '') || (this.state.currentPassord !== '' && this.state.nyttPassord === '')) {
+            return this.setState({errors: 'Begge feltene må fylles inn'})
+        }
         Axios.post('/api/endre', {
             fulltNavn: this.state.nyttNavn !== '' ? this.state.nyttNavn : this.state.fulltNavn, 
             epost: this.state.nyEpost !== '' ? this.state.nyEpost : this.state.epost,
@@ -66,7 +73,7 @@ export default class ProfilSkjema extends React.Component {
             abonnement: this.state.abonnement
         })
         .then((res) => {window.location = window.location.href;})
-        .catch(err => console.log(err))
+        .catch(err => this.setState({errors: err.response.data.error}))
     }
     handlePointSubmit(e){
         e.preventDefault();
@@ -75,7 +82,7 @@ export default class ProfilSkjema extends React.Component {
             amount: Number(this.state.nyePoeng)
         })
         .then((res) => { this.setState({errors: null, points: res.data.newPoints, nyePoeng: ''})})
-        .catch(err => console.log(err))
+        .catch(err => {this.setState({error: err.response.data.error})})
         } else {
             this.setState({errors: "wow"})
         }
@@ -83,49 +90,67 @@ export default class ProfilSkjema extends React.Component {
     }
     render () {
         return (
-            <div>
+            <div className='profil'>
                 <form onSubmit={this.handleSubmit}>
-                    <p>{this.state.brukernavn}</p>
-                    <TextFieldGroup 
-                        name='nyttNavn' 
-                        value={this.state.nyttNavn} 
-                        placeholder={this.state.fulltNavn} 
-                        onChange={this.handleChange}
-                    />
-                    <TextFieldGroup 
-                        name='nyEpost' 
-                        value={this.state.nyEpost} 
-                        placeholder={this.state.epost === '' ? 'legg til epost' : this.state.epost} 
-                        onChange={this.handleChange}
-                    />
-
-                    <TextFieldGroup 
-                        name='currentPassord' 
-                        value={this.state.currentPassord} 
-                        field='password'
-                        placeholder='nåværende passord' 
-                        onChange={this.handleChange}
-                    />
-                    <TextFieldGroup 
-                        name='nyttPassord' 
-                        value={this.state.nyttPassord} 
-                        field='password'
-                        placeholder='Nytt passord' 
-                        onChange={this.handleChange}
-                    />
-                    <p>Du har abonnement: {this.state.abonnementText}</p>
-                    <TextFieldGroup field='radio' value='1' name='abonnement' onChange={this.handleChange} labelName='Gjerrigknarken(249,-/mnd)'/>
-                    <TextFieldGroup field='radio' value='2' name='abonnement' onChange={this.handleChange} labelName='Den middlemådige(490,-/mnd)'/>
-                    <TextFieldGroup field='radio' value='3' name='abonnement' onChange={this.handleChange} labelName='Onkel Skrue(1499,-/mnd)'/>
-                    <TextFieldGroup field='radio' value='0' name='abonnement' onChange={this.handleChange} labelName='Det tar vi senere.'/>
-                            
-                    <input type='submit' value='alslda' />
+                    <div className='profil-endre-informasjon'>
+                    <h4>Endre min informasjon</h4>
+                        <h6>Kontaktinformasjon</h6>
+                        <TextFieldGroup 
+                            name='Brukernavn' 
+                            placeholder={this.state.brukernavn}
+                            value={this.state.brukernavn} 
+                            labelName='Brukernavn'
+                            onChange={() => {}}
+                            disabled={true}
+                        />
+                        <TextFieldGroup 
+                            name='nyttNavn' 
+                            value={this.state.nyttNavn} 
+                            placeholder={this.state.fulltNavn} 
+                            labelName='Fullt navn'
+                            onChange={this.handleChange}
+                        />
+                        <TextFieldGroup 
+                            name='nyEpost' 
+                            value={this.state.nyEpost} 
+                            placeholder={this.state.epost === '' ? 'legg til epost' : this.state.epost}
+                            labelName='E-postadresse'
+ 
+                            onChange={this.handleChange}
+                        />
+                        <h6>Passord</h6>
+                        <TextFieldGroup 
+                            name='currentPassord' 
+                            value={this.state.currentPassord} 
+                            field='password'
+                            labelName='Nåverende passord'
+                            onChange={this.handleChange}
+                        />
+                        <TextFieldGroup 
+                            name='nyttPassord' 
+                            value={this.state.nyttPassord} 
+                            field='password'
+                            labelName='Nytt passord'
+                            onChange={this.handleChange}
+                        />
+                        <span className='error'>{this.state.errors ? this.state.errors : ''}</span>
+                        <input type='submit' value='Bekfreft' />
+                    </div>
+                    <div className='profil-endre-abonnement'>
+                        <h4>Endre mitt abonnement</h4>
+                        <p>Nåverende abonnement: {this.state.abonnementText}</p>
+                        <TextFieldGroup field='radio' value='1' name='abonnement' onChange={this.handleChange} labelName='Gjerrigknarken(249,-/mnd)'/>
+                        <TextFieldGroup field='radio' value='2' name='abonnement' onChange={this.handleChange} labelName='Den middlemådige(490,-/mnd)'/>
+                        <TextFieldGroup field='radio' value='3' name='abonnement' onChange={this.handleChange} labelName='Onkel Skrue(1499,-/mnd)'/>
+                        <input type='submit' value='Bekreft' />
+                    </div>     
                 </form>
+                    <h4>Legg til ekstra poeng</h4>
                     <p>Legg Til Poeng. Nåværende poeng: {this.state.points}</p>
                 <form onSubmit={this.handlePointSubmit}>
                     <TextFieldGroup value={this.state.nyePoeng} name='nyePoeng' onChange={this.handleChange}/>
                     {this.state.errors ? <span>Fyll inn et tall som er høyere enn 0.</span> : ''}
-                    <input type='submit' value='alslda' />
+                    <input type='submit' value='Bekreft' />
 
                 </form>
 

@@ -124,7 +124,7 @@ export default class RegistreringsSkjema extends React.Component {
                             <button type='button' onClick={this.goBack}>Forrige</button><input type='submit' value='Registrer meg'/>
 
                         </CarouselPage>
-                        <CarouselPage><span>SKITBRA!</span></CarouselPage>
+                        <CarouselPage><div className='check'></div></CarouselPage>
                        
                     </CarouselParent>
                 </form>

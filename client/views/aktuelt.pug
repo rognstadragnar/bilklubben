@@ -1,0 +1,14 @@
+extends layout/main
+block content
+    .aktuelt-page
+        .aktuelt-page-content
+            each nyhet in nyheter 
+                a(href='/aktuelt/'+ nyhet.id).en-aktuelt
+                        .en-aktuelt-bg(style='background-image: url(' + nyhet.bilde +')' )
+                        .en-aktuelt-content
+                            h2 #{nyhet.tittel}
+                            p #{nyhet.tekst}
+                            span Les mer...
+                            
+block scripts
+    script(src='/assets/scripts/bundle.js')

@@ -9,8 +9,9 @@
         color: #3d94d0;
     }
     > .content {
-        @include col(5, 12);
-        @include push(7, 24);
+        width: 700px;
+        max-width: 90%;
+        margin: 0 auto;
         .abonnement{
             h3 {
                 color: #3d94d0;

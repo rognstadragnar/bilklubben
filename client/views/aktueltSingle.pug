@@ -1,0 +1,9 @@
+extends layout/main
+block content
+        if nyheter[nyheten].bilde
+            .nyhet-header-img(style='background-image: url(' + nyheter[nyheten].bilde +')' )
+        h2 #{nyheter[nyheten].tittel}
+        p #{nyheter[nyheten].tekst}
+        
+block scripts
+    script(src='/assets/scripts/bundle.js')

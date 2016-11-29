@@ -1,0 +1,71 @@
+.aktuelt-page {
+    margin-top: 60px;
+
+    .aktuelt-page-content{
+        @include row();
+        margin: 0 auto;
+        a.en-aktuelt {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            transition: .2s all ease;
+            &:nth-child(even) {
+                background: rgba($accent, .1);
+                &:hover {
+                    background: rgba($accent, .2);
+                }
+            }
+            &:nth-child(odd) {
+                background: rgba(white, 0.7);
+                &:hover {
+                    background: rgba($accent, .2);
+                }
+            }
+            .en-aktuelt-content {
+                max-width: 90%; margin: 0 auto;
+                padding: 100px 0px;
+            }
+            .en-aktuelt-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                z-index: -1;
+                background-size: cover;
+                background-position: center center;
+            }
+        }
+        h2 {
+            font-family: 'reklame-script';
+            color: $accent;
+            text-align: center;
+        }
+    }
+}
+
+section.aktuelt-section {
+    @include row();
+    width: 700px;
+    max-width: 90%;
+    margin: 0 auto;
+    .content {
+        @include col(12);
+        h5{text-align: center;}
+        ul {max-width: 450px; margin: 0 auto;}
+        ul li {
+            margin: 10px 0;
+            padding: 0;
+            list-style-type: none;
+            &:before {
+                content: '-'; margin-right: 10px;
+            }
+            a {color: rgba($text-color, .7); font-style: italic;font-size: 2rem;}
+            &:hover a{
+                color: $accent;
+            }
+        }
+        > a {display: block; text-align: center}
+
+    }
+}

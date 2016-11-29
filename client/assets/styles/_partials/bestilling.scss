@@ -249,7 +249,9 @@
         align-items: flex-start;
         justify-content: center;
         padding-top: 50px;
+        cursor: pointer;
         .bil-info-container {
+            cursor: auto;
             background: white;
             border-radius: 5px;
             padding: 20px;

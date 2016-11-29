@@ -1,0 +1,12 @@
+.profil-page {
+    @include row();
+    width: 700px;
+    max-width: 90%;
+    margin: 100px auto; 
+    .profil-content {
+        @include col(12);
+    }
+    .ordre-content {
+        @include col(12);
+    }
+}

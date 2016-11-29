@@ -23,6 +23,7 @@ section.top-biler {
      background: gray;
      position: relative;
      transition: .2s all ease;
+     overflow-x: hidden;
      @include mq('max-width: 1200px'){
          width: 33.333%;
          &:nth-child(4) {width: 0}
@@ -85,7 +86,6 @@ section.top-biler {
         background: -o-linear-gradient(20deg, #3a8cd1, rgb(65, 159, 207));
         background: linear-gradient(20deg, #3a8cd1, rgb(65, 159, 207)); 
         padding: 5px 20px 5px 15px;
-        font-size: 2rem;
         z-index: 2;
         > span.merke {
             text-transform: uppercase;
@@ -94,6 +94,10 @@ section.top-biler {
         > span.modell {
             text-transform: uppercase;
             margin-left: 2px;
+        }
+        font-size: 2rem;
+        @include mq('max-width: 550px') {
+            font-size: 1.5rem
         }
     }
     .img-container {

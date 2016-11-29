@@ -10,7 +10,11 @@ var gulp = require('gulp'),
 
 gulp.task('styles', function() {
     gulp.src('./client/assets/styles/*.scss')
-    .pipe(sass().on('error', sass.logError))    
+    .pipe(sass().on('error', sass.logError)) 
+    .pipe(autoprefixer({
+        browsers: ['last 2 versions'],
+        cascade: false
+    }))   
     .pipe(gulp.dest('./client/assets/styles'))
     .pipe(livereload())
 });
@@ -18,6 +22,7 @@ gulp.task('styles', function() {
 gulp.task('minify', function() {
     gulp.src('./client/assets/styles/*.css')
     .pipe(rename({suffix: '.min'}))
+    
     .pipe(minifycss())
     .pipe(gulp.dest('./client/assets/styles'))
 })

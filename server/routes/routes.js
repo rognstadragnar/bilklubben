@@ -9,6 +9,8 @@ import Bcrypt from 'bcrypt';
 import { salt } from '../utils/variables';
 import { User, Car, Order } from '../models';
 
+import Nyheter from '../data/nyheter';
+
 router.post('/api/login', (req, res) => {
     const { username, password } = req.body;
     if (username && password) {
@@ -89,6 +91,7 @@ router.post('/api/registrer', (req, res) => {
     User.create({username: brukernavn, password: hashedPassword, name: fulltNavn, plan: abonnement, points: points})
     .then((user)=> {
         req.session.bruker = {
+          id: user.dataValues.id,
           fulltNavn: user.dataValues.name,
           brukernavn: user.dataValues.username,
           points: user.dataValues.points,
@@ -133,13 +136,11 @@ router.post('/api/fyll', (req, res) => {
 router.post('/api/endre', (req, res) => {
   try {
     if (req.body.passord, req.body.nyttPassord && isAuthed(req)) {
-      console.log('11111both b here', req.body)
       const { epost, fulltNavn, passord, nyttPassord, abonnement } = req.body
       User.findOne({where: {id: req.session.bruker.id}})
         .then((user)=> {
-          if (user) {
+          if (user && user.dataValues.password && passord) {
             if (Bcrypt.compareSync(passord, user.dataValues.password)) {
-              console.log(user.dataValues.password, passord)
 
               const hashedPassord = Bcrypt.hashSync(nyttPassord, salt)
               User.update(
@@ -148,15 +149,14 @@ router.post('/api/endre', (req, res) => {
                 .then(() => res.sendStatus(200))
                 .catch((err) => res.status(403).json({error: 'Det skjedde en feil.'}))
             } else {
-              res.status(403).json({error: 'Feil passord'})
+              return res.status(403).json({error: 'Feil passord'})
             }
           } else {
+              return res.status(404).json({error: 'Feil passord'})
 
           }
         })
     } else if (isAuthed(req)) {
-            console.log('111111both b not here', req.body)
-
       const { epost, fulltNavn, abonnement } = req.body
         console.log(req.session)
         User.findOne({where: {id: req.session.bruker.id}})
@@ -206,8 +206,7 @@ router.post('/api/endre', (req, res) => {
         
     }
   } catch(err) {
-    console.log(err)
-    res.sendStatus(500)
+    return res.status(404).json({error: 'Det skjedde en feil'})
   }
 })
 
@@ -439,6 +438,17 @@ router.get('/bestilling', (req, res) => {
 })
 
 
+router.get('/aktuelt', (req, res) => {
+  res.render('aktuelt', {auth: req.session.auth, bruker: req.session.bruker, nyheter: Nyheter})
+})
+
+router.get('/aktuelt/:id', (req, res) => {
+  if (req.params.id <= Nyheter.length && req.params.id > 0) res.render('aktueltSingle', {auth: req.session.auth, bruker: req.session.bruker, nyheter: Nyheter, nyheten: req.params.id - 1})
+  else res.redirect('/aktuelt')
+})
+
+
+
 router.get('/profil', (req, res) => {
   if (isAuthed(req)) {
     res.render('profil', {auth: req.session.auth, bruker: req.session.bruker})
@@ -455,9 +465,9 @@ router.get('/', (req, res) =>  {
   })
   .then( () => {
     if (isAuthed(req)) {
-      res.render('index', {auth: req.session.auth, bruker: req.session.bruker, biler: cars})
+      res.render('index', {auth: req.session.auth, bruker: req.session.bruker, biler: cars, nyheter: Nyheter})
     } else {
-      res.render('index', {auth: req.session.auth, biler: cars})
+      res.render('index', {auth: req.session.auth, biler: cars, nyheter: Nyheter})
     }
   })
 });

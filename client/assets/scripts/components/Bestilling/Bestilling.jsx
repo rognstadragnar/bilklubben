@@ -185,10 +185,10 @@ export default class Bestilling extends React.Component {
                 valgtBil: Number(window.sessionStorage.getItem('bestillingsBil'))
             })
         } else {
-            this.setState({
+            /*this.setState({
                 startDato: Moment(),
                 sluttDato: Moment().add(1, 'days')
-            })
+            })*/
         }
     }
     componentDidMount(){

@@ -3,11 +3,12 @@ section.biler-section {
     .content {
         position: relative;
         @include row();
-        max-width: 90%;
         margin: 0 auto;
-        
+        overflow: hidden;
     }
     .overlay {
+        top: 0;
+        left: 0;
         position: absolute;
         width: 100%;
         height: 100%;
@@ -33,12 +34,16 @@ section.biler-section {
         @include col(12);
         text-align: center;
         font-family: 'reklame-script';
-        font-size: 8rem;
+        font-size: 5rem;
         color: white;
+        @include mq('max-width: 500px') {
+            font-size: 4rem;
+            margin: 0;
+        }
     }
     .bil {
         position: relative;
-        @include col(2,10, 0px);
+        @include col(3,12, 0px);
         .img-container {
             background-position: center center;
             background-size: cover;
@@ -46,4 +51,5 @@ section.biler-section {
             width: 100%;
         }
     }
+
 }

@@ -23,6 +23,9 @@ $accent: #3d94d0;
 @import './_partials/footer.scss';
 
 @import './_partials/bestilling.scss';
+@import './_partials/aktuelt.scss';
+@import './_partials/biler.scss';
+@import './_partials/profil.scss';
 
 
 body {
@@ -36,18 +39,33 @@ body {
     overflow-x: hidden;
 }
 
-::-webkit-input-placeholder{  
+.logg-inn-parent input::-webkit-input-placeholder {  
    color: rgba(white, 0.6);  
 }
-:-moz-placeholder {
+.logg-inn-parent input:-moz-placeholder  {
    color: rgba(white, 0.6);
    opacity: 1;
 }
-::-moz-placeholder {
+.logg-inn-parent input::-moz-placeholder  {
    color: rgba(white, 0.6);
    opacity: 1;
 }
-::-ms-input-placeholder{  
+.logg-inn-parent input::-ms-input-placeholder {  
+   color: rgba(white, 0.6);  
+}
+
+.registrer-parent input::-webkit-input-placeholder {  
+   color: rgba(white, 0.6);  
+}
+.registrer-parent input:-moz-placeholder  {
+   color: rgba(white, 0.6);
+   opacity: 1;
+}
+.registrer-parent input::-moz-placeholder  {
+   color: rgba(white, 0.6);
+   opacity: 1;
+}
+.registrer-parent input::-ms-input-placeholder {  
    color: rgba(white, 0.6);  
 }
 
@@ -62,4 +80,13 @@ body {
     background: -o-linear-gradient(20deg, #3a8cd1, #419fcf);
     background: linear-gradient(20deg, #3a8cd1, #419fcf);*/
     height: 100%;
+}
+
+
+h2 {
+    @include col(12);
+    text-align: center;
+    font-family: 'reklame-script';
+    font-size: 8rem;
+    color: #3d94d0;
 }

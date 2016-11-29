@@ -1,6 +1,27 @@
 footer {
     @include row();
     max-width: 90%;
-    margin: 0 auto;
-    
+    margin: 20px auto;
+    padding: 50px 0;
+    border-top: 1px solid rgba($accent, 0.2);
+    .til-toppen {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    .cookie {
+        @include col(12);
+        text-align: center;
+        font-style: italic;
+    }
+    .logo-wrapper {
+        @include col(12);
+        @include row();
+        img {
+            //@include col(4);
+            //@include push(4, 12);
+            width: 150px;
+            margin: 0 auto;
+        }
+    }
 }

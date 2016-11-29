@@ -1,13 +1,7 @@
 .greia {
     @include row();
     padding-top: 50px;
-    h2 {
-        @include col(12);
-        text-align: center;
-        font-family: 'reklame-script';
-        font-size: 8rem;
-        color: #3d94d0;
-    }
+    
     .content {
         //@include col(6);
         //@include push(3, 12);

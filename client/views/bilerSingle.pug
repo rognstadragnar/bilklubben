@@ -1,8 +1,10 @@
 extends layout/main
 
 block content
-    h1 #{bil.id} - #{bil.make} - #{bil.model} - #{bil.specs} - #{bil.pris}
-
+    .biler-single
+        .bil-header-img(style='background-image: url(/assets/img/biler/' + bil.id + '/' + bil.imglg +')' )
+        h1 #{bil.year} #{bil.make} - #{bil.model} #{bil.price}
+    
 block scripts
     script(src='/assets/scripts/bundle.js')
     

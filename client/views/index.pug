@@ -15,11 +15,28 @@ block content
                             span.merke #{biler[i].make}
                             span.modell #{biler[i].model}
                         .les-mer Les mer 
-        section.aktuelt
-            - for (var i = 0; i < 4; ++i)
-                h1 nyhet
-        //- section om tilbud/nyheter
-            
+        section.aktuelt-section
+            h2 Aktuelt
+            .content
+                h5 Siste 3 nyheter
+                ul 
+                
+                    - for (var i = 0; i < 3; ++i)
+                        li 
+                            a(href='/aktuelt/' + nyheter[i].id) #{nyheter[i].tittel}
+                    
+                a(href='/aktuelt') Se resten av nyhetene
+
+        //- TILBUD 
+        
+        section.biler-section
+            .content
+                each bil in biler
+                    .bil
+                        .img-container(style='background-image: url(/assets/img/biler/' + bil.id + '/' + bil.imgsm + ')')
+                a(href='/biler/').overlay
+                    h2 Våre fantastiske biler
+                    span Les mer
     else 
         include partials/header
         section.top-biler
@@ -129,9 +146,18 @@ block content
                 a(href='/biler/').overlay
                     h2 Våre fantastiske biler
                     span Les mer
+        section.aktuelt-section
+            h2 Aktuelt
+            .content
+                h5 Siste fra vår nyhetsblogg
+                ul 
+                    - for (var i = 0; i < 3; ++i)
+                        li 
+                            a(href='/aktuelt/' + nyheter[i].id) #{nyheter[i].tittel}...
+                        
+                a(href='/aktuelt') Se resten av nyhetene
 
-
-
+        
 block scripts
     script(src='/assets/scripts/bundle.js')
     

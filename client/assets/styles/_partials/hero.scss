@@ -44,9 +44,8 @@
         display: flex;
         flex-direction: column;
         h2.head {
-            font-family: "reklame-script";
+            color: white;
             font-size: 8rem;
-            text-align: center;
             @include mq('max-width: 600px') {
                 font-size: 5rem
             }

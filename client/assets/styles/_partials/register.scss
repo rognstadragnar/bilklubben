@@ -147,6 +147,13 @@
         }
     }
 }
+.carousel-page:nth-child(4) {
+    height: 150px;
+    width: 150px;
+    padding: 10px 50px;
+    margin: 0 auto;
+    content: url('/assets/img/icons/check-white.svg');
+}
 
 .carousel-page {
     position: absolute;

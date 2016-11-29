@@ -19,7 +19,7 @@ if auth
                         span.icon
                         ul.dropdown
                             li.navigation-li 
-                                a profil
+                                a(href='/profil') Min side
                             li.navigation-i#loggUt Logg ut
                     
     nav.main-nav#main-nav
@@ -30,7 +30,9 @@ if auth
             li.navigation-li 
                 a(href='/profil') Min side
             li.navigation-li 
-                a(href='/nyheter') Nyheter
+                a(href='/biler') Våre biler
+            li.navigation-li 
+                a(href='/aktuelt') Aktuelt
                 
 else 
     nav#navigationBar-scroll.nav-bar
@@ -56,4 +58,9 @@ else
     nav.main-nav#main-nav
         span.lukk#nav-lukk
         ul.main-nav-ul 
-            li.navigation-li Nyheter
+            li.navigation-li 
+                a(href='/') Hjem
+            li.navigation-li 
+                a(href='/biler') Våre biler
+            li.navigation-li 
+                a(href='/aktuelt') Aktuelt
