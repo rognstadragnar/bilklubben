@@ -82,8 +82,10 @@ nav.nav-bar {
 nav > .wrapper {
   position: relative; }
   nav > .wrapper .nav-logo {
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
     float: left;
@@ -125,6 +127,8 @@ nav > .wrapper {
     nav > .wrapper .main-nav-trigger:hover {
       cursor: pointer; }
       nav > .wrapper .main-nav-trigger:hover .trigger span:nth-child(2) {
+        -webkit-transform: translateX(4px);
+        -ms-transform: translateX(4px);
         transform: translateX(4px); }
     @media screen and (max-width: 600px) {
       nav > .wrapper .main-nav-trigger > span {
@@ -166,10 +170,10 @@ nav > .wrapper {
       float: left; }
     nav > .wrapper .sec-nav span.has-dd {
       margin-right: 10px; }
-    nav > .wrapper .sec-nav span.has-dd:hover ul.dropdown {
+    nav > .wrapper .sec-nav span.has-dd.showing ul.dropdown {
       max-height: 400px;
       overflow: visible; }
-      nav > .wrapper .sec-nav span.has-dd:hover ul.dropdown:after {
+      nav > .wrapper .sec-nav span.has-dd.showing ul.dropdown:after {
         right: 25px; }
     nav > .wrapper .sec-nav span.more {
       content: url("/assets/img/icons/more.svg");
@@ -238,12 +242,16 @@ nav.main-nav {
   background: linear-gradient(to right, rgba(109, 186, 251, 0.98), rgba(67, 141, 204, 0.95));
   transition: 0.5s all ease, 0.2s 0.2s background cubic-bezier(0.4, 0, 1, 1);
   z-index: 100;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   padding: 100px 0;
@@ -265,6 +273,8 @@ nav.main-nav {
       line-height: 80px;
       transition: .2s all ease;
       font-size: 5rem;
+      -webkit-transform: translateX(-10px);
+      -ms-transform: translateX(-10px);
       transform: translateX(-10px);
       transition: .2s all ease;
       opacity: 0; }
@@ -285,6 +295,8 @@ nav.main-nav {
     visibility: visible;
     opacity: 1; }
     nav.main-nav.nav-open ul li {
+      -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
       transform: translateY(0);
       opacity: 1; }
 
@@ -317,6 +329,8 @@ body.nav-open {
   body.nav-open:hover:after {
     cursor: pointer; }
   body.nav-open:after {
+    -webkit-transform: translateX(250px);
+    -ms-transform: translateX(250px);
     transform: translateX(250px);
     z-index: 100; }
 
@@ -326,6 +340,8 @@ span.lukk {
   position: absolute;
   top: 5%;
   right: 5%;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
   transform: rotate(45deg); }
   span.lukk:after, span.lukk:before {
     content: '';
@@ -335,6 +351,8 @@ span.lukk {
     background: white;
     top: calc(50% - 1px); }
   span.lukk:after {
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
     transform: rotate(90deg); }
   span.lukk:before {
     top: calc(50% - 1px); }
@@ -348,10 +366,13 @@ span.lukk {
   visibility: hidden;
   background: white;
   color: black;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   transition: .2s all ease;
@@ -363,10 +384,13 @@ span.lukk {
   .logg-inn h5 {
     color: #28636d; }
   .logg-inn form {
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
+    -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap; }
   .logg-inn .form-group {
@@ -450,10 +474,13 @@ span.lukk {
   min-height: 100vh;
   background: rgba(255, 255, 255, 0.9);
   z-index: 100;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   visibility: hidden;
@@ -570,8 +597,10 @@ span.lukk {
     bottom: 5px;
     left: 0;
     width: 100%;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center; }
     .carousel-parent > .indicators > .dot {
@@ -652,10 +681,13 @@ span.lukk {
   width: 100vw;
   box-sizing: border-box;
   border: 0px solid white;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center; }
   .hero-img:before {
@@ -683,13 +715,17 @@ span.lukk {
     z-index: 1;
     border: solid white;
     border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
     transform: rotate(45deg);
     cursor: pointer; }
   .hero-img div.call-to-action {
     z-index: 1;
     color: white;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column; }
     .hero-img div.call-to-action h2.head {
@@ -763,6 +799,7 @@ span.lukk {
   left: calc(50vw - 20px);
   z-index: 2;
   text-align: center;
+  -webkit-animation: sk-rotate 2.0s infinite linear;
   animation: sk-rotate 2.0s infinite linear; }
 
 .dot1, .dot2 {
@@ -773,17 +810,29 @@ span.lukk {
   top: 0;
   background-color: #333;
   border-radius: 100%;
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
   animation: sk-bounce 2.0s infinite ease-in-out; }
 
 .dot2 {
   top: auto;
   bottom: 0;
+  -webkit-animation-delay: -1.0s;
   animation-delay: -1.0s; }
+
+@-webkit-keyframes sk-rotate {
+  100% {
+    -webkit-transform: rotate(360deg); } }
 
 @keyframes sk-rotate {
   100% {
     transform: rotate(360deg);
     -webkit-transform: rotate(360deg); } }
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% {
+    -webkit-transform: scale(0); }
+  50% {
+    -webkit-transform: scale(1); } }
 
 @keyframes sk-bounce {
   0%, 100% {
@@ -806,10 +855,13 @@ span.lukk {
   overflow-x: hidden;
   overflow-y: visible;
   position: relative;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: 100%;
@@ -890,8 +942,10 @@ span.lukk {
       background: url("../img/pakker/3.jpg"); }
 
 section.top-biler {
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   position: relative;
@@ -933,10 +987,13 @@ section.top-biler > .top-bil {
     width: 100%;
     height: 100%;
     background: rgba(66, 135, 211, 0.5);
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
+    -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
     font-size: 3rem;
@@ -999,10 +1056,13 @@ section.top-biler > .top-bil {
   overflow-x: hidden;
   overflow-y: visible;
   position: relative;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: 100%;
@@ -1051,10 +1111,13 @@ section.top-biler > .top-bil {
   overflow-x: hidden;
   overflow-y: visible;
   position: relative;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: 100%;
@@ -1098,10 +1161,13 @@ section.biler-section {
     overflow-x: hidden;
     overflow-y: visible;
     position: relative;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between;
     width: 100%;
@@ -1114,14 +1180,19 @@ section.biler-section {
     position: absolute;
     width: 100%;
     height: 100%;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
+    -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
     background: rgba(61, 148, 208, 0.83);
@@ -1165,10 +1236,13 @@ footer {
   overflow-x: hidden;
   overflow-y: visible;
   position: relative;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: 100%;
@@ -1199,10 +1273,13 @@ footer {
     overflow-x: hidden;
     overflow-y: visible;
     position: relative;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between;
     width: 100%;
@@ -1224,14 +1301,19 @@ footer {
     height: 100%;
     box-sizing: border-box;
     width: 200px;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-justify-content: flex-start;
     -ms-flex-pack: start;
     justify-content: flex-start;
+    -webkit-align-items: flex-start;
     -ms-flex-align: start;
     align-items: flex-start;
     padding: 20px 20px;
@@ -1289,10 +1371,13 @@ footer {
     overflow-x: hidden;
     overflow-y: visible;
     position: relative;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between;
     width: 100%;
@@ -1306,12 +1391,16 @@ footer {
       margin-bottom: 16px;
       box-sizing: border-box;
       display: block;
+      display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
+      -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+      -webkit-justify-content: center;
       -ms-flex-pack: center;
       justify-content: center;
+      -webkit-align-self: center;
       -ms-flex-item-align: center;
       align-self: center;
       box-sizing: border-box;
@@ -1373,10 +1462,13 @@ footer {
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.5);
+        display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
+        -webkit-justify-content: center;
         -ms-flex-pack: center;
         justify-content: center;
+        -webkit-align-items: center;
         -ms-flex-align: center;
         align-items: center;
         opacity: 0;
@@ -1390,8 +1482,12 @@ footer {
           background-size: contain;
           z-index: 1;
           background: rgba(85, 95, 111, 0.91);
+          -webkit-transform: translateY(50px);
+          -ms-transform: translateY(50px);
           transform: translateY(50px);
-          transition: 0.2s all ease-in-out, 0.2s transform cubic-bezier(0.37, 1.67, 1, 1); }
+          transition: 0.2s all ease-in-out, 0.2s -webkit-transform cubic-bezier(0.37, 1.67, 1, 1);
+          transition: 0.2s all ease-in-out, 0.2s transform cubic-bezier(0.37, 1.67, 1, 1);
+          transition: 0.2s all ease-in-out, 0.2s transform cubic-bezier(0.37, 1.67, 1, 1), 0.2s -webkit-transform cubic-bezier(0.37, 1.67, 1, 1); }
           .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-velg:before, .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-info:before {
             content: '';
             position: absolute;
@@ -1413,31 +1509,42 @@ footer {
         .bestilling-content .bil-visning .en-bil:hover:not(.valgt):not(.disabled) .en-bil-overlay {
           opacity: 1; }
         .bestilling-content .bil-visning .en-bil:hover:not(.valgt):not(.disabled) .en-bil-velg, .bestilling-content .bil-visning .en-bil:hover:not(.valgt):not(.disabled) .en-bil-info {
+          -webkit-transform: translateY(0px);
+          -ms-transform: translateY(0px);
           transform: translateY(0px); }
         .bestilling-content .bil-visning .en-bil:hover:not(.valgt):not(.disabled) .en-bil-velg:hover {
           background: #51ab52; }
         .bestilling-content .bil-visning .en-bil:hover:not(.valgt):not(.disabled) .en-bil-info:hover {
           background: #8a9fbf; }
         .bestilling-content .bil-visning .en-bil:hover:not(.valgt):not(.disabled) .en-bil-img {
+          -webkit-transform: scale(1.05);
+          -ms-transform: scale(1.05);
           transform: scale(1.05); }
       .bestilling-content .bil-visning .en-bil:after {
         content: url("/assets/img/icons/check-white.svg");
+        display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
+        -webkit-justify-content: center;
         -ms-flex-pack: center;
         justify-content: center;
+        -webkit-align-items: center;
         -ms-flex-align: center;
         align-items: center;
         position: absolute;
         width: 100%;
         height: 100%;
+        transition: 0.2s all ease-in-out, 0.5s -webkit-transform cubic-bezier(0.37, 1.67, 1, 1);
         transition: 0.2s all ease-in-out, 0.5s transform cubic-bezier(0.37, 1.67, 1, 1);
+        transition: 0.2s all ease-in-out, 0.5s transform cubic-bezier(0.37, 1.67, 1, 1), 0.5s -webkit-transform cubic-bezier(0.37, 1.67, 1, 1);
         background: rgba(81, 171, 82, 0.7);
         visibility: hidden;
         opacity: 0;
         top: 0;
         left: 0; }
       .bestilling-content .bil-visning .en-bil.valgt .en-bil-img {
+        -webkit-transform: scale(1.15);
+        -ms-transform: scale(1.15);
         transform: scale(1.15); }
       .bestilling-content .bil-visning .en-bil.valgt .en-bil-desc {
         z-index: 1;
@@ -1446,6 +1553,8 @@ footer {
         .bestilling-content .bil-visning .en-bil.valgt .en-bil-desc .en-bil-desc-right {
           background: white; }
       .bestilling-content .bil-visning .en-bil.valgt:after {
+        -webkit-transform: scale(2);
+        -ms-transform: scale(2);
         transform: scale(2);
         visibility: visible;
         opacity: 1; }
@@ -1474,10 +1583,13 @@ footer {
     opacity: 1;
     visibility: visible;
     background: rgba(61, 148, 208, 0.2);
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-align-items: flex-start;
     -ms-flex-align: start;
     align-items: flex-start;
+    -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
     padding-top: 50px;
@@ -1495,10 +1607,13 @@ footer {
     overflow-x: hidden;
     overflow-y: visible;
     position: relative;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between;
     width: 100%;
@@ -1540,10 +1655,13 @@ section.aktuelt-section {
   overflow-x: hidden;
   overflow-y: visible;
   position: relative;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: 100%;
@@ -1584,10 +1702,13 @@ section.aktuelt-section {
   overflow-x: hidden;
   overflow-y: visible;
   position: relative;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: 100%;
@@ -1652,10 +1773,13 @@ body {
   overflow-x: hidden;
   overflow-y: visible;
   position: relative;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: 100%;
@@ -1666,10 +1790,13 @@ body {
   overflow-x: hidden;
   overflow-y: visible;
   position: relative;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: calc(100%);

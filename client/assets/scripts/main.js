@@ -32,7 +32,18 @@ if (navigationBarScroll) {
     })
 }
 
-
+const moreNav = document.getElementById('morenav');
+if (moreNav) {
+    moreNav.addEventListener('click', (e) =>{
+        e.stopPropagation()
+        moreNav.classList.toggle('showing')
+        if (moreNav.classList.contains('showing')) {
+            document.body.addEventListener('click', (e) => {
+                moreNav.classList.remove('showing')
+            })
+        }
+    })
+}
 
 const arrowDown = document.getElementById('arrowdown');
 if (arrowDown) {

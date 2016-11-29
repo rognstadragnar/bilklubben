@@ -114,7 +114,7 @@ nav > .wrapper{
             float: left;
         }
         span.has-dd {margin-right: 10px;}
-        span.has-dd:hover {
+        span.has-dd.showing {
             ul.dropdown {
                 max-height: 400px; overflow: visible; 
                 &:after {right: 25px;}

@@ -85,11 +85,11 @@
 
 	var _MineOrdre2 = _interopRequireDefault(_MineOrdre);
 
-	var _BestillingsShortcut = __webpack_require__(326);
+	var _BestillingsShortcut = __webpack_require__(331);
 
 	var _BestillingsShortcut2 = _interopRequireDefault(_BestillingsShortcut);
 
-	var _Bestilling = __webpack_require__(330);
+	var _Bestilling = __webpack_require__(333);
 
 	var _Bestilling2 = _interopRequireDefault(_Bestilling);
 
@@ -113,6 +113,19 @@
 	            navigationBarScroll.classList.add('scrolled');
 	        } else {
 	            navigationBarScroll.classList.remove('scrolled');
+	        }
+	    });
+	}
+
+	var moreNav = document.getElementById('morenav');
+	if (moreNav) {
+	    moreNav.addEventListener('click', function (e) {
+	        e.stopPropagation();
+	        moreNav.classList.toggle('showing');
+	        if (moreNav.classList.contains('showing')) {
+	            document.body.addEventListener('click', function (e) {
+	                moreNav.classList.remove('showing');
+	            });
 	        }
 	    });
 	}
@@ -39929,204 +39942,7 @@
 
 
 /***/ },
-/* 326 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(29);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactPikadayComponent = __webpack_require__(327);
-
-	var _reactPikadayComponent2 = _interopRequireDefault(_reactPikadayComponent);
-
-	var _pikaday = __webpack_require__(328);
-
-	var _pikaday2 = _interopRequireDefault(_pikaday);
-
-	var _moment = __webpack_require__(212);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _axios = __webpack_require__(2);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _BilListe = __webpack_require__(329);
-
-	var _BilListe2 = _interopRequireDefault(_BilListe);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var lol = void 0;
-
-	var BestillingsShortcut = function (_React$Component) {
-	    _inherits(BestillingsShortcut, _React$Component);
-
-	    function BestillingsShortcut() {
-	        _classCallCheck(this, BestillingsShortcut);
-
-	        var _this = _possibleConstructorReturn(this, (BestillingsShortcut.__proto__ || Object.getPrototypeOf(BestillingsShortcut)).call(this));
-
-	        _this.state = {
-	            startDato: '',
-	            sluttDato: '',
-	            startDatoClass: '',
-	            sluttDatoClass: '',
-	            biler: []
-	        };
-	        _this.onChangeStart = _this.onChangeStart.bind(_this);
-	        _this.onChangeSlutt = _this.onChangeSlutt.bind(_this);
-	        _this.handleShowCar = _this.handleShowCar.bind(_this);
-	        _this.handleSelect = _this.handleSelect.bind(_this);
-	        _this.handleConfirmBil = _this.handleConfirmBil.bind(_this);
-	        return _this;
-	    }
-
-	    _createClass(BestillingsShortcut, [{
-	        key: 'onChangeStart',
-	        value: function onChangeStart(val) {
-	            this.setState({ startDato: (0, _moment2.default)(val) });
-	            lol.setMinDate((0, _moment2.default)(val).add(1, 'days').toDate());
-	        }
-	    }, {
-	        key: 'onChangeSlutt',
-	        value: function onChangeSlutt(val) {
-	            this.setState({ sluttDato: (0, _moment2.default)(val) });
-
-	            if (this.state.startDato.isValid() && this.state.sluttDato.isValid() && this.state.sluttDato.diff(this.state.startDato, 'days') > 0) {
-	                window.sessionStorage.setItem('bestillingsStartDato', this.state.startDato);
-	                window.sessionStorage.setItem('bestillingsSluttDato', this.state.sluttDato);
-	                window.location = '/bestilling';
-	            }
-	        }
-	    }, {
-	        key: 'handleShowCar',
-	        value: function handleShowCar() {
-	            var _this2 = this;
-
-	            this.setState({ shouldShow: this.state.shouldShow ? false : true });
-	            if (!this.state.biler.length) {
-	                _axios2.default.get('/api/getbiler').then(function (res) {
-	                    return _this2.setState({ biler: res.data.biler });
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'handleSelect',
-	        value: function handleSelect(val) {
-	            this.setState({ selected: val });
-	        }
-	    }, {
-	        key: 'handleConfirmBil',
-	        value: function handleConfirmBil() {
-	            if (this.state.selected) {
-	                window.sessionStorage.setItem('bestillingsBil', this.state.selected);
-	                window.location = '/bestilling';
-	            }
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
-
-	            window.sessionStorage.removeItem('bestillingsStartDato');
-	            window.sessionStorage.removeItem('bestillingsSluttDato');
-	            window.sessionStorage.removeItem('bestillingsBilId');
-
-	            var i18n = {
-	                previousMonth: 'Forrige måned',
-	                nextMonth: 'Next måned',
-	                months: ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'],
-	                weekdays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
-	                weekdaysShort: ['Søn', 'Man', 'Tirs', 'Ons', 'Tho', 'Fre', 'Lør'] };
-
-	            new _pikaday2.default({
-	                field: this.refs.start,
-	                format: 'MM/DD/YYYY',
-	                minDate: (0, _moment2.default)().toDate(),
-	                onSelect: this.onChangeStart,
-	                onOpen: function onOpen() {
-	                    return _this3.setState({ startDatoClass: 'active' });
-	                },
-	                onClose: function onClose() {
-	                    return _this3.setState({ startDatoClass: '' });
-	                },
-	                i18n: i18n,
-	                firstDay: 1
-
-	            });
-	            lol = new _pikaday2.default({
-	                field: this.refs.slutt,
-	                format: 'MM/DD/YYYY',
-	                minDate: (0, _moment2.default)().add(1, 'day').toDate(),
-	                onSelect: this.onChangeSlutt,
-	                onOpen: function onOpen() {
-	                    return _this3.setState({ sluttDatoClass: 'active' });
-	                },
-	                onClose: function onClose() {
-	                    return _this3.setState({ sluttDatoClass: '' });
-	                },
-	                i18n: i18n,
-	                firstDay: 1
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'bestillings-shortcut' },
-	                _react2.default.createElement(
-	                    'span',
-	                    { className: 'linje-1' },
-	                    'Jeg vil leie bil fra',
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this.state.startDatoClass + (this.state.startDato ? 'dato dirty' : 'dato'), ref: 'start' },
-	                        this.state.startDato ? this.state.startDato.format('LL') : 'superplaceholder'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    { className: 'linje-2' },
-	                    _react2.default.createElement(
-	                        'span',
-	                        null,
-	                        'til og med '
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: this.state.sluttDatoClass + (this.state.sluttDato ? 'dato dirty' : 'dato'), ref: 'slutt' },
-	                        this.state.sluttDato ? this.state.sluttDato.format('LL') : 'superplaceholder'
-	                    ),
-	                    '.'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return BestillingsShortcut;
-	}(_react2.default.Component);
-
-	exports.default = BestillingsShortcut;
-
-/***/ },
+/* 326 */,
 /* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -41540,6 +41356,353 @@
 	    value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(29);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EnBil = function (_React$Component) {
+	    _inherits(EnBil, _React$Component);
+
+	    function EnBil() {
+	        _classCallCheck(this, EnBil);
+
+	        return _possibleConstructorReturn(this, (EnBil.__proto__ || Object.getPrototypeOf(EnBil)).apply(this, arguments));
+	    }
+
+	    _createClass(EnBil, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var classes = this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : '';
+	            return _react2.default.createElement(
+	                'div',
+	                { className: this.props.isDisabled ? 'en-bil disabled ' : this.props.isValgt ? 'en-bil valgt' : 'en-bil' },
+	                _react2.default.createElement('div', { className: 'en-bil-img', style: { backgroundImage: 'url(/assets/img/biler/' + this.props.bil.id + '/' + this.props.bil.imgsm + ')' } }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'en-bil-desc' },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'en-bil-desc-left' },
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'fat' },
+	                            this.props.bil.make
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'slim' },
+	                            this.props.bil.model
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'en-bil-desc-right' },
+	                        this.props.bil.price,
+	                        'bkp'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'en-bil-overlay' },
+	                    _react2.default.createElement('div', { className: 'en-bil-velg', onClick: function onClick(e) {
+	                            e.stopPropagation();_this2.props.isDisabled ? null : _this2.props.handleClick(_this2.props.bil.id);
+	                        } }),
+	                    _react2.default.createElement('div', { className: 'en-bil-info', onClick: function onClick(e) {
+	                            e.stopPropagation();_this2.props.handleVisInfo(_this2.props.bil.id);
+	                        } })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return EnBil;
+	}(_react2.default.Component);
+
+	exports.default = EnBil;
+
+/***/ },
+/* 330 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(29);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _EnBil = __webpack_require__(329);
+
+	var _EnBil2 = _interopRequireDefault(_EnBil);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BilVisning = function (_React$Component) {
+	    _inherits(BilVisning, _React$Component);
+
+	    function BilVisning() {
+	        _classCallCheck(this, BilVisning);
+
+	        return _possibleConstructorReturn(this, (BilVisning.__proto__ || Object.getPrototypeOf(BilVisning)).call(this));
+	    }
+
+	    _createClass(BilVisning, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            console.log(this.props.opptatteBiler);
+	            var biler = this.props.biler ? this.props.biler.map(function (b) {
+	                if (_this2.props.opptatteBiler && _this2.props.opptatteBiler.length) {
+	                    return _this2.props.opptatteBiler.indexOf(b.id) < 0 ? _react2.default.createElement(_EnBil2.default, { handleVisInfo: _this2.props.handleVisInfo, isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id, bil: b }) : _react2.default.createElement(_EnBil2.default, { handleVisInfo: _this2.props.handleVisInfo, isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: true, handleClick: _this2.props.handleBilValg, key: b.id, bil: b });
+	                } else {
+	                    return _react2.default.createElement(_EnBil2.default, { handleVisInfo: _this2.props.handleVisInfo, isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id, bil: b });
+	                }
+	            }) : null;
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'bil-visning' },
+	                biler
+	            );
+	        }
+	    }]);
+
+	    return BilVisning;
+	}(_react2.default.Component);
+
+	exports.default = BilVisning;
+
+/***/ },
+/* 331 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(29);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactPikadayComponent = __webpack_require__(327);
+
+	var _reactPikadayComponent2 = _interopRequireDefault(_reactPikadayComponent);
+
+	var _pikaday = __webpack_require__(328);
+
+	var _pikaday2 = _interopRequireDefault(_pikaday);
+
+	var _moment = __webpack_require__(212);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _axios = __webpack_require__(2);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _BilListe = __webpack_require__(332);
+
+	var _BilListe2 = _interopRequireDefault(_BilListe);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var lol = void 0;
+
+	var BestillingsShortcut = function (_React$Component) {
+	    _inherits(BestillingsShortcut, _React$Component);
+
+	    function BestillingsShortcut() {
+	        _classCallCheck(this, BestillingsShortcut);
+
+	        var _this = _possibleConstructorReturn(this, (BestillingsShortcut.__proto__ || Object.getPrototypeOf(BestillingsShortcut)).call(this));
+
+	        _this.state = {
+	            startDato: '',
+	            sluttDato: '',
+	            startDatoClass: '',
+	            sluttDatoClass: '',
+	            biler: []
+	        };
+	        _this.onChangeStart = _this.onChangeStart.bind(_this);
+	        _this.onChangeSlutt = _this.onChangeSlutt.bind(_this);
+	        _this.handleShowCar = _this.handleShowCar.bind(_this);
+	        _this.handleSelect = _this.handleSelect.bind(_this);
+	        _this.handleConfirmBil = _this.handleConfirmBil.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(BestillingsShortcut, [{
+	        key: 'onChangeStart',
+	        value: function onChangeStart(val) {
+	            this.setState({ startDato: (0, _moment2.default)(val) });
+	            lol.setMinDate((0, _moment2.default)(val).add(1, 'days').toDate());
+	        }
+	    }, {
+	        key: 'onChangeSlutt',
+	        value: function onChangeSlutt(val) {
+	            this.setState({ sluttDato: (0, _moment2.default)(val) });
+
+	            if (this.state.startDato.isValid() && this.state.sluttDato.isValid() && this.state.sluttDato.diff(this.state.startDato, 'days') > 0) {
+	                window.sessionStorage.setItem('bestillingsStartDato', this.state.startDato);
+	                window.sessionStorage.setItem('bestillingsSluttDato', this.state.sluttDato);
+	                window.location = '/bestilling';
+	            }
+	        }
+	    }, {
+	        key: 'handleShowCar',
+	        value: function handleShowCar() {
+	            var _this2 = this;
+
+	            this.setState({ shouldShow: this.state.shouldShow ? false : true });
+	            if (!this.state.biler.length) {
+	                _axios2.default.get('/api/getbiler').then(function (res) {
+	                    return _this2.setState({ biler: res.data.biler });
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'handleSelect',
+	        value: function handleSelect(val) {
+	            this.setState({ selected: val });
+	        }
+	    }, {
+	        key: 'handleConfirmBil',
+	        value: function handleConfirmBil() {
+	            if (this.state.selected) {
+	                window.sessionStorage.setItem('bestillingsBil', this.state.selected);
+	                window.location = '/bestilling';
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this3 = this;
+
+	            window.sessionStorage.removeItem('bestillingsStartDato');
+	            window.sessionStorage.removeItem('bestillingsSluttDato');
+	            window.sessionStorage.removeItem('bestillingsBilId');
+
+	            var i18n = {
+	                previousMonth: 'Forrige måned',
+	                nextMonth: 'Next måned',
+	                months: ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'],
+	                weekdays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
+	                weekdaysShort: ['Søn', 'Man', 'Tirs', 'Ons', 'Tho', 'Fre', 'Lør'] };
+
+	            new _pikaday2.default({
+	                field: this.refs.start,
+	                format: 'MM/DD/YYYY',
+	                minDate: (0, _moment2.default)().toDate(),
+	                onSelect: this.onChangeStart,
+	                onOpen: function onOpen() {
+	                    return _this3.setState({ startDatoClass: 'active' });
+	                },
+	                onClose: function onClose() {
+	                    return _this3.setState({ startDatoClass: '' });
+	                },
+	                i18n: i18n,
+	                firstDay: 1
+
+	            });
+	            lol = new _pikaday2.default({
+	                field: this.refs.slutt,
+	                format: 'MM/DD/YYYY',
+	                minDate: (0, _moment2.default)().add(1, 'day').toDate(),
+	                onSelect: this.onChangeSlutt,
+	                onOpen: function onOpen() {
+	                    return _this3.setState({ sluttDatoClass: 'active' });
+	                },
+	                onClose: function onClose() {
+	                    return _this3.setState({ sluttDatoClass: '' });
+	                },
+	                i18n: i18n,
+	                firstDay: 1
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'bestillings-shortcut' },
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: 'linje-1' },
+	                    'Jeg vil leie bil fra',
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this.state.startDatoClass + (this.state.startDato ? 'dato dirty' : 'dato'), ref: 'start' },
+	                        this.state.startDato ? this.state.startDato.format('LL') : 'superplaceholder'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: 'linje-2' },
+	                    _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        'til og med '
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: this.state.sluttDatoClass + (this.state.sluttDato ? 'dato dirty' : 'dato'), ref: 'slutt' },
+	                        this.state.sluttDato ? this.state.sluttDato.format('LL') : 'superplaceholder'
+	                    ),
+	                    '.'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return BestillingsShortcut;
+	}(_react2.default.Component);
+
+	exports.default = BestillingsShortcut;
+
+/***/ },
+/* 332 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _react = __webpack_require__(29);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -41597,7 +41760,7 @@
 	exports.default = bilListe;
 
 /***/ },
-/* 330 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41624,19 +41787,19 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _BilVisning = __webpack_require__(331);
+	var _BilVisning = __webpack_require__(330);
 
 	var _BilVisning2 = _interopRequireDefault(_BilVisning);
 
-	var _BilInfo = __webpack_require__(334);
+	var _BilInfo = __webpack_require__(335);
 
 	var _BilInfo2 = _interopRequireDefault(_BilInfo);
 
-	var _SokeFelt = __webpack_require__(333);
+	var _SokeFelt = __webpack_require__(334);
 
 	var _SokeFelt2 = _interopRequireDefault(_SokeFelt);
 
-	var _BekreftBestilling = __webpack_require__(335);
+	var _BekreftBestilling = __webpack_require__(336);
 
 	var _BekreftBestilling2 = _interopRequireDefault(_BekreftBestilling);
 
@@ -41924,156 +42087,7 @@
 	exports.default = Bestilling;
 
 /***/ },
-/* 331 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(29);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _EnBil = __webpack_require__(332);
-
-	var _EnBil2 = _interopRequireDefault(_EnBil);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var BilVisning = function (_React$Component) {
-	    _inherits(BilVisning, _React$Component);
-
-	    function BilVisning() {
-	        _classCallCheck(this, BilVisning);
-
-	        return _possibleConstructorReturn(this, (BilVisning.__proto__ || Object.getPrototypeOf(BilVisning)).call(this));
-	    }
-
-	    _createClass(BilVisning, [{
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-
-	            console.log(this.props.opptatteBiler);
-	            var biler = this.props.biler ? this.props.biler.map(function (b) {
-	                if (_this2.props.opptatteBiler && _this2.props.opptatteBiler.length) {
-	                    return _this2.props.opptatteBiler.indexOf(b.id) < 0 ? _react2.default.createElement(_EnBil2.default, { handleVisInfo: _this2.props.handleVisInfo, isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id, bil: b }) : _react2.default.createElement(_EnBil2.default, { handleVisInfo: _this2.props.handleVisInfo, isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: true, handleClick: _this2.props.handleBilValg, key: b.id, bil: b });
-	                } else {
-	                    return _react2.default.createElement(_EnBil2.default, { handleVisInfo: _this2.props.handleVisInfo, isValgt: _this2.props.valgtBil === b.id ? true : false, isDisabled: false, handleClick: _this2.props.handleBilValg, key: b.id, bil: b });
-	                }
-	            }) : null;
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'bil-visning' },
-	                biler
-	            );
-	        }
-	    }]);
-
-	    return BilVisning;
-	}(_react2.default.Component);
-
-	exports.default = BilVisning;
-
-/***/ },
-/* 332 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(29);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var EnBil = function (_React$Component) {
-	    _inherits(EnBil, _React$Component);
-
-	    function EnBil() {
-	        _classCallCheck(this, EnBil);
-
-	        return _possibleConstructorReturn(this, (EnBil.__proto__ || Object.getPrototypeOf(EnBil)).apply(this, arguments));
-	    }
-
-	    _createClass(EnBil, [{
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-
-	            var classes = this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : '';
-	            return _react2.default.createElement(
-	                'div',
-	                { className: this.props.isDisabled ? 'en-bil disabled ' : this.props.isValgt ? 'en-bil valgt' : 'en-bil' },
-	                _react2.default.createElement('div', { className: 'en-bil-img', style: { backgroundImage: 'url(/assets/img/biler/' + this.props.bil.id + '/' + this.props.bil.imgsm + ')' } }),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'en-bil-desc' },
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'en-bil-desc-left' },
-	                        _react2.default.createElement(
-	                            'span',
-	                            { className: 'fat' },
-	                            this.props.bil.make
-	                        ),
-	                        _react2.default.createElement(
-	                            'span',
-	                            { className: 'slim' },
-	                            this.props.bil.model
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'en-bil-desc-right' },
-	                        this.props.bil.price,
-	                        'bkp'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'en-bil-overlay' },
-	                    _react2.default.createElement('div', { className: 'en-bil-velg', onClick: function onClick(e) {
-	                            e.stopPropagation();_this2.props.isDisabled ? null : _this2.props.handleClick(_this2.props.bil.id);
-	                        } }),
-	                    _react2.default.createElement('div', { className: 'en-bil-info', onClick: function onClick(e) {
-	                            e.stopPropagation();_this2.props.handleVisInfo(_this2.props.bil.id);
-	                        } })
-	                )
-	            );
-	        }
-	    }]);
-
-	    return EnBil;
-	}(_react2.default.Component);
-
-	exports.default = EnBil;
-
-/***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42214,7 +42228,7 @@
 	exports.default = BestillingsShortcut;
 
 /***/ },
-/* 334 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42227,7 +42241,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _googleMapReact = __webpack_require__(336);
+	var _googleMapReact = __webpack_require__(337);
 
 	var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
 
@@ -42427,7 +42441,7 @@
 	};
 
 /***/ },
-/* 335 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42508,7 +42522,7 @@
 	};
 
 /***/ },
-/* 336 */
+/* 337 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42518,7 +42532,7 @@
 	});
 	exports.default = undefined;
 
-	var _google_map = __webpack_require__(337);
+	var _google_map = __webpack_require__(338);
 
 	var _google_map2 = _interopRequireDefault(_google_map);
 
@@ -42527,7 +42541,7 @@
 	exports.default = _google_map2.default;
 
 /***/ },
-/* 337 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -42552,63 +42566,63 @@
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _marker_dispatcher = __webpack_require__(338);
+	var _marker_dispatcher = __webpack_require__(339);
 
 	var _marker_dispatcher2 = _interopRequireDefault(_marker_dispatcher);
 
-	var _google_map_map = __webpack_require__(340);
+	var _google_map_map = __webpack_require__(341);
 
 	var _google_map_map2 = _interopRequireDefault(_google_map_map);
 
-	var _google_map_markers = __webpack_require__(341);
+	var _google_map_markers = __webpack_require__(342);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
-	var _google_map_markers_prerender = __webpack_require__(343);
+	var _google_map_markers_prerender = __webpack_require__(344);
 
 	var _google_map_markers_prerender2 = _interopRequireDefault(_google_map_markers_prerender);
 
-	var _google_map_loader = __webpack_require__(344);
+	var _google_map_loader = __webpack_require__(345);
 
 	var _google_map_loader2 = _interopRequireDefault(_google_map_loader);
 
-	var _detect = __webpack_require__(346);
+	var _detect = __webpack_require__(347);
 
 	var _detect2 = _interopRequireDefault(_detect);
 
-	var _geo = __webpack_require__(347);
+	var _geo = __webpack_require__(348);
 
 	var _geo2 = _interopRequireDefault(_geo);
 
-	var _array_helper = __webpack_require__(352);
+	var _array_helper = __webpack_require__(353);
 
 	var _array_helper2 = _interopRequireDefault(_array_helper);
 
-	var _is_plain_object = __webpack_require__(353);
+	var _is_plain_object = __webpack_require__(354);
 
 	var _is_plain_object2 = _interopRequireDefault(_is_plain_object);
 
-	var _pick = __webpack_require__(354);
+	var _pick = __webpack_require__(355);
 
 	var _pick2 = _interopRequireDefault(_pick);
 
-	var _raf = __webpack_require__(355);
+	var _raf = __webpack_require__(356);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
-	var _log = __webpack_require__(356);
+	var _log = __webpack_require__(357);
 
 	var _log2 = _interopRequireDefault(_log);
 
-	var _isNumber = __webpack_require__(357);
+	var _isNumber = __webpack_require__(358);
 
 	var _isNumber2 = _interopRequireDefault(_isNumber);
 
-	var _omit = __webpack_require__(342);
+	var _omit = __webpack_require__(343);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
-	var _detectElementResize = __webpack_require__(358);
+	var _detectElementResize = __webpack_require__(359);
 
 	var _detectElementResize2 = _interopRequireDefault(_detectElementResize);
 
@@ -43568,7 +43582,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ },
-/* 338 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43579,7 +43593,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _eventemitter = __webpack_require__(339);
+	var _eventemitter = __webpack_require__(340);
 
 	var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
@@ -43632,7 +43646,7 @@
 	exports.default = MarkerDispatcher;
 
 /***/ },
-/* 339 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43927,7 +43941,7 @@
 
 
 /***/ },
-/* 340 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43987,7 +44001,7 @@
 	exports.default = GoogleMapMap;
 
 /***/ },
-/* 341 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44008,7 +44022,7 @@
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _omit = __webpack_require__(342);
+	var _omit = __webpack_require__(343);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
@@ -44322,7 +44336,7 @@
 	exports.default = GoogleMapMarkers;
 
 /***/ },
-/* 342 */
+/* 343 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -44349,7 +44363,7 @@
 	exports.default = omit;
 
 /***/ },
-/* 343 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44372,7 +44386,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _google_map_markers = __webpack_require__(341);
+	var _google_map_markers = __webpack_require__(342);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
@@ -44390,7 +44404,7 @@
 	};
 
 /***/ },
-/* 344 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -44411,7 +44425,7 @@
 	// TODO add libraries language and other map options
 	function googleMapLoader(bootstrapURLKeys) {
 	  if (!$script_) {
-	    $script_ = __webpack_require__(345); // eslint-disable-line
+	    $script_ = __webpack_require__(346); // eslint-disable-line
 	  }
 
 	  // call from outside google-map-react
@@ -44468,7 +44482,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ },
-/* 345 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -44597,7 +44611,7 @@
 
 
 /***/ },
-/* 346 */
+/* 347 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -44646,7 +44660,7 @@
 	}
 
 /***/ },
-/* 347 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44659,15 +44673,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(348);
+	var _lat_lng = __webpack_require__(349);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(350);
+	var _pointGeometry = __webpack_require__(351);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _transform = __webpack_require__(351);
+	var _transform = __webpack_require__(352);
 
 	var _transform2 = _interopRequireDefault(_transform);
 
@@ -44802,7 +44816,7 @@
 	exports.default = Geo;
 
 /***/ },
-/* 348 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44813,7 +44827,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _wrap2 = __webpack_require__(349);
+	var _wrap2 = __webpack_require__(350);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -44857,7 +44871,7 @@
 	exports.default = LatLng;
 
 /***/ },
-/* 349 */
+/* 350 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -44872,7 +44886,7 @@
 	}
 
 /***/ },
-/* 350 */
+/* 351 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45009,7 +45023,7 @@
 
 
 /***/ },
-/* 351 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45020,15 +45034,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(348);
+	var _lat_lng = __webpack_require__(349);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(350);
+	var _pointGeometry = __webpack_require__(351);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _wrap = __webpack_require__(349);
+	var _wrap = __webpack_require__(350);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45189,7 +45203,7 @@
 	exports.default = Transform;
 
 /***/ },
-/* 352 */
+/* 353 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -45211,7 +45225,7 @@
 	}
 
 /***/ },
-/* 353 */
+/* 354 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45249,7 +45263,7 @@
 	}
 
 /***/ },
-/* 354 */
+/* 355 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -45270,7 +45284,7 @@
 	}
 
 /***/ },
-/* 355 */
+/* 356 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -45290,7 +45304,7 @@
 	}
 
 /***/ },
-/* 356 */
+/* 357 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -45306,7 +45320,7 @@
 	exports.default = log2;
 
 /***/ },
-/* 357 */
+/* 358 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45331,7 +45345,7 @@
 	}
 
 /***/ },
-/* 358 */
+/* 359 */
 /***/ function(module, exports) {
 
 	'use strict';
