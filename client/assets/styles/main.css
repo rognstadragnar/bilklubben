@@ -1767,6 +1767,10 @@ body {
 .registrer-parent input::-ms-input-placeholder {
   color: rgba(255, 255, 255, 0.6); }
 
+input {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px; }
+
 /* SIMPLE FLEXGRID */
 .row {
   overflow-wrap: break-word;

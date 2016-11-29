@@ -69,6 +69,11 @@ body {
    color: rgba(white, 0.6);  
 }
 
+input {
+    -webkit-appearance: none;
+    -webkit-border-radius:0px;
+}
+
 
 @import "../../../node_modules/simple-flexgrid/dist/simple-flexgrid.scss";
 
