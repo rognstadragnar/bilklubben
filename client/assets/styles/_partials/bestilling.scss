@@ -431,7 +431,7 @@
             }
             .bekreft-bestilling.showing {
                 transform: translateY(0px);
-
+                border-bottom: 10px solid #52a3e2;
             }
 
             .bekreft-bestilling {
@@ -528,6 +528,7 @@
                     top: -10px;
                     left: 0;
                     background: rgba(197, 25, 25, 0.89);
+                    border-bottom: 10px solid #e0323b;
                 }
                 .form-group {
                     position: absolute;

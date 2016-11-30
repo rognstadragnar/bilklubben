@@ -1825,7 +1825,8 @@ footer {
     .bestilling-content .sidebar .bekreft-bestilling.showing {
       -webkit-transform: translateY(0px);
       -ms-transform: translateY(0px);
-      transform: translateY(0px); }
+      transform: translateY(0px);
+      border-bottom: 10px solid #52a3e2; }
     .bestilling-content .sidebar .bekreft-bestilling {
       position: absolute;
       bottom: 0;
@@ -1910,7 +1911,8 @@ footer {
         color: white;
         top: -10px;
         left: 0;
-        background: rgba(197, 25, 25, 0.89); }
+        background: rgba(197, 25, 25, 0.89);
+        border-bottom: 10px solid #e0323b; }
       .bestilling-content .sidebar .bekreft-bestilling .form-group {
         position: absolute;
         right: 5%;
@@ -2072,7 +2074,6 @@ body {
 
 html, body {
   height: 100%;
-  overflow-y: scroll;
   -webkit-overflow-scrolling: touch; }
 
 .body-container {
