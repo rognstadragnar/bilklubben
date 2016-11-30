@@ -1744,7 +1744,7 @@ footer {
       box-sizing: border-box; } }
     @media screen and (max-width: 900px) and (max-width: 520px) {
       .bestilling-content .sidebar .sok-content {
-        padding: 0; } }
+        padding: 0 0 0 10px; } }
 
 @media screen and (max-width: 900px) {
       .bestilling-content .sidebar .sok-content .header {
@@ -1856,6 +1856,21 @@ footer {
         padding: 10px; }
       .bestilling-content .sidebar .bekreft-bestilling div {
         display: inline; }
+      .bestilling-content .sidebar .bekreft-bestilling .errors {
+        display: none; }
+      .bestilling-content .sidebar .bekreft-bestilling .errors.showing {
+        display: block;
+        position: absolute;
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 60px;
+        height: 100%;
+        color: white;
+        top: -10px;
+        background: rgba(197, 25, 25, 0.89); }
       .bestilling-content .sidebar .bekreft-bestilling .form-group {
         position: absolute;
         right: 5%;

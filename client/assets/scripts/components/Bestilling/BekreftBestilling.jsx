@@ -24,7 +24,7 @@ export default (props) => {
                 <button className='bb-send' disabled={props.showing && props.bil && props.lengde > 0 ? false : true } onClick={()=> props.handleBestill()}>Bestilling</button>
                 
             </div>
-            <span className='errors'>{props.error ? props.error : null}</span>
+            <span className={props.error ? 'errors showing' : 'errors'}>{props.error ? props.error : null}</span>
         </div>
     )
 }

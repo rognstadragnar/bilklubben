@@ -383,7 +383,7 @@
                 padding: 0 0 0 34px;
                 box-sizing: border-box;
                 @include mq('max-width: 520px') {
-                        padding: 0
+                        padding: 0 0 0 10px;
                 }
                 .header {
                     margin: 0;
@@ -501,6 +501,23 @@
                 div {
                     display: inline;
                     
+                }
+                .errors {
+                    display: none;
+                }
+                .errors.showing {
+                    display: block;
+                    position: absolute;
+                    margin: 10px 0;
+                    width: 100%;
+                    text-align: center;
+                    font-size: 2rem;
+                    font-weight: 500;
+                    line-height: 60px;
+                    height: 100%;
+                    color: white;
+                    top: -10px;
+                    background: rgba(197, 25, 25, 0.89);
                 }
                 .form-group {
                     position: absolute;

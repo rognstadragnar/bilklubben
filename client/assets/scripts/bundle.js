@@ -41904,7 +41904,8 @@
 	                startDato: null,
 	                sluttDato: null,
 	                opptatteDatoer: [],
-	                opptatteBiler: []
+	                opptatteBiler: [],
+	                error: null
 	            });
 	        }
 	    }, {
@@ -42516,7 +42517,7 @@
 	        ),
 	        _react2.default.createElement(
 	            'span',
-	            { className: 'errors' },
+	            { className: props.error ? 'errors showing' : 'errors' },
 	            props.error ? props.error : null
 	        )
 	    );

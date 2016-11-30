@@ -87,7 +87,8 @@ export default class Bestilling extends React.Component {
             startDato: null,
             sluttDato: null,
             opptatteDatoer: [],
-            opptatteBiler: []
+            opptatteBiler: [],
+            error: null
         })
     }
 
