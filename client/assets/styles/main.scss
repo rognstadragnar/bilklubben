@@ -69,7 +69,7 @@ body {
    color: rgba(white, 0.6);  
 }
 
-input {
+input:not[type='radio'], input:not[type='check'] {
     -webkit-appearance: none;
     -webkit-border-radius:0px;
 }

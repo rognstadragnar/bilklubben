@@ -44,6 +44,10 @@ if (moreNav) {
         }
     })
 }
+const toTop = document.getElementById('to-top');
+if (toTop) {
+    toTop.addEventListener('click', () => simpleScroll.toTop());
+}
 
 const arrowDown = document.getElementById('arrowdown');
 if (arrowDown) {

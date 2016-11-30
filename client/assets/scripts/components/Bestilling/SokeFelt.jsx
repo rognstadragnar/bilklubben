@@ -69,9 +69,10 @@ export default class BestillingsShortcut extends React.Component {
         
         return (
             <div className='sok-content'>
+                <h4 className='header'>Lei bil</h4>
                 <div className={'sokefelt startfelt' + (this.props.startDato ? '' : ' grayed')} ref='startPickerDiv'>{this.props.startDato ? this.props.startDato.format('LL') : 'Velg startdato'}</div>
                 <div className={'sokefelt sluttfelt' + (this.props.sluttDato ? '' : ' grayed')} ref='sluttPickerDiv'>{this.props.sluttDato ? this.props.sluttDato.format('LL') : 'Velg sluttdato'} </div>
-                <span onClick={this.props.handleToggle}>{this.props.toggleHva}</span>
+                <span className='sok-reset' onClick={this.props.handleToggle}>{this.props.toggleHva}</span>
         </div>
         )
     }

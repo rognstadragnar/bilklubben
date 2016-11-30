@@ -129,6 +129,12 @@
 	        }
 	    });
 	}
+	var toTop = document.getElementById('to-top');
+	if (toTop) {
+	    toTop.addEventListener('click', function () {
+	        return _simpleScroll2.default.toTop();
+	    });
+	}
 
 	var arrowDown = document.getElementById('arrowdown');
 	if (arrowDown) {
@@ -2007,7 +2013,6 @@
 	            } else {
 	                speed = amount / duration;
 	            }
-	            console.log(speed, duration);
 	            var scrolling = setInterval(function () {
 	                var currentPos = window.scrollY;
 	                if (window.scrollY < goal && document.body.scrollHeight - window.innerHeight !== window.scrollY) {
@@ -2016,7 +2021,7 @@
 	                } else {
 	                    clearInterval(scrolling);
 	                }
-	            });
+	            }, 5);
 	        })();
 	    } else if (amount < 0) {
 	        (function () {
@@ -41831,7 +41836,8 @@
 	            opptatteDatoer: [],
 	            opptatteBiler: [],
 	            velgBil: false,
-	            visInfo: false
+	            visInfo: false,
+	            error: null
 	        };
 	        _this.handleToggleBilDato = _this.handleToggleBilDato.bind(_this);
 	        _this.handleBilValg = _this.handleBilValg.bind(_this);
@@ -41851,20 +41857,16 @@
 	                maxDato: (0, _moment2.default)('12/12/2999'),
 	                startDato: (0, _moment2.default)(val)
 	            });
-	            if (this.state.valgtBil && this.state.opptatteBiler.indexOf(this.state.valgtBil)) {
-	                this.setState({ valgtBil: null });
-	            }
+
 	            if (this.state.sluttDato && !(0, _moment2.default)(val).isBefore(this.state.sluttDato)) {
-	                console.log('it is');
 	                this.setState({
 	                    sluttDato: (0, _moment2.default)(val).add(1, 'days')
 	                });
 	            }
-	            if (!this.state.velgBil) {
-	                this.updateOpptatteBiler();
-	            }
 
-	            if (this.state.valgtBil) {
+	            this.updateOpptatteBiler();
+
+	            if (this.state.valgtBil && this.state.opptatteBiler.length) {
 	                var dateArr = this.state.opptatteDatoer.sort(function (a, b) {
 	                    if (a > b) return 1;else if (a > b) return -1;else return 0;
 	                });
@@ -41881,8 +41883,6 @@
 	    }, {
 	        key: 'handleSluttChange',
 	        value: function handleSluttChange(val) {
-	            console.log(this.state.startDato);
-	            console.log('HANDLED SLUTT CHANGE');
 	            if (this.state.velgBil) {
 	                this.setState({
 	                    sluttDato: (0, _moment2.default)(val)
@@ -41898,46 +41898,27 @@
 	    }, {
 	        key: 'handleToggleBilDato',
 	        value: function handleToggleBilDato() {
-	            if (this.state.velgBil) {
-	                this.resetBiler();
-
-	                this.setState({
-	                    velgBil: false,
-	                    startDato: (0, _moment2.default)(),
-	                    sluttDato: (0, _moment2.default)().add(1, 'days'),
-	                    opptatteDatoer: []
-
-	                });
-	            } else {
-	                this.resetBiler();
-	                this.setState({
-	                    velgBil: true,
-	                    startDato: null,
-	                    sluttDato: null,
-	                    opptatteDatoer: []
-	                });
-	            }
+	            this.resetBiler();
+	            this.setState({
+	                velgBil: false,
+	                startDato: null,
+	                sluttDato: null,
+	                opptatteDatoer: [],
+	                opptatteBiler: []
+	            });
 	        }
 	    }, {
 	        key: 'handleBilValg',
 	        value: function handleBilValg(val) {
 	            var _this2 = this;
 
-	            console.log('hop', val === this.state.valgtBil);
-	            if (this.state.velgBil) {
-	                this.updateOpptatteDatoer(val);
-	                this.setState({
-	                    valgtBil: this.state.valgtBil === val ? null : val
-	                });
-	            } else {
-	                this.setState({
-	                    valgtBil: this.state.valgtBil === val ? null : val
-	                });
-	            }
+	            this.updateOpptatteDatoer(val);
+	            this.setState({
+	                valgtBil: this.state.valgtBil === val ? null : val
+	            });
 	            var car = this.state.biler.filter(function (cv) {
 	                return cv.id === _this2.state.valgtBil ? true : false;
 	            });
-	            console.log('111', car);
 	        }
 	    }, {
 	        key: 'resetBiler',
@@ -41959,7 +41940,6 @@
 	        value: function updateOpptatteDatoer(val) {
 	            var _this3 = this;
 
-	            console.log('UPDATE OPPTATTE DATOER');
 	            _axios2.default.post('/api/finnOpptatteDatoer', { bilId: val }).then(function (res) {
 	                console.log(res.data);_this3.setState({ opptatteDatoer: res.data.opptatteDatoer.map(function (d) {
 	                        return _moment2.default.range(d.start, d.slutt);
@@ -41976,35 +41956,42 @@
 	                sluttDato: this.state.sluttDato ? this.state.sluttDato : null
 	            }).then(function (res) {
 	                return _this4.setState({ opptatteBiler: res.data.opptatteBiler });
+	            }).then(function () {
+	                if (_this4.state.valgtBil && _this4.state.opptatteBiler.indexOf(_this4.state.valgtBil) >= 0) {
+	                    _this4.setState({ valgtBil: null });
+	                }
 	            }); //should retrun res.data.opptattebiler
 	        }
 	    }, {
 	        key: 'handleBestill',
 	        value: function handleBestill() {
+	            var _this5 = this;
+
 	            console.log('yeeho');
 	            if ((0, _moment2.default)(this.state.startDato).isValid() && (0, _moment2.default)(this.state.sluttDato).isValid && this.state.valgtBil) {
 	                _axios2.default.post('/api/bestill', { startDato: this.state.startDato, sluttDato: this.state.sluttDato, bil: this.state.valgtBil }).then(function () {
 	                    return window.location = '/profil';
 	                }).catch(function (err) {
-	                    return console.log(err);
+	                    return _this5.setState({ error: err.response.data.error });
 	                });
 	            }
 	        }
 	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            _axios2.default.get('/api/getBiler').then(function (res) {
-	                return _this5.setState({ biler: res.data.biler });
+	                return _this6.setState({ biler: res.data.biler });
 	            });
 	            if (window.sessionStorage.getItem('bestillingsStartDato') && window.sessionStorage.getItem('bestillingsSluttDato')) {
 	                this.setState({
 	                    startDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsStartDato')),
 	                    sluttDato: (0, _moment2.default)(window.sessionStorage.getItem('bestillingsSluttDato'))
 	                });
+	                this.updateOpptatteBiler();
 	                setTimeout(function () {
-	                    return _this5.updateOpptatteBiler();
+	                    return _this6.updateOpptatteBiler();
 	                }, 500);
 	            } else if (window.sessionStorage.getItem('bestillingsBil')) {
 	                var bilen = Number(window.sessionStorage.getItem('bestillingsBil'));
@@ -42015,11 +42002,6 @@
 	                    velgBil: true,
 	                    valgtBil: Number(window.sessionStorage.getItem('bestillingsBil'))
 	                });
-	            } else {
-	                /*this.setState({
-	                    startDato: Moment(),
-	                    sluttDato: Moment().add(1, 'days')
-	                })*/
 	            }
 	        }
 	    }, {
@@ -42032,7 +42014,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this6 = this;
+	            var _this7 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -42050,17 +42032,18 @@
 	                        handleStartChange: this.handleStartChange,
 	                        handleSluttChange: this.handleSluttChange,
 	                        handleToggle: this.handleToggleBilDato,
-	                        toggleHva: this.state.velgBil ? 'Velg basert på dato' : 'Velg basert på bil'
+	                        toggleHva: this.state.velgBil ? 'Reset' : 'Reset'
 	                    }),
 	                    _react2.default.createElement(_BekreftBestilling2.default, {
 	                        showing: this.state.valgtBil && (0, _moment2.default)(this.state.startDato).isValid() && (0, _moment2.default)(this.state.sluttDato).isValid() ? true : false,
 	                        bil: this.state.valgtBil && this.state.biler ? this.state.biler.filter(function (cv) {
-	                            return cv.id === _this6.state.valgtBil;
+	                            return cv.id === _this7.state.valgtBil;
 	                        })[0] : null,
 	                        lengde: (0, _moment2.default)(this.state.startDato).isValid() && (0, _moment2.default)(this.state.sluttDato).isValid ? _moment2.default.range((0, _moment2.default)(this.state.startDato), (0, _moment2.default)(this.state.sluttDato)).diff('days') : null,
 	                        startDato: this.state.startDato ? this.state.startDato.format('Do MMM') : null,
 	                        sluttDato: this.state.sluttDato ? this.state.sluttDato.format('Do MMM') : null,
-	                        handleBestill: this.handleBestill
+	                        handleBestill: this.handleBestill,
+	                        error: this.state.error
 	                    })
 	                ),
 	                _react2.default.createElement(
@@ -42070,10 +42053,10 @@
 	                    this.state.visInfo ? _react2.default.createElement(
 	                        'div',
 	                        { className: 'bil-info showing', onClick: function onClick() {
-	                                return _this6.handleVisInfo(false);
+	                                return _this7.handleVisInfo(false);
 	                            } },
 	                        _react2.default.createElement(_BilInfo2.default, { showing: true, handleLukk: this.handleVisInfo, bil: this.state.biler.filter(function (cv) {
-	                                return cv.id == _this6.state.visInfo;
+	                                return cv.id == _this7.state.visInfo;
 	                            })[0] })
 	                    ) : _react2.default.createElement('div', { className: 'bil-info' })
 	                )
@@ -42203,6 +42186,11 @@
 	                'div',
 	                { className: 'sok-content' },
 	                _react2.default.createElement(
+	                    'h4',
+	                    { className: 'header' },
+	                    'Lei bil'
+	                ),
+	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'sokefelt startfelt' + (this.props.startDato ? '' : ' grayed'), ref: 'startPickerDiv' },
 	                    this.props.startDato ? this.props.startDato.format('LL') : 'Velg startdato'
@@ -42215,7 +42203,7 @@
 	                ),
 	                _react2.default.createElement(
 	                    'span',
-	                    { onClick: this.props.handleToggle },
+	                    { className: 'sok-reset', onClick: this.props.handleToggle },
 	                    this.props.toggleHva
 	                )
 	            );
@@ -42468,56 +42456,69 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-din-bestilling' },
-	            'Din bestilling:'
-	        ),
-	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-bil' },
-	            props.bil.year,
-	            ' ',
-	            props.bil.make,
-	            ' ',
-	            props.bil.model
-	        ),
-	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-lengde' },
-	            ' \xE1 ',
-	            props.lengde,
-	            ' d\xF8gn (',
-	            props.startDato,
-	            ' - ',
-	            props.sluttDato,
-	            ')'
-	        ),
-	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-pris' },
-	            props.bil.price * props.lengde,
-	            ' BK-poeng'
-	        ),
-	        _react2.default.createElement(
-	            'button',
-	            { className: 'bb-send', disabled: props.showing ? false : true, onClick: function onClick() {
-	                    return props.handleBestill();
-	                } },
-	            'Fullf\xF8r bestilling'
+	            'div',
+	            { className: 'bb-cont' },
+	            _react2.default.createElement(
+	                'span',
+	                { className: 'bb-bil' },
+	                props.bil.make,
+	                ' ',
+	                props.bil.model
+	            ),
+	            _react2.default.createElement(
+	                'span',
+	                { className: 'bb-lengde' },
+	                props.lengde,
+	                ' d\xF8gn ',
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: 'bb-datoer' },
+	                    '(',
+	                    props.startDato,
+	                    ' - ',
+	                    props.sluttDato,
+	                    ')'
+	                )
+	            ),
+	            _react2.default.createElement(
+	                'span',
+	                { className: 'bb-pris' },
+	                'Totalpris: ',
+	                props.bil.price * props.lengde,
+	                ' bkp'
+	            )
 	        )
 	    ) : _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	            'span',
-	            { className: 'bb-din-bestilling' },
-	            'Din bestilling:'
-	        )
+	        _react2.default.createElement('div', { className: 'bb-cont' })
 	    );
 	    return _react2.default.createElement(
 	        'div',
 	        { className: props.showing && props.bil && props.lengde > 0 ? 'bekreft-bestilling showing' : 'bekreft-bestilling' },
-	        bekreftBestilling
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'bb-din-bestilling' },
+	            'Din bestilling:'
+	        ),
+	        bekreftBestilling,
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2.default.createElement('input', { type: 'text', name: 'rabatt', placeholder: 'Rabatt' }),
+	            _react2.default.createElement(
+	                'button',
+	                { className: 'bb-send', disabled: props.showing && props.bil && props.lengde > 0 ? false : true, onClick: function onClick() {
+	                        return props.handleBestill();
+	                    } },
+	                'Bestilling'
+	            )
+	        ),
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'errors' },
+	            props.error ? props.error : null
+	        )
 	    );
 	};
 

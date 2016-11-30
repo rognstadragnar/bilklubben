@@ -1254,7 +1254,10 @@ footer {
   footer .til-toppen {
     position: absolute;
     top: 10px;
-    right: 10px; }
+    right: 10px;
+    color: #3d94d0; }
+    footer .til-toppen:hover {
+      cursor: pointer; }
   footer .cookie {
     width: calc(100%);
     max-width: calc(100%);
@@ -1318,12 +1321,30 @@ footer {
     align-items: flex-start;
     padding: 20px 20px;
     box-sizing: border-box;
-    background: white; }
+    background: white;
+    z-index: 2; }
+    .bestilling-content .sidebar h4.header {
+      text-align: center;
+      font-family: 'reklame-script';
+      letter-spacing: .2rem;
+      margin: 15px 0 20px;
+      font-size: 4rem;
+      color: #3d94d0; }
     .bestilling-content .sidebar .sok-content {
       position: relative;
       top: 0;
       height: auto;
       width: 100%; }
+    .bestilling-content .sidebar .sok-reset {
+      display: block;
+      text-align: center;
+      font-style: italic;
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+      opacity: .4; }
+      .bestilling-content .sidebar .sok-reset:hover {
+        cursor: pointer;
+        opacity: 1; }
     .bestilling-content .sidebar .sokefelt {
       position: relative;
       background: white;
@@ -1333,7 +1354,8 @@ footer {
       margin: 10px 0;
       text-align: center;
       font-weight: 300;
-      color: #3d94d0; }
+      color: #3d94d0;
+      z-index: 2; }
       .bestilling-content .sidebar .sokefelt:hover {
         cursor: pointer;
         color: rgba(61, 148, 208, 0.7);
@@ -1384,6 +1406,9 @@ footer {
     box-sizing: border-box;
     padding: 50px;
     max-width: 1500px; }
+    @media screen and (max-width: 1000px) {
+      .bestilling-content .bil-visning {
+        padding: 50px 20px; } }
     .bestilling-content .bil-visning .en-bil {
       position: relative;
       width: calc(25% - 16px * 0.75);
@@ -1422,7 +1447,21 @@ footer {
           margin-bottom: 16px;
           box-sizing: border-box;
           display: block; } }
+      @media screen and (max-width: 900px) {
+        .bestilling-content .bil-visning .en-bil {
+          width: calc(33.33333% - 16px * 0.66667);
+          max-width: calc(33.33333% - 16px * 0.66667);
+          margin-bottom: 16px;
+          box-sizing: border-box;
+          display: block; } }
       @media screen and (max-width: 750px) {
+        .bestilling-content .bil-visning .en-bil {
+          width: calc(50% - 16px * 0.5);
+          max-width: calc(50% - 16px * 0.5);
+          margin-bottom: 16px;
+          box-sizing: border-box;
+          display: block; } }
+      @media screen and (max-width: 550px) {
         .bestilling-content .bil-visning .en-bil {
           width: calc(100%);
           max-width: calc(100%);
@@ -1600,6 +1639,247 @@ footer {
       border-radius: 5px;
       padding: 20px; }
 
+.bekreft-bestilling {
+  max-width: 100%;
+  width: 100%; }
+  .bekreft-bestilling .bb-cont {
+    border: solid #333;
+    border-width: 1px 0 1px 0;
+    height: 120px;
+    padding: 5px 5px;
+    position: relative;
+    box-shadow: 0 0 10px -7px inset; }
+    .bekreft-bestilling .bb-cont .bb-bil, .bekreft-bestilling .bb-cont .bb-pris {
+      display: block; }
+    .bekreft-bestilling .bb-cont .bb-lengde {
+      color: #aaa; }
+    .bekreft-bestilling .bb-cont .bb-bil {
+      font-weight: 500;
+      text-transform: uppercase; }
+    .bekreft-bestilling .bb-cont .bb-datoer {
+      font-size: 1.25rem; }
+    .bekreft-bestilling .bb-cont .bb-pris {
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      font-weight: bold; }
+  .bekreft-bestilling .form-group {
+    margin-top: 10px;
+    max-width: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    position: relatve; }
+    .bekreft-bestilling .form-group input[type='text'] {
+      position: relative;
+      font-size: 1.4rem;
+      font-family: 'europa';
+      font-weight: 300;
+      padding: 6px;
+      box-sizing: border-box;
+      width: 45%;
+      height: 33px;
+      border: 1px solid #ddd;
+      color: #666; }
+  .bekreft-bestilling button.bb-send {
+    background: #3d94d0;
+    color: white;
+    border: 1px solid #3d94d0;
+    border-radius: 0px;
+    font-family: "europa";
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 8px 10px;
+    margin: 0;
+    transition: .2s all ease;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    height: 33px; }
+    .bekreft-bestilling button.bb-send:hover, .bekreft-bestilling button.bb-send:focus {
+      background: white;
+      color: #3d94d0;
+      outline: none;
+      cursor: pointer; }
+    .bekreft-bestilling button.bb-send:disabled {
+      opacity: 0.2;
+      background: rgba(61, 148, 208, 0.5);
+      border-color: rgba(61, 148, 208, 0.5); }
+  .bekreft-bestilling .errors {
+    display: block;
+    margin: 10px 0;
+    color: indianred; }
+
+@media screen and (max-width: 900px) {
+  .bestilling-content .sidebar {
+    pointer-events: none;
+    width: 100%;
+    background: none;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 0; }
+    .bestilling-content .sidebar .sok-content {
+      pointer-events: auto;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      background: white;
+      height: 70px;
+      box-shadow: 0 0 23px -10px;
+      padding: 0 0 0 34px;
+      box-sizing: border-box; } }
+    @media screen and (max-width: 900px) and (max-width: 520px) {
+      .bestilling-content .sidebar .sok-content {
+        padding: 0; } }
+
+@media screen and (max-width: 900px) {
+      .bestilling-content .sidebar .sok-content .header {
+        margin: 0;
+        position: absolute;
+        left: 20px;
+        top: 10px; } }
+      @media screen and (max-width: 900px) and (max-width: 720px) {
+        .bestilling-content .sidebar .sok-content .header {
+          display: none; } }
+
+@media screen and (max-width: 900px) {
+      .bestilling-content .sidebar .sok-content .sokefelt {
+        width: 200px;
+        margin: 18px; } }
+      @media screen and (max-width: 900px) and (max-width: 720px) {
+        .bestilling-content .sidebar .sok-content .sokefelt {
+          width: 180px;
+          margin: 18px 5px; } }
+      @media screen and (max-width: 900px) and (max-width: 520px) {
+        .bestilling-content .sidebar .sok-content .sokefelt {
+          width: 50%;
+          margin: 18px 5px; } }
+      @media screen and (max-width: 900px) and (max-width: 420px) {
+        .bestilling-content .sidebar .sok-content .sokefelt {
+          font-size: 1.4rem;
+          padding: 4px 0; }
+          .bestilling-content .sidebar .sok-content .sokefelt:after {
+            display: none; } }
+
+@media screen and (max-width: 900px) {
+      .bestilling-content .sidebar .sok-content .sok-reset {
+        content: url("/assets/img/icons/reset.svg");
+        color: transparent;
+        opacity: 1;
+        margin: 24px 10px; } }
+      @media screen and (max-width: 900px) and (max-width: 720px) {
+        .bestilling-content .sidebar .sok-content .sok-reset {
+          right: 5px; } }
+
+@media screen and (max-width: 900px) {
+    .bestilling-content .sidebar .bekreft-bestilling.showing {
+      -webkit-transform: translateY(0px);
+      -ms-transform: translateY(0px);
+      transform: translateY(0px); }
+    .bestilling-content .sidebar .bekreft-bestilling {
+      background: #3d94d0;
+      pointer-events: auto;
+      margin-bottom: 70px;
+      height: 60px;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-transform: translateY(100px);
+      -ms-transform: translateY(100px);
+      transform: translateY(100px);
+      transition: .4s all ease; }
+      .bestilling-content .sidebar .bekreft-bestilling .bb-cont {
+        border: 0;
+        color: white;
+        line-height: 60px;
+        position: absolute;
+        left: 5%;
+        top: 0;
+        padding: 0; } }
+      @media screen and (max-width: 900px) and (max-width: 770px) {
+        .bestilling-content .sidebar .bekreft-bestilling .bb-cont .bb-datoer {
+          display: none; } }
+      @media screen and (max-width: 900px) and (max-width: 650px) {
+        .bestilling-content .sidebar .bekreft-bestilling .bb-cont .bb-datoer {
+          display: none; }
+        .bestilling-content .sidebar .bekreft-bestilling .bb-cont .bb-pris {
+          margin-left: 10px;
+          font-size: 1.6rem; } }
+      @media screen and (max-width: 900px) and (max-width: 530px) {
+        .bestilling-content .sidebar .bekreft-bestilling .bb-cont {
+          right: calc(10% + 60px);
+          left: auto; }
+          .bestilling-content .sidebar .bekreft-bestilling .bb-cont .bb-bil, .bestilling-content .sidebar .bekreft-bestilling .bb-cont .bb-lengde {
+            display: none; }
+          .bestilling-content .sidebar .bekreft-bestilling .bb-cont .bb-pris {
+            border: none;
+            margin-right: 20px; } }
+
+@media screen and (max-width: 900px) {
+      .bestilling-content .sidebar .bekreft-bestilling .bb-din-bestilling {
+        display: none; }
+      .bestilling-content .sidebar .bekreft-bestilling .bb-bil, .bestilling-content .sidebar .bekreft-bestilling .bb-pris, .bestilling-content .sidebar .bekreft-bestilling .bb-lengde, .bestilling-content .sidebar .bekreft-bestilling .bb-datoer {
+        display: inline;
+        bottom: auto;
+        font-size: 1.55rem; }
+      .bestilling-content .sidebar .bekreft-bestilling .bb-lengde {
+        color: white;
+        margin-left: 5px; }
+      .bestilling-content .sidebar .bekreft-bestilling .bb-pris {
+        margin-left: 25px;
+        font-size: 1.8rem; }
+      .bestilling-content .sidebar .bekreft-bestilling .bb-bil {
+        font-weight: 500; }
+      .bestilling-content .sidebar .bekreft-bestilling .bb-datoer {
+        font-style: italic; }
+      .bestilling-content .sidebar .bekreft-bestilling .bb-pris {
+        position: relative;
+        font-weight: bold;
+        border-left: 1px solid;
+        padding: 10px; }
+      .bestilling-content .sidebar .bekreft-bestilling div {
+        display: inline; }
+      .bestilling-content .sidebar .bekreft-bestilling .form-group {
+        position: absolute;
+        right: 5%;
+        top: 0;
+        padding: 10px 0;
+        margin: 0;
+        height: 60px; }
+        .bestilling-content .sidebar .bekreft-bestilling .form-group input[type='text'] {
+          width: 60px;
+          margin: 0 10px;
+          height: 40px; } }
+        @media screen and (max-width: 900px) and (max-width: 610px) {
+          .bestilling-content .sidebar .bekreft-bestilling .form-group input[type='text'] {
+            display: none; } }
+
+@media screen and (max-width: 900px) {
+        .bestilling-content .sidebar .bekreft-bestilling .form-group button {
+          border-color: white;
+          height: 40px; }
+  .bestilling-content .main {
+    margin: 0;
+    padding-top: 50px;
+    width: 100%; } }
+
 .aktuelt-page {
   margin-top: 60px; }
   .aktuelt-page .aktuelt-page-content {
@@ -1767,7 +2047,7 @@ body {
 .registrer-parent input::-ms-input-placeholder {
   color: rgba(255, 255, 255, 0.6); }
 
-input {
+input:not[type='radio'], input:not[type='check'] {
   -webkit-appearance: none;
   -webkit-border-radius: 0px; }
 

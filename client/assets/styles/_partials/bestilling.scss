@@ -19,11 +19,32 @@
         padding: 20px 20px;
         box-sizing: border-box;
         background: white;
+        z-index: 2;
+        h4.header {
+            text-align: center;
+            font-family: 'reklame-script';
+            letter-spacing: .2rem;
+            margin: 15px 0 20px;
+            font-size: 4rem;
+            color: $accent;
+        }
         .sok-content {
             position: relative;
             top: 0;
             height: auto;
             width: 100%;
+        }
+        .sok-reset {
+            display: block;
+            text-align: center;
+            font-style: italic;
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            opacity: .4;
+            &:hover {
+                cursor: pointer;
+                opacity: 1;
+            }
         }
         .sokefelt {
             position: relative;
@@ -35,6 +56,7 @@
             text-align: center;
             font-weight: 300;
             color: $accent;
+            z-index: 2;
             &:hover {
                 cursor: pointer; 
                 color: rgba($accent, .7);
@@ -80,6 +102,9 @@
         @include row();
         padding: 50px;
         max-width: 1500px;
+        @include mq('max-width: 1000px') {
+            padding: 50px 20px;
+        }
         .en-bil {
             position: relative;
             @include col(3);
@@ -90,7 +115,13 @@
             @include mq('max-width: 950px') {
                 @include col(6)
             }
+            @include mq('max-width: 900px') {
+                @include col(4)
+            }
             @include mq('max-width: 750px') {
+                @include col(6)
+            }
+            @include mq('max-width: 550px') {
                 @include col(12)
             }
             display: flex;
@@ -258,4 +289,246 @@
         }
     }
 
+}
+
+
+.bekreft-bestilling {
+    max-width: 100%;
+    width: 100%;
+    .bb-cont {
+        border: solid $text-color;
+        border-width: 1px 0 1px 0;
+        height: 120px;
+        padding: 5px 5px;
+        position: relative;
+        box-shadow: 0 0 10px -7px inset;
+        .bb-bil, .bb-pris{
+            display: block;
+        }
+        .bb-lengde {
+            color: #aaa
+        }
+        .bb-bil {font-weight: 500; text-transform: uppercase}
+        .bb-datoer {
+            font-size: 1.25rem;
+        }
+        .bb-pris {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            font-weight: bold
+        }
+    }
+    .form-group {
+        margin-top: 10px;
+        max-width: 100%;
+        display: flex; justify-content: space-between;
+        position: relatve;
+        input[type='text'] {
+            position: relative;
+            font-size: 1.4rem;
+            font-family: 'europa';
+            font-weight: 300;
+            padding: 6px;
+            box-sizing: border-box;
+            width: 45%;
+            height: 33px;
+            border: 1px solid #ddd;
+            color: #666
+        }
+    }
+    button.bb-send {
+        background: $accent;
+        color: white;
+        border: 1px solid $accent;
+        border-radius: 0px;
+        font-family: "europa";
+        font-size: 1.5rem;
+        font-weight: 500;
+        padding: 8px 10px;
+        margin: 0;
+        transition: .2s all ease;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        height: 33px;
+        &:hover, &:focus {background: white; color: $accent; outline: none; cursor: pointer;}
+        &:disabled {opacity: 0.2; background: rgba($accent, .5); border-color: rgba($accent, .5);}
+    }
+    .errors {display: block; margin: 10px 0; color: indianred}
+
+    
+}
+
+
+@include mq('max-width: 900px') {
+    .bestilling-content {
+        .sidebar{
+            pointer-events: none;
+            width: 100%;
+            background: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            //background: rgba(pink, 0.2);
+            padding: 0;
+            .sok-content {
+                pointer-events: auto;
+                display: flex;
+                justify-content: center;
+                background: white;
+                height: 70px;
+                box-shadow: 0 0 23px -10px;
+                padding: 0 0 0 34px;
+                box-sizing: border-box;
+                @include mq('max-width: 520px') {
+                        padding: 0
+                }
+                .header {
+                    margin: 0;
+                    position: absolute;
+                    left: 20px;
+                    top: 10px;
+                    @include mq('max-width: 720px') {
+                        display: none;
+                    }
+                }
+                .sokefelt {
+                    width: 200px;
+                    margin: 18px;
+                    @include mq('max-width: 720px') {
+                        width: 180px;
+                        margin: 18px 5px;
+                    }
+                    @include mq('max-width: 520px') {
+                        width: 50%;
+                        margin: 18px 5px;
+                    }
+                    @include mq('max-width: 420px') {
+                        font-size: 1.4rem;
+                        padding: 4px 0;
+                        &:after {
+                            display: none;
+                        }
+                    }
+                }
+                .sok-reset {
+                    content: url('/assets/img/icons/reset.svg');
+                    color: transparent;
+                    opacity: 1;
+                    margin: 24px 10px;
+                    @include mq('max-width: 720px') {
+                        right: 5px;
+                    }
+                }
+            }
+            .bekreft-bestilling.showing {
+                transform: translateY(0px);
+
+            }
+
+            .bekreft-bestilling {
+                background: $accent;
+                pointer-events: auto;
+                margin-bottom: 70px;
+                height: 60px;
+                display: flex;
+                justify-content: center;
+                transform: translateY(100px);
+                transition: .4s all ease;
+                .bb-cont {
+                    border: 0;
+                    color: white;
+                    line-height: 60px;
+                    position: absolute;
+                    left: 5%;
+                    top: 0;
+                    padding: 0;
+                    @include mq('max-width: 770px') {
+                        .bb-datoer {
+                            display: none;
+                        }
+                    }
+                    @include mq('max-width: 650px') {
+                        .bb-datoer {
+                            display: none;
+                        }
+                        .bb-pris{
+                            margin-left: 10px;
+                            font-size: 1.6rem;
+                        }
+                    }
+                    @include mq('max-width: 530px') {
+                        .bb-bil, .bb-lengde {
+                            display: none;
+                        }
+                        .bb-pris{
+                            border: none;
+                            margin-right: 20px;
+                        }
+                        right: calc(10% + 60px);
+                        left: auto;
+
+                    }
+                }
+                .bb-din-bestilling {
+                    display: none;
+                }
+                .bb-bil, .bb-pris, .bb-lengde, .bb-datoer{
+                    display: inline;
+                    bottom: auto;
+                    font-size: 1.55rem;
+                }
+                .bb-lengde {
+                    color: white;
+                    margin-left: 5px;
+                }
+                .bb-pris{
+                    margin-left: 25px;
+                    font-size: 1.8rem
+                }
+                .bb-bil {font-weight: 500}
+                .bb-datoer {
+                    font-style: italic;
+                }
+                .bb-pris {
+                    position: relative;
+                    font-weight: bold;
+                    border-left: 1px solid;
+                            padding: 10px;
+                }
+                div {
+                    display: inline;
+                    
+                }
+                .form-group {
+                    position: absolute;
+                    right: 5%;
+                    top: 0;
+                    padding: 10px 0;
+                    margin: 0;
+                    height: 60px;
+                    
+                    input[type='text'] {
+                        width: 60px;
+                        margin: 0 10px;
+                        height: 40px;
+                        @include mq('max-width: 610px') {
+                            display: none;
+                        }
+                    }
+                    button {
+                        border-color: white;
+                        height: 40px;
+                    }
+                }
+            }
+        }
+        .main {
+            margin: 0;
+            padding-top: 50px;
+            width: 100%;
+        }
+    }
 }

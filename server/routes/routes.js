@@ -212,62 +212,7 @@ router.post('/api/endre', (req, res) => {
 
 
 router.post('/api/bestill', (req, res, next) => {
-  try {/*
-    const { bil, startDato, sluttDato } = req.body  
-    const userId = req.session.bruker.id;
-    let userInfo = {}, carInfo = {}, orderInfo = {}, kostnad;
-    const duration = Moment.range(
-      new Moment(startDato).format('YYYY-MM-DD'), 
-      new Moment(sluttDato).add(1, 'days').format('YYYY-MM-DD')
-    ).diff('days');
-    orderInfo.opptatt = [];
-  if (c_id && userId && startDato && sluttDato && isAuthed(req) === true) {
-    User.findOne({where: {id: u_id}, attributes: ['id','points']})
-        .then((user)=> { 
-          if (!user) {
-            return res.status(404).json({error: 'Fant ikke bruker.'})
-          } else {
-            userInfo.id = user.dataValues.id, userInfo.points = user.dataValues.points;
-            Car.findOne({where: {id: c_id}, attributes: ['price']})
-            .then(car => {
-              kostnad = car.dataValues.price * duration;
-              console.log('kostnad!!:',kostnad, user.dataValues.points)
-              if (kostnad > user.dataValues.points) {
-                return res.status(500).json({error: 'Ikke nok poeng.'})
-              } else  {
-                Order.findAll({where: {car_id: c_id}})
-                .then((orders) => {
-                
-                  orders.map(o => {
-                    orderInfo.opptatt.push(
-                      {startDato: o.dataValues.startdate, 
-                      sluttDato: o.dataValues.enddate})
-                 })
-                })
-                .then(()=> {
-                  if (isAvailable(startDato, sluttDato, orderInfo.opptatt) === true) {
-                    Order.create({car_id: c_id, user_id: u_id, startdate: startDato, enddate: sluttDato, cost: kostnad})
-                    .then(() => {
-                      User.update({points: user.dataValues.points - kostnad}, {where: {id: u_id}})
-                      .then(() => {console.log('gikk da fint herran');return res.sendStatus(200)})
-                      .catch((err) => console.log(err))
-                      
-                    })
-                    .catch((err) => console.log(err))
-                  } else {
-                    return res.status(404).json({error: 'E ittj leedig nei shø'})
-                  }
-                })
-                .catch((err) => console.log(err))
-              }
-          
-        })
-    .then(()=> {res.sendStatus(200);})
-    .catch((err) => {console.log(err)})
-
-          }
-  }) } else {return res.status(403).json({error: 'shjeit'});}*/
-
+  try {
     const userId = req.session.bruker.id;
     const { bil, startDato, sluttDato } = req.body;
     const duration = Moment.range(startDato, sluttDato).diff('days');
@@ -280,14 +225,14 @@ router.post('/api/bestill', (req, res, next) => {
         .then(car => {
           if (car.dataValues.price * duration <= user.dataValues.points) {
             Order.create({startdate: startDato, enddate: sluttDato, cost: car.dataValues.price * duration, user_id: userId, bkUserId: userId, car_id: bil, bkCarId: bil})
-            //console.log(user.dataValues.points, car.dataValues.price, duration);
             .then(() => 
               User.update({points: Number(user.dataValues.points - (car.dataValues.price * duration))}, {where: {id: userId}})
-              .then(()=> res.sendStatus(200))
+             
+              .then(()=> {req.session.bruker.points = user.dataValues.points - (car.dataValues.price * duration);res.sendStatus(200)})
             )
             
           } else {
-            return res.status(403).json({error: 'Noe gikk galt.'})
+            return res.status(403).json({error: 'Du har ikke nok poeng.'})
           }
         })
         .catch(err => res.status(403).json({error: 'Fant ikke bil.'}))
@@ -314,8 +259,8 @@ router.get('/api/getbiler', (req, res) => {
 router.post('/api/finnOpptatteBiler', (req, res) => {
   
   try {
-      const stD = req.body.startDato ? Moment(req.body.startDato) : Moment(),
-        slD = Moment(req.body.sluttDato) ? Moment(req.body.sluttDato) : req.body.startDato ? 
+      const stD = Moment(req.body.startDato).isValid() ? Moment(req.body.startDato) : Moment(),
+        slD = Moment(req.body.sluttDato).isValid() ? Moment(req.body.sluttDato) : Moment(stD) ? 
         Moment(req.body.startDato).add(1, 'days') : Moment().add(1, 'days')
       let opptatteBiler = []
       Order.findAll({

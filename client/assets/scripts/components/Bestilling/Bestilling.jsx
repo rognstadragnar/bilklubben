@@ -22,7 +22,8 @@ export default class Bestilling extends React.Component {
             opptatteDatoer: [],
             opptatteBiler: [],
             velgBil: false,
-            visInfo: false
+            visInfo: false,
+            error: null,
         }
         this.handleToggleBilDato = this.handleToggleBilDato.bind(this)
         this.handleBilValg = this.handleBilValg.bind(this)
@@ -39,20 +40,16 @@ export default class Bestilling extends React.Component {
             maxDato: Moment('12/12/2999'),
             startDato: Moment(val),
         })
-        if (this.state.valgtBil && this.state.opptatteBiler.indexOf(this.state.valgtBil)) {
-            this.setState({valgtBil: null})
-        }
+       
         if (this.state.sluttDato && !Moment(val).isBefore(this.state.sluttDato)) {
-            console.log('it is')
             this.setState({
                 sluttDato: Moment(val).add(1, 'days')
             })
         }
-        if (!this.state.velgBil) {
-            this.updateOpptatteBiler()
-        }
-
-        if (this.state.valgtBil) {
+        
+        this.updateOpptatteBiler()
+        
+        if (this.state.valgtBil && this.state.opptatteBiler.length) {
             const dateArr = this.state.opptatteDatoer.sort((a, b) => {
                 if (a > b) return 1
                 else if (a > b) return -1
@@ -70,8 +67,6 @@ export default class Bestilling extends React.Component {
 
     }
     handleSluttChange(val){
-        console.log(this.state.startDato)
-        console.log('HANDLED SLUTT CHANGE')
         if (this.state.velgBil) {
             this.setState({
                 sluttDato: Moment(val)
@@ -86,41 +81,23 @@ export default class Bestilling extends React.Component {
     }
 
     handleToggleBilDato(){
-        if (this.state.velgBil) {
-            this.resetBiler()
-
-            this.setState({
-                velgBil: false,
-                startDato: Moment(),
-                sluttDato: Moment().add(1, 'days'),
-                opptatteDatoer: []
-
-            })
-        } else {
-            this.resetBiler()
-            this.setState({
-                velgBil: true,
-                startDato: null,
-                sluttDato: null,
-                opptatteDatoer: []
-            })
-        }
+        this.resetBiler()
+        this.setState({
+            velgBil: false,
+            startDato: null,
+            sluttDato: null,
+            opptatteDatoer: [],
+            opptatteBiler: []
+        })
     }
 
     handleBilValg(val){
-        console.log('hop', val === this.state.valgtBil)
-        if (this.state.velgBil) {
-            this.updateOpptatteDatoer(val)
-            this.setState({
-                valgtBil: this.state.valgtBil === val ? null : val,
-            })
-        } else {
-            this.setState({
-                valgtBil: this.state.valgtBil === val ? null : val
-            })
-        }
+
+        this.updateOpptatteDatoer(val)
+        this.setState({
+            valgtBil: this.state.valgtBil === val ? null : val,
+        })
         const car = this.state.biler.filter((cv) => cv.id === this.state.valgtBil ? true : false)
-        console.log('111', car)
     }
 
     resetBiler(){
@@ -137,7 +114,6 @@ export default class Bestilling extends React.Component {
 
 
     updateOpptatteDatoer(val){
-            console.log('UPDATE OPPTATTE DATOER')
         Axios.post('/api/finnOpptatteDatoer', {bilId: val})
         .then(res => {console.log(res.data);this.setState(
             {opptatteDatoer: res.data.opptatteDatoer.map(
@@ -151,8 +127,10 @@ export default class Bestilling extends React.Component {
             startDato: this.state.startDato ?  this.state.startDato : null, 
             sluttDato: this.state.sluttDato ? this.state.sluttDato : null
         })
-        .then(res => this.setState({opptatteBiler: res.data.opptatteBiler})) //should retrun res.data.opptattebiler
-
+        .then(res => this.setState({opptatteBiler: res.data.opptatteBiler}))
+        .then(()=> {if (this.state.valgtBil && this.state.opptatteBiler.indexOf(this.state.valgtBil) >= 0) {
+                this.setState({valgtBil: null})
+            }}) //should retrun res.data.opptattebiler
     }
 
     handleBestill(){
@@ -160,7 +138,7 @@ export default class Bestilling extends React.Component {
         if (Moment(this.state.startDato).isValid() && Moment(this.state.sluttDato).isValid && this.state.valgtBil) {
             Axios.post('/api/bestill', {startDato: this.state.startDato, sluttDato: this.state.sluttDato, bil: this.state.valgtBil})
             .then(() => window.location = '/profil')
-            .catch(err => console.log(err))
+            .catch(err => this.setState({error: err.response.data.error}))
         }
     }
 
@@ -174,6 +152,7 @@ export default class Bestilling extends React.Component {
                 startDato: Moment(window.sessionStorage.getItem('bestillingsStartDato')),
                 sluttDato: Moment(window.sessionStorage.getItem('bestillingsSluttDato')),
             })
+            this.updateOpptatteBiler();
             setTimeout(() => this.updateOpptatteBiler(), 500)
         } else if (window.sessionStorage.getItem('bestillingsBil')) { 
             const bilen = Number(window.sessionStorage.getItem('bestillingsBil'))
@@ -184,11 +163,6 @@ export default class Bestilling extends React.Component {
                 velgBil: true,
                 valgtBil: Number(window.sessionStorage.getItem('bestillingsBil'))
             })
-        } else {
-            /*this.setState({
-                startDato: Moment(),
-                sluttDato: Moment().add(1, 'days')
-            })*/
         }
     }
     componentDidMount(){
@@ -210,7 +184,7 @@ export default class Bestilling extends React.Component {
                         handleStartChange={this.handleStartChange}
                         handleSluttChange={this.handleSluttChange}
                         handleToggle={this.handleToggleBilDato} 
-                        toggleHva={this.state.velgBil ? 'Velg basert på dato' : 'Velg basert på bil'} 
+                        toggleHva={this.state.velgBil ? 'Reset' : 'Reset'} 
                     />
                     {<BekreftBestilling 
                         showing={this.state.valgtBil && Moment(this.state.startDato).isValid() && Moment(this.state.sluttDato).isValid() ? true : false} 
@@ -218,7 +192,8 @@ export default class Bestilling extends React.Component {
                         lengde={Moment(this.state.startDato).isValid() && Moment(this.state.sluttDato).isValid ? Moment.range(Moment(this.state.startDato), Moment(this.state.sluttDato)).diff('days') : null}
                         startDato={this.state.startDato ? this.state.startDato.format('Do MMM') : null}
                         sluttDato={this.state.sluttDato ? this.state.sluttDato.format('Do MMM') : null}
-                        handleBestill={this.handleBestill}
+                        handleBestill={this.handleBestill} 
+                        error={this.state.error}
                     />}
                 </div>
                 <div className='main'>
