@@ -2,11 +2,11 @@ import React from 'react';
 
 
 export default class EnBil extends React.Component{
-
     render(){
-        const classes = this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : ''
+        const classes = this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : '';
+        let hover = false;
         return (
-            <div onclick={()=>{}} className={ this.props.isDisabled ? 'en-bil disabled ' : this.props.isValgt ? 'en-bil valgt' : 'en-bil'}>
+            <div onClick={()=>{}} className={'en-bil' + classes}>
                 <div className='en-bil-img' style={{backgroundImage: 'url(/assets/img/biler/' + this.props.bil.id + '/' + this.props.bil.imgsm +')'}} />
                 <div className='en-bil-desc'>
                     <span className='en-bil-desc-left'>
@@ -15,8 +15,8 @@ export default class EnBil extends React.Component{
                     <span className='en-bil-desc-right'>{this.props.bil.price}bkp</span>
                 </div>
                 <div className='en-bil-overlay'>
-                    <div className='en-bil-velg' onClick={(e) => {e.stopPropagation(); this.props.isDisabled ? null : this.props.handleClick(this.props.bil.id)}}></div>
-                    <div className='en-bil-info' onClick={(e) => {e.stopPropagation(); this.props.handleVisInfo(this.props.bil.id)}}></div>
+                    <div className='en-bil-velg' onClick={(e) => {e.stopPropagation(); console.log(hover); this.props.isDisabled && hover ? null : this.props.handleClick(this.props.bil.id)}}></div>
+                    <div className='en-bil-info' onClick={(e) => {e.stopPropagation(); console.log(hover); hover ? this.props.handleVisInfo(this.props.bil.id) : null}}></div>
                 </div>
             </div>
         )
