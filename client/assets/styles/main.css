@@ -1291,6 +1291,37 @@ footer {
       width: 150px;
       margin: 0 auto; }
 
+.kontakter {
+  width: 150px;
+  margin: 0 auto 20px; }
+
+.kontakt {
+  width: 15px;
+  height: 15px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: inline-block;
+  margin: 0 10px;
+  -webkit-filter: saturate(0);
+  filter: saturate(0);
+  transition: .2s all ease; }
+  .kontakt:hover {
+    -webkit-filter: none;
+    filter: none; }
+
+.twitter {
+  background-image: url("/assets/img/icons/twitter.svg"); }
+
+.fb {
+  background-image: url("/assets/img/icons/fb.svg"); }
+
+.tlf {
+  background-image: url("/assets/img/icons/tlf.svg"); }
+
+.mail {
+  background-image: url("/assets/img/icons/mail.svg"); }
+
 .bestilling-content {
   /*max-width: 90%;*/
   width: 100%;
@@ -1870,6 +1901,7 @@ footer {
         height: 100%;
         color: white;
         top: -10px;
+        left: 0;
         background: rgba(197, 25, 25, 0.89); }
       .bestilling-content .sidebar .bekreft-bestilling .form-group {
         position: absolute;

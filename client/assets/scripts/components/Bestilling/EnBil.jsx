@@ -6,7 +6,7 @@ export default class EnBil extends React.Component{
     render(){
         const classes = this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : ''
         return (
-            <div className={ this.props.isDisabled ? 'en-bil disabled ' : this.props.isValgt ? 'en-bil valgt' : 'en-bil'}>
+            <div onclick={()=>{}} className={ this.props.isDisabled ? 'en-bil disabled ' : this.props.isValgt ? 'en-bil valgt' : 'en-bil'}>
                 <div className='en-bil-img' style={{backgroundImage: 'url(/assets/img/biler/' + this.props.bil.id + '/' + this.props.bil.imgsm +')'}} />
                 <div className='en-bil-desc'>
                     <span className='en-bil-desc-left'>

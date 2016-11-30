@@ -27,3 +27,35 @@ footer {
         }
     }
 }
+.kontakter {
+    width: 150px;
+    margin: 0 auto 20px;
+}
+
+.kontakt {
+    width: 15px;
+    height: 15px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center; 
+    display: inline-block;
+    margin: 0 10px;
+    filter: saturate(0);
+    transition: .2s all ease;
+    &:hover {
+        filter: none;
+    }
+}
+
+.twitter {
+    background-image: url('/assets/img/icons/twitter.svg')
+}
+.fb {
+    background-image: url('/assets/img/icons/fb.svg')
+}
+.tlf {
+    background-image: url('/assets/img/icons/tlf.svg')
+}
+.mail {
+    background-image: url('/assets/img/icons/mail.svg')
+}

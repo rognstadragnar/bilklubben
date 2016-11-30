@@ -41392,7 +41392,7 @@
 	            var classes = this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : '';
 	            return _react2.default.createElement(
 	                'div',
-	                { className: this.props.isDisabled ? 'en-bil disabled ' : this.props.isValgt ? 'en-bil valgt' : 'en-bil' },
+	                { onclick: function onclick() {}, className: this.props.isDisabled ? 'en-bil disabled ' : this.props.isValgt ? 'en-bil valgt' : 'en-bil' },
 	                _react2.default.createElement('div', { className: 'en-bil-img', style: { backgroundImage: 'url(/assets/img/biler/' + this.props.bil.id + '/' + this.props.bil.imgsm + ')' } }),
 	                _react2.default.createElement(
 	                    'div',
