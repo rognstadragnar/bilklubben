@@ -3,7 +3,7 @@ import React from 'react';
 
 export default class EnBil extends React.Component{
     render(){
-        const classes = this.props.isDisabled ? 'disabled ' : this.props.isValgt ? ' valgt' : '';
+        const classes = this.props.isDisabled ? ' disabled' : this.props.isValgt ? ' valgt' : '';
         let hover = false;
         return (
             <div onClick={()=>{}} className={'en-bil' + classes}>

@@ -1332,7 +1332,8 @@ footer {
   .bestilling-content .sidebar {
     position: fixed;
     left: 0;
-    height: 100%;
+    top: 70px;
+    height: calc(100vh - 70px);
     box-sizing: border-box;
     width: 200px;
     display: -webkit-flex;
@@ -1758,9 +1759,13 @@ footer {
     -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    height: 100vh;
+    height: calc(100vh - 70px);
+    top: 70px;
     padding: 0; }
     .bestilling-content .sidebar .sok-content {
+      position: absolute;
+      top: 0;
+      left: 0;
       pointer-events: auto;
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -1822,9 +1827,12 @@ footer {
       -ms-transform: translateY(0px);
       transform: translateY(0px); }
     .bestilling-content .sidebar .bekreft-bestilling {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      top: auto;
       background: #3d94d0;
       pointer-events: auto;
-      margin-bottom: 70px;
       height: 60px;
       display: -webkit-flex;
       display: -ms-flexbox;
