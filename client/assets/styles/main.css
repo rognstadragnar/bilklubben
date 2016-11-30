@@ -2070,6 +2070,11 @@ body {
   max-width: 100vw;
   width: 100vw; }
 
+html, body {
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; }
+
 .body-container {
   max-width: 100vw;
   overflow-x: hidden; }
