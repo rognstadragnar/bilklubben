@@ -289,12 +289,19 @@
             padding: 20px;
             max-width: 75%;
             width: 600px;
+            @include mq('max-width: 550px') {
+                padding: 15px;
+            }
             .bil-info-header {
                 font-size: 5rem;
                 font-family: 'europa';
                 color: $text-color;
                 position: relative;
                 padding: 10px 0 20px 0;
+                @include mq('max-width: 550px') {
+                    font-size: 3rem;
+                    margin: 0;
+                }
                 &:after {
                     content: '';
                     width: 70px;
@@ -305,17 +312,25 @@
                     left: calc(50% - 35px)
                 }
             }
-            .bil-info-pris {
+            table {
+                margin: 30px auto;
+            }
+            .bil-info-poeng {
                 display: block; text-align: center;
-                font-size: 2rem;
-                .bil-info-poeng {
-                    font-weight: bold;
-                    font-size: 4rem
-                }
+                font-size: 6rem;
+                font-weight: 500;
+                margin: 0 0 -20px 0;
+                            
+            }
+            .bil-info-dogn {
+                font-size: 1.7rem;
+                display: block; text-align: center;
+                opacity: 0.5;
+                font-style: italic;
             }
         }
         .map-container {
-            height: 400px;
+            height: 200px;
             width: 100%;
         }
     }

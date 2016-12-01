@@ -1672,12 +1672,19 @@ footer {
       padding: 20px;
       max-width: 75%;
       width: 600px; }
+      @media screen and (max-width: 550px) {
+        .bestilling-content .bil-info.showing .bil-info-container {
+          padding: 15px; } }
       .bestilling-content .bil-info.showing .bil-info-container .bil-info-header {
         font-size: 5rem;
         font-family: 'europa';
         color: #333;
         position: relative;
         padding: 10px 0 20px 0; }
+        @media screen and (max-width: 550px) {
+          .bestilling-content .bil-info.showing .bil-info-container .bil-info-header {
+            font-size: 3rem;
+            margin: 0; } }
         .bestilling-content .bil-info.showing .bil-info-container .bil-info-header:after {
           content: '';
           width: 70px;
@@ -1686,15 +1693,22 @@ footer {
           position: absolute;
           bottom: 0;
           left: calc(50% - 35px); }
-      .bestilling-content .bil-info.showing .bil-info-container .bil-info-pris {
+      .bestilling-content .bil-info.showing .bil-info-container table {
+        margin: 30px auto; }
+      .bestilling-content .bil-info.showing .bil-info-container .bil-info-poeng {
         display: block;
         text-align: center;
-        font-size: 2rem; }
-        .bestilling-content .bil-info.showing .bil-info-container .bil-info-pris .bil-info-poeng {
-          font-weight: bold;
-          font-size: 4rem; }
+        font-size: 6rem;
+        font-weight: 500;
+        margin: 0 0 -20px 0; }
+      .bestilling-content .bil-info.showing .bil-info-container .bil-info-dogn {
+        font-size: 1.7rem;
+        display: block;
+        text-align: center;
+        opacity: 0.5;
+        font-style: italic; }
     .bestilling-content .bil-info.showing .map-container {
-      height: 400px;
+      height: 200px;
       width: 100%; }
 
 .bekreft-bestilling {

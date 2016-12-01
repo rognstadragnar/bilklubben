@@ -10,7 +10,8 @@ export default (props) => {
         <div className='bil-info-container' onClick={(e => e.stopPropagation())} >
             <h2 className='bil-info-header'>{props.bil.year} {props.bil.make} {props.bil.model}</h2>
             <div className='img-container' style={{background: 'url("/assets/img/' + props.bil.id + '/' + props.bil.imglg + '")'}}></div>
-            <span className='bil-info-pris'><span className='bil-info-poeng'>{props.bil.price}</span>bkp/døgn</span>
+            <span className='bil-info-poeng'>{props.bil.price}</span>
+            <span className='bil-info-dogn'>bkp/døgn</span>
             <table>
                 <tbody>
                     <tr>
