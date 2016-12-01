@@ -91,69 +91,76 @@ export default class ProfilSkjema extends React.Component {
     render () {
         return (
             <div className='profil'>
+                <h2>Min side</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className='profil-endre-informasjon'>
-                    <h4>Endre min informasjon</h4>
-                        <h6>Kontaktinformasjon</h6>
-                        <TextFieldGroup 
-                            name='Brukernavn' 
-                            placeholder={this.state.brukernavn}
-                            value={this.state.brukernavn} 
-                            labelName='Brukernavn'
-                            onChange={() => {}}
-                            disabled={true}
-                        />
-                        <TextFieldGroup 
-                            name='nyttNavn' 
-                            value={this.state.nyttNavn} 
-                            placeholder={this.state.fulltNavn} 
-                            labelName='Fullt navn'
-                            onChange={this.handleChange}
-                        />
-                        <TextFieldGroup 
-                            name='nyEpost' 
-                            value={this.state.nyEpost} 
-                            placeholder={this.state.epost === '' ? 'legg til epost' : this.state.epost}
-                            labelName='E-postadresse'
- 
-                            onChange={this.handleChange}
-                        />
-                        <h6>Passord</h6>
-                        <TextFieldGroup 
-                            name='currentPassord' 
-                            value={this.state.currentPassord} 
-                            field='password'
-                            labelName='Nåverende passord'
-                            onChange={this.handleChange}
-                        />
-                        <TextFieldGroup 
-                            name='nyttPassord' 
-                            value={this.state.nyttPassord} 
-                            field='password'
-                            labelName='Nytt passord'
-                            onChange={this.handleChange}
-                        />
-                        <span className='error'>{this.state.errors ? this.state.errors : ''}</span>
-                        <input type='submit' value='Bekfreft' />
+                        <div className='profil-section-content'>
+                            <h4>Endre min informasjon</h4>
+                                <h6>Kontaktinformasjon</h6>
+                                <TextFieldGroup 
+                                    name='Brukernavn' 
+                                    placeholder={this.state.brukernavn}
+                                    value={this.state.brukernavn} 
+                                    labelName='Brukernavn'
+                                    onChange={() => {}}
+                                    disabled={true}
+                                />
+                                <TextFieldGroup 
+                                    name='nyttNavn' 
+                                    value={this.state.nyttNavn} 
+                                    placeholder={this.state.fulltNavn} 
+                                    labelName='Fullt navn'
+                                    onChange={this.handleChange}
+                                />
+                                <TextFieldGroup 
+                                    name='nyEpost' 
+                                    value={this.state.nyEpost} 
+                                    placeholder={this.state.epost === '' ? 'legg til epost' : this.state.epost}
+                                    labelName='E-postadresse'
+        
+                                    onChange={this.handleChange}
+                                />
+                                <h6>Passord</h6>
+                                <TextFieldGroup 
+                                    name='currentPassord' 
+                                    value={this.state.currentPassord} 
+                                    field='password'
+                                    labelName='Nåverende passord'
+                                    onChange={this.handleChange}
+                                />
+                                <TextFieldGroup 
+                                    name='nyttPassord' 
+                                    value={this.state.nyttPassord} 
+                                    field='password'
+                                    labelName='Nytt passord'
+                                    onChange={this.handleChange}
+                                />
+                                <span className='error'>{this.state.errors ? this.state.errors : ''}</span>
+                                <input type='submit' value='Bekfreft' />
+                            </div>
                     </div>
                     <div className='profil-endre-abonnement'>
-                        <h4>Endre mitt abonnement</h4>
-                        <p>Nåverende abonnement: {this.state.abonnementText}</p>
-                        <TextFieldGroup field='radio' value='1' name='abonnement' onChange={this.handleChange} labelName='Gjerrigknarken(249,-/mnd)'/>
-                        <TextFieldGroup field='radio' value='2' name='abonnement' onChange={this.handleChange} labelName='Den middlemådige(490,-/mnd)'/>
-                        <TextFieldGroup field='radio' value='3' name='abonnement' onChange={this.handleChange} labelName='Onkel Skrue(1499,-/mnd)'/>
-                        <input type='submit' value='Bekreft' />
+                        <div className='profil-section-content'>
+                            <h4>Endre mitt abonnement</h4>
+                            <span className='profil-current'>Mitt abonnement: {this.state.abonnementText}</span>
+                            <TextFieldGroup field='radio' value='1' name='abonnement' onChange={this.handleChange} labelName='Gjerrigknarken(249,-/mnd)'/>
+                            <TextFieldGroup field='radio' value='2' name='abonnement' onChange={this.handleChange} labelName='Den middlemådige(490,-/mnd)'/>
+                            <TextFieldGroup field='radio' value='3' name='abonnement' onChange={this.handleChange} labelName='Onkel Skrue(1499,-/mnd)'/>
+                            <input type='submit' value='Bekreft' />
+                        </div>     
                     </div>     
                 </form>
-                    <h4>Legg til ekstra poeng</h4>
-                    <p>Legg Til Poeng. Nåværende poeng: {this.state.points}</p>
-                <form onSubmit={this.handlePointSubmit}>
-                    <TextFieldGroup value={this.state.nyePoeng} name='nyePoeng' onChange={this.handleChange}/>
-                    {this.state.errors ? <span>Fyll inn et tall som er høyere enn 0.</span> : ''}
-                    <input type='submit' value='Bekreft' />
-
-                </form>
-
+                <div className='profil-legg-til'>
+                    <div className='profil-section-content'>
+                        <h4>Legg til flere BK-poeng</h4>
+                        <span className='profil-current'>Mine poeng: {this.state.points}</span>
+                        <form onSubmit={this.handlePointSubmit}>
+                            <TextFieldGroup value={this.state.nyePoeng} field='number' labelName='Legg til' name='nyePoeng' onChange={this.handleChange}/>
+                            {this.state.errors ? <span className='error'>Fyll inn et tall som er høyere enn 0.</span> : ''}
+                            <input type='submit' value='Bekreft' />
+                        </form>
+                    </div>
+                </div>
             </div>
         )
     }

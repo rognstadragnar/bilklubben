@@ -1,0 +1,107 @@
+.bil-single {
+    padding-top: 70px;
+}
+.bil-single-hero {
+    background-image: url(/assets/img/biler/1/largeimg.jpg);
+    height: 500px;
+    width: 100%;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include mq('max-width: 800px') {
+        height: 400px;
+    }
+    @include mq('max-width: 500px') {
+        height: 300px;
+    }
+    .bil-single-hero-text {
+        z-index: 1;
+        background: radial-gradient(ellipse at center, #444444 0%, rgba(97, 150, 197, 0) 73%, rgba(125, 185, 232, 0) 100%);
+        h4 {   
+            margin: 0;
+            color: white;
+            font-size: 7rem;
+            @include mq('max-width: 750px') {
+                font-size: 5rem;
+            }
+            @include mq('max-width: 470px') {
+                font-size: 3rem;
+            }
+            span:first-child {
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+            span:last-child {
+                text-transform: capitalize;
+                font-weight: 200;
+
+            }
+        }
+    }
+}
+
+.bil-single-content {
+    //@include row();
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 700px;
+    max-width: 90%;
+    margin: 40px auto 0;
+    .table-wrapper {
+        @include col(12);
+    }
+    table {
+        width: 180px;
+        margin: 0 auto;
+        border-width: 1px 0;
+        padding: 10px 0;
+        border-collapse: collapse;
+        td:nth-child(odd) {
+            text-align: right;
+            padding: 0 15px 0 0;
+            font-weight: 500;
+            border-right: 1px solid rgba($accent, 0.2);
+        }
+        td:nth-child(even) {
+            text-align: left;
+            padding: 0 0 0 15px;
+        }
+    }
+    button {
+        background: white;
+        color: $accent;
+        border: 1px solid;
+        border-radius: 0px;
+        font-family: "europa";
+        font-size: 1.5rem;
+        font-weight: 500;
+        padding: 8px 10px;
+        margin: 5px auto;
+        transition: .2s all ease;
+        text-align: center;
+        text-transform: uppercase;
+        margin: 10px 5px 20px;
+
+        &:hover, &:focus {background: $accent; color: white; outline: none; cursor: pointer;}
+    }
+}
+.map-header {
+    display: block;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 20px 0 10px;
+}
+.map-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    height: 400px;
+    max-height: 50vh;
+    @include mq('max-width: 600px') {
+        height: 300px;
+    }
+}

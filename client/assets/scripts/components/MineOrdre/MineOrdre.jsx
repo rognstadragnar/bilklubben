@@ -40,7 +40,7 @@ export default class MineOrdre extends React.Component {
         this.setState({showStatusRapport: false})
     }
     render(){
-        const ordreToShow = this.state.ordre.map((o) => {
+        const ordreToShow = this.state.ordre.length ? this.state.ordre.map((o) => {
             
             return <EnOrdre 
                 key={o.id}
@@ -52,11 +52,12 @@ export default class MineOrdre extends React.Component {
                 ordreDato={new Moment(o.ordreDato).format('DD/MM/YYYY')}
                 kostndad={o.kostnad} 
             />
-        })
+        }) : <span className='no-orders'>Ingen ordre</span>;
         //const showStatusRapport = this.showStatusRapport ? <StatusRapport handleClick={this.handleCloseStatusClick} id={showStatusRapportId}/> : ''
         return (
-            <div>{ordreToShow}
-            {this.state.showStatusRapport ? this.state.showStatusRapportId : 'lol'}
+            <div className='profil-ordre'>
+                <h4>Mine ordre</h4>
+                {ordreToShow}
             </div>  
         )
     }

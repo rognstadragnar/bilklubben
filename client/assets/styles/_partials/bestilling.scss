@@ -267,7 +267,6 @@
         min-height: 300px;
         visibility: hidden;
         z-index: -1;
-
         opacity: 0;
         transition: .2s all ease;
     }
@@ -281,13 +280,43 @@
         display: flex;
         align-items: flex-start;
         justify-content: center;
-        padding-top: 50px;
+        padding-top: 120px;
         cursor: pointer;
         .bil-info-container {
             cursor: auto;
             background: white;
             border-radius: 5px;
             padding: 20px;
+            max-width: 75%;
+            width: 600px;
+            .bil-info-header {
+                font-size: 5rem;
+                font-family: 'europa';
+                color: $text-color;
+                position: relative;
+                padding: 10px 0 20px 0;
+                &:after {
+                    content: '';
+                    width: 70px;
+                    height: 3px;
+                    background: $accent;
+                    position: absolute;
+                    bottom: 0;
+                    left: calc(50% - 35px)
+                }
+            }
+            .bil-info-pris {
+                display: block; text-align: center;
+                font-size: 2rem;
+                .bil-info-poeng {
+                    font-weight: bold;
+                    font-size: 4rem
+                }
+            }
+        }
+        .map-container {
+            height: 400px;
+            width: 100%;
         }
     }
 

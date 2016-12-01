@@ -1,6 +1,6 @@
 @import './_vendor/simpletypography.scss';
 @import 'https://fonts.googleapis.com/css?family=Oxygen|Raleway:400,600';
-@include setFontFamily('"Europa", "Raleway"', 300, 400, "Oxygen", 400);
+@include setFontFamily('"Europa", "Raleway"', 300, 400, "Europa", 400);
 
 $text-color: #333;
 $accent: #3d94d0;
@@ -70,6 +70,21 @@ html, body {
    opacity: 1;
 }
 .registrer-parent input::-ms-input-placeholder {  
+   color: rgba(white, 0.6);  
+}
+
+.profile-page input::-webkit-input-placeholder {  
+   color: rgba(white, 0.6);  
+}
+.profile-page input:-moz-placeholder  {
+   color: rgba(white, 0.6);
+   opacity: 1;
+}
+.profile-page input::-moz-placeholder  {
+   color: rgba(white, 0.6);
+   opacity: 1;
+}
+.profile-page input::-ms-input-placeholder {  
    color: rgba(white, 0.6);  
 }
 

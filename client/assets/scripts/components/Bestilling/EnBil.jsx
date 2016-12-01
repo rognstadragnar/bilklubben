@@ -15,8 +15,8 @@ export default class EnBil extends React.Component{
                     <span className='en-bil-desc-right'>{this.props.bil.price}bkp</span>
                 </div>
                 <div className='en-bil-overlay'>
-                    <div className='en-bil-velg' onClick={(e) => {e.stopPropagation(); console.log(hover); this.props.isDisabled && hover ? null : this.props.handleClick(this.props.bil.id)}}></div>
-                    <div className='en-bil-info' onClick={(e) => {e.stopPropagation(); console.log(hover); hover ? this.props.handleVisInfo(this.props.bil.id) : null}}></div>
+                    <div className='en-bil-velg' onClick={(e) => {e.stopPropagation(); this.props.handleClick(this.props.bil.id)}}></div>
+                    <div className='en-bil-info' onClick={(e) => {e.stopPropagation(); this.props.handleVisInfo(this.props.bil.id)}}></div>
                 </div>
             </div>
         )

@@ -100,9 +100,9 @@
         transition: .2s all ease;
         text-align: center;
         text-transform: uppercase;
-                margin: 10px 5px 20px; font-size: 1.2rem;
+        margin: 10px 5px 20px; font-size: 1.2rem;
 
-        &:hover, &:focus {background: white; color: $accent; outline: none; cursor: pointer;}
+        &:hover, &:focus {background: $accent; color: white; outline: none; cursor: pointer;}
     }
     button {
         margin: 10px 5px 20px; font-size: 1.2rem;

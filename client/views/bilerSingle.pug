@@ -1,10 +1,28 @@
 extends layout/main
 
 block content
-    .biler-single
-        .bil-header-img(style='background-image: url(/assets/img/biler/' + bil.id + '/' + bil.imglg +')' )
-        h1 #{bil.year} #{bil.make} - #{bil.model} #{bil.price}
-    
+    #biler-single-react
 block scripts
+    script.
+        var bilen = {
+            id: '#{bil.id}',
+            make: '#{bil.make}',
+            model: '#{bil.model}',
+            year: '#{bil.year}',
+            category: '#{bil.category}',
+            color: '#{bil.color}',
+            km: '#{bil.km}',
+            motor: '#{bil.motor}',
+            bhp: '#{bil.bhp}',
+            seats: '#{bil.seats}',
+            poslat: '#{bil.poslat}',
+            poslng: '#{bil.poslng}',
+            status: '#{bil.status}',
+            imglg: '#{bil.imglg}',
+            imgsm: '#{bil.imgsm}',
+            price: '#{bil.price}',
+        }
+        console.log(bilen)
+    script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcrViFlK4vqX3TUprSRVDgtI9eM7jHLKE")
+
     script(src='/assets/scripts/bundle.js')
-    

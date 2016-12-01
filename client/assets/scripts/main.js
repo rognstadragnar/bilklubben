@@ -9,7 +9,7 @@ import Profilskjema from './components/ProfilSkjema.jsx';
 import MineOrdre from './components/MineOrdre/MineOrdre.jsx';
 import BestillingsShortcut from './components/BestillingsShortcut/BestillingsShortcut.jsx';
 import Bestilling from './components/Bestilling/Bestilling.jsx';
-
+import BilerSingle from './components/Biler/BilerSingle.jsx';
 
 
 const loggUt = document.getElementById('loggUt');
@@ -160,4 +160,9 @@ if (BestillingsShortcutReact) {
 const BestillingReact = document.getElementById('bestilling-react');
 if (BestillingReact) {
     ReactDom.render(<Bestilling />, BestillingReact);    
+}
+
+const BilerSingleReact = document.getElementById('biler-single-react');
+if (BilerSingleReact) {
+    ReactDom.render(<BilerSingle />, BilerSingleReact);    
 }
