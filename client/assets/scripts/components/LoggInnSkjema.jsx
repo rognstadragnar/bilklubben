@@ -22,7 +22,7 @@ export default class LoggInnSkjema extends React.Component {
             username: this.state.brukernavn, 
             password: this.state.passord
         })    
-        .then((res)=> window.location = '/')
+        .then((res)=> window.location = '/?status=loggetinn')
         .catch((error) => {
              
             this.setState({error: error.response.data.error})})

@@ -43,6 +43,67 @@ html, body {
     overflow-x: hidden;
 }
 
+
+
+
+@import "../../../node_modules/simple-flexgrid/dist/simple-flexgrid.scss";
+@include simpleFlexgrid();
+
+.main-content {
+    /*background: #419fcf;
+    background: -webkit-linear-gradient(20deg, #3a8cd1, #419fcf);
+    background: -o-linear-gradient(20deg, #3a8cd1, #419fcf);
+    background: linear-gradient(20deg, #3a8cd1, #419fcf);*/
+    height: 100%;
+}
+
+
+h2 {
+    @include col(12);
+    text-align: center;
+    font-family: 'reklame-script';
+    font-size: 8rem;
+    color: #3d94d0;
+}
+
+.flash-msg {
+    position: fixed;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: rgba(gray, 0.7);
+    z-index: 100;
+    color: rgba(white, .8);
+    font-size: 1.5rem;
+    transition: .4s .4s all cubic-bezier(0.53, -0.47, 0.79, 0.42);
+    border-top: 50px solid;
+    transform: translateY(-100px);
+    @include mq('max-width: 650px') {
+        font-size: 1.5rem;
+    }
+    @include mq('max-width: 450px') {
+        font-size: 1.2rem;
+    }
+    span {
+        line-height: 50px;
+        display: block;
+        text-align: center;
+    }
+}
+.flash-msg-positive {
+    background: rgba(7, 158, 5, 0.75);
+    border-color: rgba(7, 158, 5, 0.75);
+}
+.flash-msg-negative {
+    background: rgba(158, 5, 5, 0.75);
+    border-color: rgba(158, 5, 5, 0.75);
+}
+
+.flash-msg-show {
+    transform: translateY(0)
+}
+
 .logg-inn-parent input::-webkit-input-placeholder {  
    color: rgba(white, 0.6);  
 }
@@ -91,26 +152,4 @@ html, body {
 input:not[type='radio'], input:not[type='check'] {
     -webkit-appearance: none;
     -webkit-border-radius:0px;
-}
-
-
-@import "../../../node_modules/simple-flexgrid/dist/simple-flexgrid.scss";
-
-@include simpleFlexgrid();
-
-.main-content {
-    /*background: #419fcf;
-    background: -webkit-linear-gradient(20deg, #3a8cd1, #419fcf);
-    background: -o-linear-gradient(20deg, #3a8cd1, #419fcf);
-    background: linear-gradient(20deg, #3a8cd1, #419fcf);*/
-    height: 100%;
-}
-
-
-h2 {
-    @include col(12);
-    text-align: center;
-    font-family: 'reklame-script';
-    font-size: 8rem;
-    color: #3d94d0;
 }

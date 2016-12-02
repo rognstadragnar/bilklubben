@@ -49,7 +49,7 @@ export default class RegistreringsSkjema extends React.Component {
                 })    
                 .then((res)=> {
                     this.setState({error: null, currentPage:4});
-                    setTimeout(() => {window.location = '/'}, 500)
+                    setTimeout(() => {window.location = '/?status=registrert'}, 500)
                 })
                 .catch((error) => {
                     this.setState({error: error.response.data.error})})

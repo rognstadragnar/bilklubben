@@ -18,7 +18,10 @@ html
             .l-dot
             .l-dot
         #load-bg
-        .body-container    
+        .body-container 
+            if flashMsg !== false 
+                #flash-msg(class='flash-msg flash-msg-' + flashMsg.type)
+                    span #{flashMsg.msg}  
             .main-content
                 
 
@@ -29,6 +32,5 @@ html
             include ../partials/logginn-registrering
 
             include ../partials/navbar
-
         block scripts
     

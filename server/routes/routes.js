@@ -2,6 +2,7 @@ import express from 'express';
 let router = express.Router();
 import { checkLogin, isAuthed } from '../middleware/authentication';
 import { isAvailable } from '../middleware/availability';
+import flashMsg from '../middleware/flashMsg';
 
 import Moment from 'moment';
 require('moment-range');
@@ -378,7 +379,7 @@ router.get('/bestilling', (req, res) => {
   if (isAuthed(req)) {
     res.render('bestilling', {auth: req.session.auth, bruker: req.session.bruker})
   } else {
-    res.redirect('/')
+    res.redirect('/?status=ikkelov')
   }
 })
 
@@ -398,21 +399,21 @@ router.get('/profil', (req, res) => {
   if (isAuthed(req)) {
     res.render('profil', {auth: req.session.auth, bruker: req.session.bruker})
   } else {
-    res.redirect('/')
+    res.redirect('/?status=ikkelov')
   }
 })
 
 router.get('/', (req, res) =>  {
-  let cars = [];
+    let cars = [];
   Car.findAll()
   .then(car => {
     car.map((v) => {cars.push(v.dataValues)})
   })
-  .then( () => {
+  .then(() => {
     if (isAuthed(req)) {
-      res.render('index', {auth: req.session.auth, bruker: req.session.bruker, biler: cars, nyheter: Nyheter})
+      res.render('index', {auth: req.session.auth, bruker: req.session.bruker, biler: cars, nyheter: Nyheter, flashMsg: flashMsg(req.query)})
     } else {
-      res.render('index', {auth: req.session.auth, biler: cars, nyheter: Nyheter})
+      res.render('index', {auth: req.session.auth, biler: cars, nyheter: Nyheter, flashMsg: flashMsg(req.query)})
     }
   })
 });

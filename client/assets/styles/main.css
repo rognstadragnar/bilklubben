@@ -2482,52 +2482,6 @@ html, body {
   max-width: 100vw;
   overflow-x: hidden; }
 
-.logg-inn-parent input::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.6); }
-
-.logg-inn-parent input:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  opacity: 1; }
-
-.logg-inn-parent input::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  opacity: 1; }
-
-.logg-inn-parent input::-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6); }
-
-.registrer-parent input::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.6); }
-
-.registrer-parent input:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  opacity: 1; }
-
-.registrer-parent input::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  opacity: 1; }
-
-.registrer-parent input::-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6); }
-
-.profile-page input::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.6); }
-
-.profile-page input:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  opacity: 1; }
-
-.profile-page input::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-  opacity: 1; }
-
-.profile-page input::-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6); }
-
-input:not[type='radio'], input:not[type='check'] {
-  -webkit-appearance: none;
-  -webkit-border-radius: 0px; }
-
 /* SIMPLE FLEXGRID */
 .row {
   overflow-wrap: break-word;
@@ -3107,3 +3061,84 @@ h2 {
   font-family: 'reklame-script';
   font-size: 8rem;
   color: #3d94d0; }
+
+.flash-msg {
+  position: fixed;
+  top: -50px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: rgba(128, 128, 128, 0.7);
+  z-index: 100;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.5rem;
+  transition: 0.4s 0.4s all cubic-bezier(0.53, -0.47, 0.79, 0.42);
+  border-top: 50px solid;
+  transform: translateY(-100px); }
+  @media screen and (max-width: 650px) {
+    .flash-msg {
+      font-size: 1.5rem; } }
+  @media screen and (max-width: 450px) {
+    .flash-msg {
+      font-size: 1.2rem; } }
+  .flash-msg span {
+    line-height: 50px;
+    display: block;
+    text-align: center; }
+
+.flash-msg-positive {
+  background: rgba(7, 158, 5, 0.75);
+  border-color: rgba(7, 158, 5, 0.75); }
+
+.flash-msg-negative {
+  background: rgba(158, 5, 5, 0.75);
+  border-color: rgba(158, 5, 5, 0.75); }
+
+.flash-msg-show {
+  transform: translateY(0); }
+
+.logg-inn-parent input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.6); }
+
+.logg-inn-parent input:-moz-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1; }
+
+.logg-inn-parent input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1; }
+
+.logg-inn-parent input::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.6); }
+
+.registrer-parent input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.6); }
+
+.registrer-parent input:-moz-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1; }
+
+.registrer-parent input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1; }
+
+.registrer-parent input::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.6); }
+
+.profile-page input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.6); }
+
+.profile-page input:-moz-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1; }
+
+.profile-page input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1; }
+
+.profile-page input::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.6); }
+
+input:not[type='radio'], input:not[type='check'] {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px; }

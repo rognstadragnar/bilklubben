@@ -19,7 +19,9 @@ html
             .l-dot
         #load-bg
         .body-container#top    
-
+            if flashMsg !== false 
+                #flash-msg(class='flash-msg flash-msg-' + flashMsg.type)
+                    span #{flashMsg.msg}
             .main-content
                 
 

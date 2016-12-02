@@ -16,7 +16,7 @@ const loggUt = document.getElementById('loggUt');
 if (loggUt) {
     loggUt.addEventListener('click', () => {
         axios.post('/api/logout')
-        .then(() => window.location = '/')
+        .then(() => window.location = '/?status=loggetut')
         .catch((err) => console.log(err));
     });
 }
@@ -165,4 +165,16 @@ if (BestillingReact) {
 const BilerSingleReact = document.getElementById('biler-single-react');
 if (BilerSingleReact) {
     ReactDom.render(<BilerSingle />, BilerSingleReact);    
+}
+
+
+const flashMsg = document.getElementById('flash-msg');
+if (flashMsg) {
+    const si = setInterval(() => {
+        if (document.readyState == 'complete') {
+            flashMsg.classList.add('flash-msg-show')
+            setTimeout(() => flashMsg.classList.remove('flash-msg-show'), 3500)
+            clearInterval(si);
+        }
+    }, 1000) 
 }
