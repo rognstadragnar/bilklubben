@@ -163,9 +163,13 @@
         }
         .ordre-info-main {
             font-weight: 500;
+            @include mq('max-width: 500px') {
+                font-size: 1.4rem;
+            }
         }
         .ordre-info-dato {
             font-style: italic;
+            font-size: 1.1rem
         }
 
         .ordre-info-main, .ordre-info-dato {

@@ -2455,8 +2455,12 @@ section.aktuelt-section {
         background: rgba(61, 148, 208, 0.2); }
     .profil-page .ordre-table .ordre-info-main {
       font-weight: 500; }
+      @media screen and (max-width: 500px) {
+        .profil-page .ordre-table .ordre-info-main {
+          font-size: 1.4rem; } }
     .profil-page .ordre-table .ordre-info-dato {
-      font-style: italic; }
+      font-style: italic;
+      font-size: 1.1rem; }
     .profil-page .ordre-table .ordre-info-main, .profil-page .ordre-table .ordre-info-dato {
       display: block;
       text-align: left; }
