@@ -69,3 +69,127 @@ section.aktuelt-section {
 
     }
 }
+
+
+.aktuelt-single-page {
+    padding-top: 70px;
+
+}
+
+
+.aktuelt-single-content {
+    @include row();
+    width: 600px;
+    max-width: 90%;
+    margin: 20px auto 30px;
+    h2 {
+        font-size: 6rem;
+        @include mq('max-width: 800px') {
+            font-size: 5rem;
+        }
+        @include mq('max-width: 600px') {
+            font-size: 4.5rem;
+        }
+        @include mq('max-width: 490px') {
+            font-size: 4rem;
+        }
+    }
+}
+
+.aktuelt-single-hero {
+    height: 30vw;
+    min-height: 150px;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba($accent, .5);
+    }
+}
+
+
+.kommentar-felt {
+    @include row();
+    max-width: 90%;
+    width: 450px;
+    padding: 0px 16px;
+    margin: 50px auto;
+    justify-content: center;
+    border-top: 1px solid rgba(black, 0.2);
+
+    
+    .kommentar {
+        margin: 20px 0;
+        padding: 20px;
+        display: block; text-align: center;
+        position: relative;
+    }
+    h5 {
+        font-size: 2rem;
+        display: block;
+    }
+    form {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 288px;
+        padding: 16px 66px;
+        position: relative;
+        &:hover {
+            &:after {
+                content: 'Ikke enda implementert';
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 2.5rem;
+                color: white;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0; left: 0;
+                background: rgba($accent, .8);
+            }
+        }
+    }
+    input[type='text'], textarea {
+        font-size: 1.5rem;
+        background: none;
+        border: 1px solid rgba($accent, .5);
+        padding: 5px;
+        width: 150px;
+        height: 30px;
+        font-family: "europa";
+        font-weight: 300;
+        box-sizing: border-box;    
+        margin: 10px 0;        
+    }
+    textarea {
+        height: 150px;
+        width: 280px;
+    }
+
+    
+    input[type='submit'], button {
+        background: rgba($accent, .5);
+        color: white;
+        border: 1px solid;
+        border-radius: 0px;
+        font-family: "europa";
+        font-size: 1.5rem;
+        font-weight: 500;
+        padding: 8px 10px;
+        margin: 5px 0;
+        transition: .2s all ease;
+        text-align: center;
+        text-transform: uppercase;
+        margin: 10px 5px 20px; font-size: 1.2rem;
+
+        &:hover, &:focus {background: $accent; color: white; outline: none; cursor: pointer;}
+    }
+}

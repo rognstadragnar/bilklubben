@@ -1941,6 +1941,142 @@ section.aktuelt-section {
       display: block;
       text-align: center; }
 
+.aktuelt-single-page {
+  padding-top: 70px; }
+
+.aktuelt-single-content {
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: visible;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  width: 600px;
+  max-width: 90%;
+  margin: 20px auto 30px; }
+  .aktuelt-single-content h2 {
+    font-size: 6rem; }
+    @media screen and (max-width: 800px) {
+      .aktuelt-single-content h2 {
+        font-size: 5rem; } }
+    @media screen and (max-width: 600px) {
+      .aktuelt-single-content h2 {
+        font-size: 4.5rem; } }
+    @media screen and (max-width: 490px) {
+      .aktuelt-single-content h2 {
+        font-size: 4rem; } }
+
+.aktuelt-single-hero {
+  height: 30vw;
+  min-height: 150px;
+  background-position: center center;
+  background-size: cover;
+  position: relative; }
+  .aktuelt-single-hero:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(61, 148, 208, 0.5); }
+
+.kommentar-felt {
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: visible;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 90%;
+  width: 450px;
+  padding: 0px 16px;
+  margin: 50px auto;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.2); }
+  .kommentar-felt .kommentar {
+    margin: 20px 0;
+    padding: 20px;
+    display: block;
+    text-align: center;
+    position: relative; }
+  .kommentar-felt h5 {
+    font-size: 2rem;
+    display: block; }
+  .kommentar-felt form {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 288px;
+    padding: 16px 66px;
+    position: relative; }
+    .kommentar-felt form:hover:after {
+      content: 'Ikke enda implementert';
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -ms-flex-align: center;
+      align-items: center;
+      font-size: 2.5rem;
+      color: white;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: rgba(61, 148, 208, 0.8); }
+  .kommentar-felt input[type='text'], .kommentar-felt textarea {
+    font-size: 1.5rem;
+    background: none;
+    border: 1px solid rgba(61, 148, 208, 0.5);
+    padding: 5px;
+    width: 150px;
+    height: 30px;
+    font-family: "europa";
+    font-weight: 300;
+    box-sizing: border-box;
+    margin: 10px 0; }
+  .kommentar-felt textarea {
+    height: 150px;
+    width: 280px; }
+  .kommentar-felt input[type='submit'], .kommentar-felt button {
+    background: rgba(61, 148, 208, 0.5);
+    color: white;
+    border: 1px solid;
+    border-radius: 0px;
+    font-family: "europa";
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 8px 10px;
+    margin: 5px 0;
+    transition: .2s all ease;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 10px 5px 20px;
+    font-size: 1.2rem; }
+    .kommentar-felt input[type='submit']:hover, .kommentar-felt input[type='submit']:focus, .kommentar-felt button:hover, .kommentar-felt button:focus {
+      background: #3d94d0;
+      color: white;
+      outline: none;
+      cursor: pointer; }
+
 .bil-single {
   padding-top: 70px; }
 

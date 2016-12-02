@@ -1,9 +1,22 @@
 extends layout/main
 block content
-        if nyheter[nyheten].bilde
-            .nyhet-header-img(style='background-image: url(' + nyheter[nyheten].bilde +')' )
-        h2 #{nyheter[nyheten].tittel}
-        p #{nyheter[nyheten].tekst}
-        
+        .aktuelt-single-page
+                if nyheter[nyheten].bilde
+                    .aktuelt-single-hero(style='background-image: url(' + nyheter[nyheten].bilde +')')
+                else  
+                    .aktuelt-single-hero(style='background-image: url(/assets/img/hero1.jpg)')
+                .aktuelt-single-content
+                    h2 #{nyheter[nyheten].tittel}
+                    p #{nyheter[nyheten].tekst}
+
+                .kommentar-felt
+
+                    span.kommentar Artikkelen har ingen kommentarer enda.
+
+                    h5 Legg til en kommentar
+                    form
+                        input(type='text' disabled='' placeholder='Mitt navn')
+                        textarea(type='text' disabled='' placeholder='Min kommentar')
+                        input(type='submit' value='Send kommentar' disabled='')
 block scripts
     script(src='/assets/scripts/bundle.js')
