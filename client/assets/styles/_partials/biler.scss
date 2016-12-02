@@ -105,3 +105,110 @@
         height: 300px;
     }
 }
+
+
+
+
+.biler-page {
+    padding-top: 70px;
+}
+
+.biler-page-content {
+    @include row();
+    width: 1000px;
+    max-width: 90%;
+    margin: 30px auto;
+    h2 {
+        margin-bottom: 30px;
+        @include mq('max-width: 550px') {
+            font-size: 6rem;
+        }
+        @include mq('max-width: 4500px') {
+            font-size: 5rem;
+        }    
+    }
+}
+
+.biler {
+    @include col(4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    position: relative;
+    box-shadow: 0 3px 20px -10px $text-color;
+    transition: .2s all ease;
+    &:hover {
+        box-shadow: 0 5px 30px -10px $text-color;
+        .biler-desc {
+            transform: translateY(0px);
+            .biler-info {
+                opacity: 1
+            }
+        }
+    }
+    .biler-desc {
+        padding-top: 20px;
+        position: relative;
+        color: white;
+        @include mq('min-width: 550px') {
+            transform: translateY(10px);
+        }
+        transition: .2s all cubic-bezier(0.25, 0.1, 0, 2.39);
+    }
+    .biler-merke {
+        font-size: 2rem;
+        background: radial-gradient(ellipse at center, rgba(#444444, .6) 0%, rgba(97, 150, 197, 0) 73%, rgba(125, 185, 232, 0) 100%);
+        
+        > span:first-child {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+    .biler-info {
+        background: radial-gradient(ellipse at center, rgba(#444444, .6) 0%, rgba(97, 150, 197, 0) 73%, rgba(125, 185, 232, 0) 100%);
+        display: block;
+        text-align: center;
+        @include mq('min-width: 550px') {
+            opacity: 0;
+        }
+        transition: .2s all ease;
+
+    }
+    @include mq('max-width: 750px') {
+        height: 165px;
+    }
+    @include mq('max-width: 750px') {
+        @include col(6);
+        display: flex;
+        height: 200px;
+    }
+    @include mq('max-width: 550px') {
+        height: 150px;
+    }
+    @include mq('max-width: 450px') {
+        @include col(12);
+        display: flex;
+        height: 200px;
+    }
+
+}
+
+.biler-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-position: center center;
+    background-size: cover;
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(black, 0.2);
+    }
+}

@@ -3,13 +3,15 @@ extends layout/main
 block content
     .biler-page
         .biler-page-content
-    each bil in biler
-
-                a(href='/biler/'+ bil.id).en-bil
-                        .en-bil-bg(style='background-image: url(' + bil.imglg +')' )
-                        .en-bil-content
-                            h2 #{bil.make} #{bil.model}
-                            span Mer informasjon...
+            h2 Våre fantastike biler
+            each bil in biler
+                a(href='/biler/'+ bil.id).biler
+                        .biler-bg(style='background-image: url(/assets/img/biler/' + bil.id + '/'  + bil.imgsm +')' )
+                        .biler-desc
+                            span.biler-merke 
+                                span #{bil.make} 
+                                span #{bil.model}
+                            span.biler-info Mer info
 
 
 
