@@ -24,6 +24,13 @@
     }
     .ordre-content {
         @include col(12);
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+        &:not(:last-child) {
+            border-bottom: 1px solid
+
+        }
     }
     .profil-endre-informasjon {
         //background: rgba($accent,.5);
@@ -130,5 +137,44 @@
         text-align: center;
         color: $text-color;
         font-style: italic;
+    }
+    .ordre-table {
+        display: flex;
+        justify-content: center;
+
+        table {
+            border-collapse: collapse;   
+
+            th, td {
+                padding: 4px 8px;
+            } 
+            th {
+                background: $accent;
+                color: white;
+                border-collapse: collapse;
+                border: none;
+            }
+            tr {
+                &:not(:first-child){border-bottom: 1px solid rgba($accent, 0.2);}
+                &:hover {
+                    background: rgba($accent, 0.2);
+                }   
+            }
+        }
+        .ordre-info-main {
+            font-weight: 500;
+        }
+        .ordre-info-dato {
+            font-style: italic;
+        }
+
+        .ordre-info-main, .ordre-info-dato {
+            display: block;
+            text-align: left;
+        }
+        .ordre-pris {
+            font-weight: 300;
+            font-size: 2rem
+        }
     }
 }

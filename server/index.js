@@ -1,8 +1,7 @@
 import express from 'express';
 import routes from './routes/routes';
 import bodyParser from 'body-parser';
-//import cookieParser from 'cookie-parser';
-
+import helmet from 'helmet';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
 import Sequelize from 'sequelize';
@@ -44,7 +43,7 @@ app.use(session({
     }
     })
 );
-
+app.use(helmet())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 

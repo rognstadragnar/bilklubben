@@ -1912,7 +1912,7 @@ section.aktuelt-section {
   box-sizing: border-box;
   width: 700px;
   max-width: 90%;
-  margin: 0 auto; }
+  margin: 40px auto; }
   section.aktuelt-section .content {
     width: calc(100%);
     max-width: calc(100%);
@@ -2344,7 +2344,12 @@ section.aktuelt-section {
     max-width: calc(100%);
     margin-bottom: 16px;
     box-sizing: border-box;
-    display: block; }
+    display: block;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center; }
+    .profil-page .ordre-content:not(:last-child) {
+      border-bottom: 1px solid; }
   .profil-page .profil-endre-abonnement .form-group {
     text-align: center; }
   .profil-page .profil-legg-til .form-group {
@@ -2430,6 +2435,34 @@ section.aktuelt-section {
     text-align: center;
     color: #333;
     font-style: italic; }
+  .profil-page .ordre-table {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center; }
+    .profil-page .ordre-table table {
+      border-collapse: collapse; }
+      .profil-page .ordre-table table th, .profil-page .ordre-table table td {
+        padding: 4px 8px; }
+      .profil-page .ordre-table table th {
+        background: #3d94d0;
+        color: white;
+        border-collapse: collapse;
+        border: none; }
+      .profil-page .ordre-table table tr:not(:first-child) {
+        border-bottom: 1px solid rgba(61, 148, 208, 0.2); }
+      .profil-page .ordre-table table tr:hover {
+        background: rgba(61, 148, 208, 0.2); }
+    .profil-page .ordre-table .ordre-info-main {
+      font-weight: 500; }
+    .profil-page .ordre-table .ordre-info-dato {
+      font-style: italic; }
+    .profil-page .ordre-table .ordre-info-main, .profil-page .ordre-table .ordre-info-dato {
+      display: block;
+      text-align: left; }
+    .profil-page .ordre-table .ordre-pris {
+      font-weight: 300;
+      font-size: 2rem; }
 
 body {
   background: white;

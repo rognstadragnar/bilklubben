@@ -20,16 +20,16 @@ export default class EnOrdre extends React.Component {
     render(){
         
         
-        return (
-            <div className={this.state.showing ? 'showing': ''} onClick={this.handleShowClick}>
-                <span>{this.props.bilId}: {this.props.bilNavn}</span>
-                <div className='ordre-more-info'>
-                    <span>Ordreinfo</span>
-                    <p>{this.props.startDato}(start) - {this.props.sluttDato}(slutt) (lengde: {Moment.range(this.props.startDato, this.props.sluttDato).diff('days') + 1})</p>
-                    <p>Kostnad: {this.props.kostnad} poeng. {this.props.ordreDato}</p>
-                    <span onClick={(e) => {e.stopPropagation(); this.props.handleStatusClick(this.props.bilId)}}>Mer info</span>
-                </div>
-            </div>
+        return (                
+            <tr className={this.state.showing ? 'showing': ''} onClick={this.handleShowClick}>
+                <td>{this.props.ordreDato.format('DD.MM.YYYY')}</td>
+                <td>
+                
+                    <span className='ordre-info-main'>{Moment.range(this.props.startDato, this.props.sluttDato).diff('days')} døgn x {this.props.bilNavn}</span>
+                    <span className='ordre-info-dato'>{this.props.startDato.format('ll')} - {this.props.sluttDato.format('ll')}</span>
+                </td>
+                <td className='ordre-pris'>{this.props.kostnad}</td>
+            </tr>
         )
     }
 }

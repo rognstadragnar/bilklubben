@@ -48,7 +48,7 @@ section.aktuelt-section {
     @include row();
     width: 700px;
     max-width: 90%;
-    margin: 0 auto;
+    margin: 40px auto;
     .content {
         @include col(12);
         h5{text-align: center;}

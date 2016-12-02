@@ -14,7 +14,6 @@ export default class MineOrdre extends React.Component {
         this.handleCloseStatusClick = this.handleCloseStatusClick.bind(this)
     }
     componentDidMount() {
-        console.log('hi')
         Axios.get('/api/getOrdre')
         .then((res)=> {
             this.setState({
@@ -41,23 +40,37 @@ export default class MineOrdre extends React.Component {
     }
     render(){
         const ordreToShow = this.state.ordre.length ? this.state.ordre.map((o) => {
-            
             return <EnOrdre 
                 key={o.id}
                 handleStatusClick={this.handleStatusClick}
-                bilId={o.id}
+                ordreId={o.id}
                 bilNavn= {o.bilMerke + '-' + o.bilModell} 
-                startDato={new Moment(o.startDato).format('DD/MM/YYYY')} 
-                sluttDato={new Moment(o.sluttDato).format('DD/MM/YYYY')} 
-                ordreDato={new Moment(o.ordreDato).format('DD/MM/YYYY')}
-                kostndad={o.kostnad} 
+                startDato={new Moment(o.startDato)} 
+                sluttDato={new Moment(o.sluttDato)} 
+                ordreDato={new Moment(o.ordreDato)}
+                kostnad={o.kostnad} 
             />
-        }) : <span className='no-orders'>Ingen ordre</span>;
+        }) : null;
         //const showStatusRapport = this.showStatusRapport ? <StatusRapport handleClick={this.handleCloseStatusClick} id={showStatusRapportId}/> : ''
         return (
             <div className='profil-ordre'>
                 <h4>Mine ordre</h4>
-                {ordreToShow}
+
+                <div className='ordre-table'>
+                {this.state.ordre.length ? 
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Dato</th>
+                                <th>Ordreinfo</th>
+                                <th>Pris (i BKp)</th>
+                            </tr>
+                                {ordreToShow}
+                        </tbody>
+                    </table>
+                    : <span className='no-orders'>Ingen ordre</span>
+                }
+                </div>
             </div>  
         )
     }
