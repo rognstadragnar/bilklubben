@@ -317,9 +317,9 @@ router.get('/biler', (req, res) => {
   })
   .then( () => {
     if (isAuthed(req)) {
-      res.render('biler', {auth: req.session.auth, bruker: req.session.bruker, biler: cars})
+      res.render('biler', {auth: req.session.auth, bruker: req.session.bruker, biler: cars,flashMsg: flashMsg(req.query)})
     } else {
-      res.render('biler', {auth: req.session.auth, biler: cars})
+      res.render('biler', {auth: req.session.auth, biler: cars, flashMsg: flashMsg(req.query)})
     }
   })
 })
@@ -335,9 +335,9 @@ router.get('/biler/:id', (req, res) => {
   })
   .then(() => {
     if (isAuthed(req)) {
-      res.render('bilerSingle', {auth: req.session.auth, bruker: req.session.bruker, bil: theCar})
+      res.render('bilerSingle', {auth: req.session.auth, bruker: req.session.bruker, bil: theCar, flashMsg: flashMsg(req.query)})
     } else {
-      res.render('bilerSingle', {auth: req.session.auth, bil: theCar})
+      res.render('bilerSingle', {auth: req.session.auth, bil: theCar, flashMsg: flashMsg(req.query)})
     }
   })
   .catch(err => res.redirect('/biler'))
@@ -377,7 +377,7 @@ router.get('/api/getOrdre', (req, res) => {
 
 router.get('/bestilling', (req, res) => {
   if (isAuthed(req)) {
-    res.render('bestilling', {auth: req.session.auth, bruker: req.session.bruker})
+    res.render('bestilling', {auth: req.session.auth, bruker: req.session.bruker, flashMsg: flashMsg(req.query)})
   } else {
     res.redirect('/?status=ikkelov')
   }
@@ -385,11 +385,11 @@ router.get('/bestilling', (req, res) => {
 
 
 router.get('/aktuelt', (req, res) => {
-  res.render('aktuelt', {auth: req.session.auth, bruker: req.session.bruker, nyheter: Nyheter})
+  res.render('aktuelt', {auth: req.session.auth, bruker: req.session.bruker, nyheter: Nyheter, flashMsg: flashMsg(req.query)})
 })
 
 router.get('/aktuelt/:id', (req, res) => {
-  if (req.params.id <= Nyheter.length && req.params.id > 0) res.render('aktueltSingle', {auth: req.session.auth, bruker: req.session.bruker, nyheter: Nyheter, nyheten: req.params.id - 1})
+  if (req.params.id <= Nyheter.length && req.params.id > 0) res.render('aktueltSingle', {auth: req.session.auth, bruker: req.session.bruker, nyheter: Nyheter, nyheten: req.params.id - 1, flashMsg: flashMsg(req.query)})
   else res.redirect('/aktuelt')
 })
 
@@ -397,7 +397,7 @@ router.get('/aktuelt/:id', (req, res) => {
 
 router.get('/profil', (req, res) => {
   if (isAuthed(req)) {
-    res.render('profil', {auth: req.session.auth, bruker: req.session.bruker})
+    res.render('profil', {auth: req.session.auth, bruker: req.session.bruker, flashMsg: flashMsg(req.query)})
   } else {
     res.redirect('/?status=ikkelov')
   }
