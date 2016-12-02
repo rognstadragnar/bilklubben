@@ -176,7 +176,7 @@
                 justify-content: center;
                 align-items: center;
                 opacity: 0;
-                transition: .2s all ease-in-out;
+                transition: .5s all ease;
                 .en-bil-velg, .en-bil-info {
                     position: relative;
                     height: 50px;
@@ -187,7 +187,7 @@
                     z-index: 1;
                     background: rgba(85, 95, 111, 0.91);
                     transform: translateY(50px);
-                    transition: .2s all ease-in-out, .2s transform cubic-bezier(0.37, 1.67, 1, 1);
+                    transition: .3s .1s all ease, .3s .1s transform cubic-bezier(0.37, 1.67, 1, 1);
                     &:before {
                         content: '';
                         position: absolute;

@@ -1543,7 +1543,7 @@ footer {
         -ms-flex-align: center;
         align-items: center;
         opacity: 0;
-        transition: .2s all ease-in-out; }
+        transition: .5s all ease; }
         .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-velg, .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-info {
           position: relative;
           height: 50px;
@@ -1556,9 +1556,7 @@ footer {
           -webkit-transform: translateY(50px);
           -ms-transform: translateY(50px);
           transform: translateY(50px);
-          transition: 0.2s all ease-in-out, 0.2s -webkit-transform cubic-bezier(0.37, 1.67, 1, 1);
-          transition: 0.2s all ease-in-out, 0.2s transform cubic-bezier(0.37, 1.67, 1, 1);
-          transition: 0.2s all ease-in-out, 0.2s transform cubic-bezier(0.37, 1.67, 1, 1), 0.2s -webkit-transform cubic-bezier(0.37, 1.67, 1, 1); }
+          transition: 0.3s 0.1s all ease, 0.3s 0.1s transform cubic-bezier(0.37, 1.67, 1, 1); }
           .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-velg:before, .bestilling-content .bil-visning .en-bil .en-bil-overlay .en-bil-info:before {
             content: '';
             position: absolute;
