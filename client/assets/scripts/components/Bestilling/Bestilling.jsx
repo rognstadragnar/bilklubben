@@ -49,18 +49,18 @@ export default class Bestilling extends React.Component {
         
         this.updateOpptatteBiler()
         
-        if (this.state.valgtBil && this.state.opptatteBiler.length) {
+        if (this.state.valgtBil) {
             const dateArr = this.state.opptatteDatoer.sort((a, b) => {
                 if (a > b) return 1
                 else if (a > b) return -1
                 else return 0
             })
             for (let i = 0; i < dateArr.length; i++) {
-                console.log(dateArr[i].isSame(Moment(val)), dateArr[i].isAfter(Moment(val)))
+                if (Moment(dateArr[i].start).isAfter(Moment(val)) ||
+                    Moment(dateArr[i].end).isAfter(Moment(val))) {
 
-                if (dateArr[i].isAfter(this.state.startDato)) {
-                    this.setState({maxDato: dateArr[i]})
-                    return true
+                    this.setState({maxDato: dateArr[i].start})
+                    return;
                 }   
             }
         }
@@ -86,6 +86,7 @@ export default class Bestilling extends React.Component {
             velgBil: false,
             startDato: null,
             sluttDato: null,
+            maxDato: null,
             opptatteDatoer: [],
             opptatteBiler: [],
             error: null
@@ -93,18 +94,34 @@ export default class Bestilling extends React.Component {
     }
 
     handleBilValg(val){
-
+        
         this.updateOpptatteDatoer(val)
         this.setState({
             valgtBil: this.state.valgtBil === val ? null : val,
         })
-        const car = this.state.biler.filter((cv) => cv.id === this.state.valgtBil ? true : false)
+        
+        if (this.state.startDato) {
+            const dateArr = this.state.opptatteDatoer.sort((a, b) => {
+                if (a > b) return 1
+                else if (a > b) return -1
+                else return 0
+            })
+            for (let i = 0; i < dateArr.length; i++) {
+                if (Moment(dateArr[i].start).isAfter(Moment(this.state.startDato)) ||
+                    Moment(dateArr[i].end).isAfter(Moment(this.state.startDato))) {
+
+                    this.setState({maxDato: dateArr[i].start})
+                    return;
+                }   
+            }
+        }
+        
     }
 
     resetBiler(){
         this.setState({
             valgtBil: null,
-            opptatteBiler: []
+            opptatteDatoer: []
         })
     }
     handleVisInfo(val){
@@ -116,7 +133,7 @@ export default class Bestilling extends React.Component {
 
     updateOpptatteDatoer(val){
         Axios.post('/api/finnOpptatteDatoer', {bilId: val})
-        .then(res => {console.log(res.data);this.setState(
+        .then(res => {this.setState(
             {opptatteDatoer: res.data.opptatteDatoer.map(
                 d => Moment.range(d.start, d.slutt)
             )}
@@ -135,10 +152,9 @@ export default class Bestilling extends React.Component {
     }
 
     handleBestill(){
-        console.log('yeeho')
         if (Moment(this.state.startDato).isValid() && Moment(this.state.sluttDato).isValid && this.state.valgtBil) {
             Axios.post('/api/bestill', {startDato: this.state.startDato, sluttDato: this.state.sluttDato, bil: this.state.valgtBil})
-            .then(() => window.location = '/profil')
+            .then(() => window.location = '/profil?status=bestilt')
             .catch(err => this.setState({error: err.response.data.error}))
         }
     }
@@ -159,7 +175,7 @@ export default class Bestilling extends React.Component {
             const bilen = Number(window.sessionStorage.getItem('bestillingsBil'))
             let carArr = []
             carArr.push(bilen)
-            this.updateOpptatteDatoer(carArr)
+            this.updateOpptatteDatoer(bilen)
             this.setState({
                 velgBil: true,
                 valgtBil: Number(window.sessionStorage.getItem('bestillingsBil'))

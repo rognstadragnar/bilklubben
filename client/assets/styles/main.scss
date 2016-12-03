@@ -76,7 +76,7 @@ h2 {
     z-index: 100;
     color: rgba(white, .8);
     font-size: 1.5rem;
-    transition: .4s .4s all cubic-bezier(0.53, -0.47, 0.79, 0.42);
+    transition: .4s all cubic-bezier(0.53, -0.47, 0.79, 0.42);
     border-top: 50px solid;
     transform: translateY(-100px);
     @include mq('max-width: 650px') {

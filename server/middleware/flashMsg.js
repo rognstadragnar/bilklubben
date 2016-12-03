@@ -13,7 +13,16 @@ export default (query) => {
         case 'registrert':
             flashMsg.msg = 'Du har blitt registrert.';
             flashMsg.type = 'positive'
+            return flashMsg;   
+        case 'bestilt':
+            flashMsg.msg = 'Bestilling vellykket.';
+            flashMsg.type = 'positive'
             return flashMsg;
+        case 'endring':
+            flashMsg.msg = 'Endring vellykket.';
+            flashMsg.type = 'positive'
+            return flashMsg;
+            
         case 'ikkelov':
             flashMsg.msg = 'Du har ikke rettigheter til siden du prøvde å besøke.';
             flashMsg.type = 'negative'

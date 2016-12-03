@@ -20,7 +20,7 @@ html
         #load-bg
         .body-container 
             if flashMsg !== false 
-                #flash-msg(class='flash-msg flash-msg-' + flashMsg.type)
+                #flash-msg(class='flash-msg flash-msg-' + flashMsg.type + ' flash-msg-show')
                     span #{flashMsg.msg}  
             .main-content
                 

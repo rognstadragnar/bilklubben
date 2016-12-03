@@ -14,7 +14,7 @@ export default class BestillingsShortcut extends React.Component {
     disableDayFn(day) {
         if (!this.props.opptatteDatoer) return false
         for (let i = 0; i < this.props.opptatteDatoer.length; i++) {
-            if (Moment(day).within(this.props.opptatteDatoer[i])) return true
+            if (this.props.opptatteDatoer[i].contains(Moment(day), false)) return true
         }
     }
 
@@ -50,7 +50,7 @@ export default class BestillingsShortcut extends React.Component {
             maxDate: this.props.maxDato.toDate() ? this.props.maxDato.toDate() : new Date('12/12/2999'),
             defaultDate: this.props.sluttDato ? this.props.sluttDato.toDate() : null,
             setDefaultDate: true,
-            onSelect: (v) => {this.props.handleSluttChange(v); console.log(this.props.startDato)},
+            onSelect: (v) => {this.props.handleSluttChange(v)},
             onOpen: (v) => {this.props.startDato ? 
                 sluttPicker.setMinDate(Moment(this.props.startDato).add(1, 'days').toDate()) : 
                 sluttPicker.setMinDate(Moment().add(1, 'days').toDate());  

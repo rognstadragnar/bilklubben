@@ -2352,6 +2352,11 @@ section.aktuelt-section {
       border-bottom: 1px solid; }
   .profil-page .profil-endre-abonnement .form-group {
     text-align: center; }
+  .profil-page .profil-endre-abonnement .obs {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.25rem; }
   .profil-page .profil-legg-til .form-group {
     margin: 50px 0;
     text-align: center; }
@@ -3072,7 +3077,7 @@ h2 {
   z-index: 100;
   color: rgba(255, 255, 255, 0.8);
   font-size: 1.5rem;
-  transition: 0.4s 0.4s all cubic-bezier(0.53, -0.47, 0.79, 0.42);
+  transition: 0.4s all cubic-bezier(0.53, -0.47, 0.79, 0.42);
   border-top: 50px solid;
   transform: translateY(-100px); }
   @media screen and (max-width: 650px) {

@@ -268,16 +268,16 @@ router.post('/api/finnOpptatteBiler', (req, res) => {
         where: {
           $or: [
             {$and: [
-              {startdate: {$lte: stD.subtract(1, 'days').toDate()}}, 
-              {enddate: {$gte: slD.add(1, 'days').toDate()}}
+              {startdate: {$lte: stD.toDate()}}, 
+              {enddate: {$gte: slD.toDate()}}
             ]},
             {$and: [
-              {startdate: {$gte: stD.subtract(1, 'days').toDate()}},
-              {startdate: {$lte: slD.add(1,'days').toDate()}}
+              {startdate: {$gte: stD.toDate()}},
+              {startdate: {$lte: slD.toDate()}}
             ]},
             {$and: [
-              {enddate: {$gte: stD.subtract(1, 'days').toDate()}},
-              {enddate: {$lte: slD.add(1,'days').toDate()}}
+              {enddate: {$gte: stD.toDate()}},
+              {enddate: {$lte: slD.toDate()}}
             ]}
           ]
         }
@@ -301,7 +301,7 @@ router.post('/api/finnOpptatteDatoer', (req, res) => {
     const bilId = req.body.bilId
     let datoer = [];
     Order.findAll({where: {bkCarId: bilId}})
-    .then(orders => orders.map(o => datoer.push({start: Moment(o.dataValues.startdate), slutt: Moment(o.dataValues.enddate)})))
+    .then(orders => orders.map(o => datoer.push({start: Moment(o.dataValues.startdate).subtract(1, 'days'), slutt: Moment(o.dataValues.enddate).add(1, 'days')})))
     .then(() => res.status(200).json({opptatteDatoer: datoer}))
   } 
   catch(err) {

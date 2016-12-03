@@ -46,24 +46,33 @@ export default class ProfilSkjema extends React.Component {
                     epost: res.data.bruker.email ? res.data.bruker.email : '',
                     points: res.data.bruker.points,
                     abonnement: res.data.bruker.abonnement,
-                    abonnementText: abonnementText
+                    abonnementText: abonnementText,
+                    currentAbbonnement: res.data.bruker.abonnement
+
                 })
                 return res
             })
-            .then((res ) => console.log(res))
             .catch(err => this.setState({error: err.response.data.error}))
     }
     handleChange(e){
         this.setState({ [e.target.name]: e.target.value})
     }
     handleSubmit(e){
-        console.log(window.location.href)
         e.preventDefault();
         if (this.state.nyEpost !== '' && !this.state.nyEpost.match(/^[\w\.\+\_]+\@\w+\.[a-z]+$/i)) {
             return this.setState({errors: 'Ugyldig epost'})
         }
         if ((this.state.nyttPassord !== '' && this.state.currentPassord === '') || (this.state.currentPassord !== '' && this.state.nyttPassord === '')) {
             return this.setState({errors: 'Begge feltene må fylles inn'})
+        }
+        if (
+            this.state.nyttNavn === '' && 
+            this.state.nyEpost === '' &&
+            this.state.currentPassord === '' &&
+            this.state.nyttPassord === '' &&
+            this.state.abonnement === this.state.currentAbbonnement
+        ) {
+            return this.setState({errors: 'Du må gjøre en endring.'})
         }
         Axios.post('/api/endre', {
             fulltNavn: this.state.nyttNavn !== '' ? this.state.nyttNavn : this.state.fulltNavn, 
@@ -72,7 +81,7 @@ export default class ProfilSkjema extends React.Component {
             nyttPassord: this.state.nyttPassord !== '' ? this.state.nyttPassord : null,
             abonnement: this.state.abonnement
         })
-        .then((res) => {window.location = window.location.href;})
+        .then((res) => {window.location = '/profil?status=endring';})
         .catch(err => this.setState({errors: err.response.data.error}))
     }
     handlePointSubmit(e){
@@ -81,12 +90,12 @@ export default class ProfilSkjema extends React.Component {
             Axios.post('/api/fyll', {
             amount: Number(this.state.nyePoeng)
         })
-        .then((res) => { this.setState({errors: null, points: res.data.newPoints, nyePoeng: ''})})
+        .then((res) => {
+            this.setState({errors: null, points: res.data.newPoints, nyePoeng: ''});
+            window.location = '/profil?status=endring'
+        })
         .catch(err => {this.setState({error: err.response.data.error})})
-        } else {
-            this.setState({errors: "wow"})
         }
-        
     }
     render () {
         return (
@@ -147,7 +156,9 @@ export default class ProfilSkjema extends React.Component {
                             <TextFieldGroup field='radio' value='2' name='abonnement' onChange={this.handleChange} labelName='Den middlemådige(490,-/mnd)'/>
                             <TextFieldGroup field='radio' value='3' name='abonnement' onChange={this.handleChange} labelName='Onkel Skrue(1499,-/mnd)'/>
                             <input type='submit' value='Bekreft' />
-                        </div>     
+                            <span className='obs'>Obs: Ved endring av abonnement start nytt abonnement øyeblikkelig.</span>  
+
+                        </div>   
                     </div>     
                 </form>
                 <div className='profil-legg-til'>

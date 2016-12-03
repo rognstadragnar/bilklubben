@@ -32,14 +32,19 @@
 
         }
     }
-    .profil-endre-informasjon {
-        //background: rgba($accent,.5);
-    }
+
     .profil-endre-abonnement {
         .form-group {
             text-align: center;
         }
+        .obs {
+            display: block;
+            text-align: center;
+            font-style: italic;
+            font-size: 1.25rem;
+        }
     }
+    
     .profil-legg-til {
         .form-group {
             margin: 50px 0;
@@ -181,4 +186,6 @@
             font-size: 2rem
         }
     }
+   
 }
+
