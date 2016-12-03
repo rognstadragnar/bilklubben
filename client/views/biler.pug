@@ -3,7 +3,7 @@ extends layout/main
 block content
     .biler-page
         .biler-page-content
-            h2 Våre fantastike biler
+            h2 Våre fantastiske biler
             each bil in biler
                 a(href='/biler/'+ bil.id).biler
                         .biler-bg(style='background-image: url(/assets/img/biler/' + bil.id + '/'  + bil.imgsm +')' )
