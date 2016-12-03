@@ -1,5 +1,6 @@
 # Bilklubben
-Node, Express and MySQL(Sequelize) backend
-Pug, React and SCSS frontend.
+- Node, Express, ES2015 and MySQL(Sequelize) backend
+- Pug, React, ES2015 and SCSS frontend
 
-ES2015 on both.
+
+Hosted on a free Heroku server: http://bilklubben.rognstad.me
