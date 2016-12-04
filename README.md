@@ -114,3 +114,5 @@ Ved en fullverdig implementering av et slikt nettsted ville det også vært vikt
 
 
 
+## Videre arbied
+Nettstedet er utviklet for å enkelt kunne vidreutvikles.
