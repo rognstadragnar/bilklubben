@@ -7,9 +7,13 @@ Prosjektoppgave i IINI2001-A 16H av Ragnar Aasen Rognstad
 http://bilklubben.rognstad.me (hostet gratis på Heroku)
 
 ## Funksjonalitet
-I tillegg til registrering og innlogging fokuserte jeg mye på å gjøre bestillingsfunksjonen best mulig, og den synes jeg har blitt bra. Siden er i stor grad bygd opp med AJAX som skal gi brukeren en god opplevelse.
+I tillegg til registrering og innlogging fokuserte jeg mye på å gjøre bestillingsfunksjonen best mulig, og den synes jeg har blitt bra. 
+Bestillingssiden oppdaterer opptatte biler og opptatte datoer ut i fra brukerens valg uten at siden oppdateres, dette på bakgrunn av at 
+siden er i stor grad bygd opp med AJAX og ReactJS, som gir brukeren en god opplevelse.
 
-Det er enkelt å endre abonnement og å legge til poeng, samt se sine ordre. Siden har også en  oversikt over biler(både med beskrivelse og lokasjon) og nyheter("Aktuelt").
+Det er enkelt å endre abonnement og å legge til poeng, samt se sine ordre. Siden har også en oversikt over biler(både med beskrivelse og lokasjon) og nyheter("Aktuelt").
+
+Jeg er også fornøyd med sidens design og responsivitet, som er gjort helt fra bunnen (tok meg også den frihet å lage logo til casen).
 
 ## Teknologi
 Jeg valgte å gå nokså langt utover pensum, siden jeg har brukt mye tid på webutvikling fra før av. 
@@ -116,3 +120,5 @@ Ved en fullverdig implementering av et slikt nettsted ville det også vært vikt
 
 ## Videre arbied
 Nettstedet er utviklet for å enkelt kunne vidreutvikles.
+
+Eksempelvis ville det vært naturlig å lage en admin-del som gjør det enkelt å legge til nyheter og biler, samt administrere ordre.
