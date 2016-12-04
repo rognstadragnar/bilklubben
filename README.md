@@ -121,4 +121,4 @@ Ved en fullverdig implementering av et slikt nettsted ville det også vært vikt
 ## Videre arbied
 Nettstedet er utviklet for å enkelt kunne vidreutvikles.
 
-Eksempelvis ville det vært naturlig å lage en admin-del som gjør det enkelt å legge til nyheter og biler, samt administrere ordre/få e-postbekreftelse.
+Eksempelvis ville det vært naturlig å lage en admin-del som gjør det enkelt å legge til nyheter og biler, samt administrere ordre.
