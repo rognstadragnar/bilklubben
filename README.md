@@ -1,4 +1,4 @@
-![Bilklubben](https://raw.githubusercontent.com/rognstadragnar/bilklubben/master/githublogo.png)
+![Bilklubben](https://raw.githubusercontent.com/rognstadragnar/bilklubben/master/githubimg.png)
 
 
 # Case: Bilklubben
