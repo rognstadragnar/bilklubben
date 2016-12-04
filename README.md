@@ -16,14 +16,14 @@ Det er enkelt å endre abonnement og å legge til poeng, samt se sine ordre. Sid
 Jeg er også fornøyd med sidens design og responsivitet, som er gjort helt fra bunnen (tok meg også den frihet å lage logo til casen).
 
 ## Teknologi
-Jeg valgte å gå nokså langt utover pensum, siden jeg har brukt mye tid på webutvikling fra før av. 
+Jeg valgte å gå nokså langt utover pensum, siden jeg har brukt mye tid på webutvikling fra før av, og bruke teknologier og teknikker som arbeidsgivere etterspør.
 #### Frontend
-Nettsidens stilark ble skrevet i [SCSS](http://sass-lang.com/), som er en moderne "videreføring" av CSS som har logikk og variabler, og gjør det svært enkelt å skrive modulær gjennbrukbar kode. Jeg har ikke brukt noe frontend-bibliotek (a lá Bootstrap e.l.), men på mye av sidens responsivitet har jeg brukt et selvskrevet grid-system ([Simple-flexgrid](https://www.npmjs.com/package/simple-flexgrid)). Utover det er alt skrevet for hånd.
+Nettsidens stilark ble skrevet i språket [SCSS](http://sass-lang.com/), som er en moderne "videreføring" av CSS som har logikk og variabler, og gjør det svært enkelt å skrive modulær gjennbrukbar kode. Jeg har ikke brukt noe frontend-bibliotek (a lá Bootstrap e.l.), men på mye av sidens responsivitet har jeg brukt et selvskrevet grid-system ([Simple-flexgrid](https://www.npmjs.com/package/simple-flexgrid)). Utover det er alt skrevet for hånd.
 
-All javascript, både på serverside og frontend, er skrevet med de nyeste funksjonene(ES2015).
+All javascript, både på serverside og frontend, er skrevet med i den nyeste versjonen av Javascript(ES2015).
 For bedre bruker opplevelse har jeg brukt Facebook sitt Javascript-rammeverk [REACT](https://facebook.github.io/react/) på funksjonene for loggin, registrering og spesielt bestilling. Datepikeren [PIKADAY](https://github.com/dbushell/Pikaday) skal også nevnes.
 
-SCSS og ES2015-javascript må kompileres til 'gammeldags' kode, noe jeg har brukt byggeverktøyene [GULP](http://gulpjs.com/) og [Webpack](https://webpack.github.io/) til - Webpack gjør det også mulig å importere filer enkelt i Javascript.
+SCSS og ES2015-javascript må kompileres til 'gammeldags' kode slik at nettleseren kan kjøre den, noe jeg har brukt byggeverktøyene [GULP](http://gulpjs.com/) og [Webpack](https://webpack.github.io/) til - Webpack gjør det også mulig å importere filer enkelt i Javascript.
 
 #### Backend
 Nettstedets backend er skrevet i NodeJS med Express-rammeverket. Siden mye av nettstedets funksjonalitet er bygd opp med Ajax er mye av backend satt opp som en API som returnerer JSON. (Dette fordi det da er enkelt å videreutvikle)
@@ -121,4 +121,4 @@ Ved en fullverdig implementering av et slikt nettsted ville det også vært vikt
 ## Videre arbied
 Nettstedet er utviklet for å enkelt kunne vidreutvikles.
 
-Eksempelvis ville det vært naturlig å lage en admin-del som gjør det enkelt å legge til nyheter og biler, samt administrere ordre.
+Eksempelvis ville det vært naturlig å lage en admin-del som gjør det enkelt å legge til nyheter og biler, samt administrere ordre/få e-postbekreftelse.
