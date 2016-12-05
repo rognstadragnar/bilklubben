@@ -23,6 +23,8 @@ Nettsidens stilark ble skrevet i språket [SCSS](http://sass-lang.com/), som er 
 All javascript, både på serverside og frontend, er skrevet med i den nyeste versjonen av Javascript(ES2015).
 For bedre bruker opplevelse har jeg brukt Facebook sitt Javascript-rammeverk [REACT](https://facebook.github.io/react/) på funksjonene for loggin, registrering og spesielt bestilling. Datepikeren [PIKADAY](https://github.com/dbushell/Pikaday) skal også nevnes.
 
+[Axios](https://github.com/mzabriskie/axios) er brukt som http-klient (altså for å sende og motta AJAX).
+
 SCSS og ES2015-javascript må kompileres til 'gammeldags' kode slik at nettleseren kan kjøre den, noe jeg har brukt byggeverktøyene [GULP](http://gulpjs.com/) og [Webpack](https://webpack.github.io/) til - Webpack gjør det også mulig å importere filer enkelt i Javascript.
 
 #### Backend
@@ -122,3 +124,8 @@ Ved en fullverdig implementering av et slikt nettsted ville det også vært vikt
 Nettstedet er utviklet for å enkelt kunne vidreutvikles.
 
 Eksempelvis ville det vært naturlig å lage en admin-del som gjør det enkelt å legge til nyheter og biler, samt administrere ordre.
+
+
+
+
+Siden er testet i Chrome, Safari og Firefox på Mac, samt Chrome på Android og Safari på iOS.
