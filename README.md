@@ -30,7 +30,7 @@ SCSS og ES2015-javascript må kompileres til 'gammeldags' kode slik at nettleser
 #### Backend
 Nettstedets backend er skrevet i NodeJS med Express-rammeverket. Siden mye av nettstedets funksjonalitet er bygd opp med Ajax er mye av backend satt opp som en API som returnerer JSON. (Dette fordi det da er enkelt å videreutvikle)
 
-Her er koden som returnerer JSON når serveren får en GET-request til http://bilklubben.rognstad.me/api/getbiler.
+Her er koden som henter ut biler fra databasen og returnerer det som JSON når serveren får en GET-request til http://bilklubben.rognstad.me/api/getbiler.
 ```Javascript 
 // i filen ./server/routes/routes.js
 
