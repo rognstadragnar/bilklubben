@@ -129,3 +129,5 @@ Eksempelvis ville det vært naturlig å lage en admin-del som gjør det enkelt �
 
 
 Siden er testet i Chrome, Safari og Firefox på Mac, samt Chrome på Android og Safari på iOS.
+
+Det skal også nevnes at fontene som er brukt er lastet fra Adobe Typekit, og siden trekker derfor inn endel javascript fra Typekit.net.
