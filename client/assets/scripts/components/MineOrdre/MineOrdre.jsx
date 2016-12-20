@@ -20,7 +20,6 @@ export default class MineOrdre extends React.Component {
                 ordre: res.data.ordre
             })
         })
-        .then(() => console.log(this.state))
     }
     handleStatusClick(val){
         this.setState({
@@ -29,7 +28,6 @@ export default class MineOrdre extends React.Component {
         })
     }
     handleStatusClose(val){
-        console.log(val)
         this.setState({
             showStatusRapport: true,
             showStatusRapportId: val

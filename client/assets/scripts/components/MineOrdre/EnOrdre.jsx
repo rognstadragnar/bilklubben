@@ -12,7 +12,6 @@ export default class EnOrdre extends React.Component {
         this.handleShowClick = this.handleShowClick.bind(this)
     }
     handleShowClick(){
-        console.log('asd')
         let shouldShow;
         this.state.showing === true ? shouldShow = false : shouldShow = true;
         this.setState({showing: shouldShow})

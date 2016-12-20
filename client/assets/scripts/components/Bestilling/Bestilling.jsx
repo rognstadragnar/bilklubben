@@ -8,16 +8,14 @@ import BilVisning from './BilVisning.jsx';
 import BilInfo from './BilInfo.jsx';
 import SokeFelt from './SokeFelt.jsx';
 import BekreftBestilling from './BekreftBestilling.jsx';
+import simpleScroll from 'simple-scroll';
 
-
-        Moment.locale('nb')
+Moment.locale('nb')
 
 export default class Bestilling extends React.Component {
     constructor(){
         super()
         this.state = {
-            //startDato: Moment(),
-            //sluttDato: Moment().add(1, 'days'),
             maxDato: Moment('12/12/2999'),
             opptatteDatoer: [],
             opptatteBiler: [],
@@ -125,6 +123,7 @@ export default class Bestilling extends React.Component {
         })
     }
     handleVisInfo(val){
+				simpleScroll.toTop()
         this.setState({
             visInfo: val
         })

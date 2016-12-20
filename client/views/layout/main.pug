@@ -12,10 +12,6 @@ html
         link(rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5")
         meta(name="theme-color" content="#ffffff")
         link(rel='stylesheet' href='/assets/styles/main.css')
-        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.5.1/css/pikaday.min.css')
-        script(src="https://use.typekit.net/qsq4ljb.js")
-        script.
-            try{Typekit.load({ async: true });}catch(e){}
         //- include ../partials/preloader
     body
         #load-bar
@@ -37,5 +33,10 @@ html
             include ../partials/logginn-registrering
 
             include ../partials/navbar
+        script(src="https://use.typekit.net/qsq4ljb.js")
+        script.
+            try{Typekit.load({ async: true });}catch(e){}
+
         block scripts
-    
+
+        

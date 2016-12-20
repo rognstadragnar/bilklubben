@@ -5,7 +5,6 @@ export default class BilVisning extends React.Component{
         super()
     }
     render(){
-        console.log(this.props.opptatteBiler)
         const biler = this.props.biler ? this.props.biler.map(
             b => {
                 if (this.props.opptatteBiler && this.props.opptatteBiler.length) {

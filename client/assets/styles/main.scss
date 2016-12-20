@@ -6,7 +6,7 @@ $text-color: #333;
 $accent: #3d94d0;
 
 @import '../../../node_modules/simple-flexgrid/dist/simple-flexgrid.scss';
-
+@import '../../../node_modules/pikaday/scss/pikaday.scss';
 
 @import './_partials/navbar.scss';
 @import './_partials/loggInnForm.scss';
@@ -162,10 +162,3 @@ input:not[type='radio'], input:not[type='check'] {
 		transition: .2s all ease;
 	}
 }
- 
-
-/*.wf-active, .wf-inactive {
-	h1, h2, h3, h4, h5, h6, p, span {
-		visibility: visible;
-	}
-}*/
