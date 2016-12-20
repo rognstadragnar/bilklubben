@@ -3152,5 +3152,8 @@ input:not[type='radio'], input:not[type='check'] {
   visibility: hidden;
   transition: .2s all ease; }
 
-.wf-active h1, .wf-active h2, .wf-active h3, .wf-active h4, .wf-active h5, .wf-active h6, .wf-active p, .wf-active span, .wf-inactive h1, .wf-inactive h2, .wf-inactive h3, .wf-inactive h4, .wf-inactive h5, .wf-inactive h6, .wf-inactive p, .wf-inactive span {
-  visibility: visible; }
+/*.wf-active, .wf-inactive {
+	h1, h2, h3, h4, h5, h6, p, span {
+		visibility: visible;
+	}
+}*/
