@@ -13,6 +13,10 @@ html
         meta(name="theme-color" content="#ffffff")
         link(rel='stylesheet' href='/assets/styles/main.css')
         //- include ../partials/preloader
+        script(src="https://use.typekit.net/qsq4ljb.js")
+        script.
+            try{Typekit.load({ async: true });}catch(e){}
+
     body
         #load-bar
             .l-dot
@@ -33,10 +37,7 @@ html
             include ../partials/logginn-registrering
 
             include ../partials/navbar
-        script(src="https://use.typekit.net/qsq4ljb.js")
-        script.
-            try{Typekit.load({ async: true });}catch(e){}
-
+        
         block scripts
 
         
