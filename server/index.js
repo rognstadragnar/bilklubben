@@ -54,6 +54,7 @@ app.use('/assets', express.static(__dirname + '/../client/assets'));
 app.use('/favicon', express.static(__dirname + '/../client/assets/favicon'));
 
 
+
 app.use('/', routes);
 
 

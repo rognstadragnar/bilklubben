@@ -1,6 +1,6 @@
-
 var path = require('path');
 var webpack = require('webpack');
+var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
     devtool: 'source-map',
@@ -29,7 +29,9 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('production')
             }
         }),
-        new webpack.optimize.UglifyJsPlugin()
+    		new webpack.optimize.DedupePlugin(), //dedupe similar code 
+				new webpack.optimize.UglifyJsPlugin(), //minify everything
+				new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks 
     ],
     resolve: {
         extensions: [ '', '.js', '.jsx']

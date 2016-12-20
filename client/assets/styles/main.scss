@@ -153,3 +153,19 @@ input:not[type='radio'], input:not[type='check'] {
     -webkit-appearance: none;
     -webkit-border-radius:0px;
 }
+
+
+
+.wf-loading {
+	h1, h2, h3, h4, h5, h6, p, span {
+		visibility: hidden;
+		transition: .2s all ease;
+	}
+}
+ 
+
+.wf-active, .wf-inactive {
+	h1, h2, h3, h4, h5, h6, p, span {
+		visibility: visible;
+	}
+}
